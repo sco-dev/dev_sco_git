@@ -1,0 +1,50 @@
+_schema-version: "3.2"
+ID: sco00graficosocupacion
+version: 0.0.1
+modules:
+- name: sco00graficosocupacion-approuter
+  type: approuter.nodejs
+  path: sco00graficosocupacion-approuter
+  requires:
+  - name: sco00graficosocupacion_html_repo_runtime
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: sco00graficosocupacion_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: sco00graficosocupacion_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - sco00grafocup_html-content.zip
+      name: sco00grafocup_html
+      target-path: resources/
+- name: sco00grafocup_html
+  type: html5
+  path: sco00grafocup_html
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: sco00graficosocupacion_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: sco00graficosocupacion_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

@@ -1,0 +1,101 @@
+<mvc:View xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data" controllerName="sapui5agendar.sco00grafocup_html.controller.Master">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}" showHeader="false">
+                    <content>
+                        <IconTabBar items="{/tabs}" expanded="{device>/isNoPhone}" class="sapUiResponsiveContentPadding">
+                            <items>
+                                <IconTabFilter text="{name}">
+                                    <ScrollContainer content="{groups}">
+                                        <Panel headerText="{name}" class="sapUiContentPadding" width="100%" height="100%">
+                                            <l:HorizontalLayout class="sapUiContentPadding">
+                                                <t:Table rows="{dataset}" selectionMode="Single" selectionBehavior="RowOnly" width="37.2rem">
+                                                    <t:noData>
+                                                        <Text textAlign="Center" class="sapUiTableCtrlEmptyMsg" text="Sin estadísticas"/>
+                                                    </t:noData>
+                                                    <t:columns>
+                                                        <t:Column width="5rem">
+                                                            <Label text="Centros"/>
+                                                            <t:template>
+                                                                <Text text="{CENTRO}"/>
+                                                            </t:template>
+                                                        </t:Column>
+                                                        <t:Column width="9rem" hAlign="End">
+                                                            <Label text="Capacidad total Box" tooltip="Capacidad total Box" />
+                                                            <t:template>
+                                                                <Text text="{TOTAL}"/>
+                                                            </t:template>
+                                                        </t:Column>
+                                                        <t:Column width="7rem" hAlign="End">
+                                                            <Label text="Box Ocupados" tooltip="Box Ocupados"/>
+                                                            <t:template>
+                                                                <Text text="{OCUPADOS}"/>
+                                                            </t:template>
+                                                        </t:Column>
+                                                        <t:Column width="8rem" hAlign="End">
+                                                            <Label text="Box Disponibles" tooltip="Box Disponibles"/>
+                                                            <t:template>
+                                                                <Text text="{DISPONIBLES}"/>
+                                                            </t:template>
+                                                        </t:Column>
+                                                        <t:Column width="7rem" hAlign="End">
+                                                            <Label text="% Ocupación" tooltip="% Ocupación"/>
+                                                            <t:template>
+                                                                <Text text="{PORCENTAJE}"/>
+                                                            </t:template>
+                                                        </t:Column>
+                                                    </t:columns>
+                                                    <t:footer>
+                                                        <Toolbar>
+                                                            <Text text="Total: {= ${dataset}.length }"/>
+                                                        </Toolbar>
+                                                    </t:footer>
+                                                </t:Table>
+                                                <viz:VizFrame uiConfig="{ 'applicationSet': 'fiori' }" vizType='column' height="368px" width="32rem" vizProperties="{ title: { visible : false }}" visible="{= ${dataset}.length > 0 }">
+                                                    <viz:dataset>
+                                                        <viz.data:FlattenedDataset data="{dataset}">
+                                                            <viz.data:dimensions>
+                                                                <viz.data:DimensionDefinition name="Centro" value="{CENTRO}" />
+                                                            </viz.data:dimensions>
+                                                            <viz.data:measures>
+                                                                <viz.data:MeasureDefinition name="Ocupados" value="{OCUPADOS}" />
+                                                                <viz.data:MeasureDefinition name="Disponibles" value="{DISPONIBLES}" />
+                                                            </viz.data:measures>
+                                                        </viz.data:FlattenedDataset>
+                                                    </viz:dataset>
+                                                    <viz:feeds>
+                                                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Ocupados,Disponibles" />
+                                                        <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Centro" />
+                                                    </viz:feeds>
+                                                </viz:VizFrame>
+                                                <VBox visible="{= ${dataset}.length === 0 }" height="368px" width="32rem" alignItems="Center" justifyContent="Center">
+                                                    <Label text="No hay datos que se puedan desplegar en el gráfico"/>
+                                                </VBox>
+                                            </l:HorizontalLayout>
+                                        </Panel>
+                                    </ScrollContainer>
+                                </IconTabFilter>
+                            </items>
+                        </IconTabBar>
+                    </content>
+                    <footer>
+                        <Toolbar>
+                            <Button id="errorPopover" icon="sap-icon://message-popup" visible="{= ${message>/}.length > 0}" text="{= ${message>/}.length}" type="Emphasized" press="handleMessagePopoverPress"/>
+                            <ToolbarSpacer/>
+                        </Toolbar>
+                    </footer>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
