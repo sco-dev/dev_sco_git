@@ -1,0 +1,83 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+                         xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" xmlns:u="sap.uxap"
+                         xmlns:t="sap.ui.table">
+    <Dialog class="sapUiSizeCompact" contentWidth="40rem" title="Agendar">
+        <u:ObjectPageLayout class="sapUiSmallMarginBottom" binding="{/Vehiculos/0}">
+            <u:headerTitle>
+                <u:ObjectPageHeader objectTitle="Datos del Vehículo"/>
+            </u:headerTitle>
+            <u:headerContent>
+                <l:VerticalLayout>
+                    <ObjectStatus title="Marca" text="{MARCA}"/>
+                    <ObjectStatus title="Km" text="{KILOMETRAJE}"/>
+                </l:VerticalLayout>
+
+                <l:VerticalLayout>
+                    <ObjectStatus title="Modelo" text="{MODELO}"/>
+                    <ObjectStatus title="Patente" text="{PATENTE}"/>
+                </l:VerticalLayout>
+
+                <l:VerticalLayout>
+                    <ObjectStatus title="Año" text="{ANIO}"/>
+                    <ObjectStatus title="VIN" text="{VIN}"/>
+                </l:VerticalLayout>
+            </u:headerContent>
+        </u:ObjectPageLayout>
+        <t:Table rows="{/ConsultarAgenda/Avisos}" class="sapUiSmallMargin sapUiMediumMarginBottom" selectedIndex="{/ConsultarAgenda/i_Aviso}"
+                 selectionMode="Single" selectionBehavior="RowOnly" visibleRowCount="3">
+            <t:title>
+                <Title text="Servicios Agendados"/>
+            </t:title>
+            <t:extension>
+                <Toolbar>
+                    <Button text="Modificar" icon="sap-icon://edit" press="handleModificarAgenda"
+                            visible="{=${/ConsultarAgenda/i_Aviso} >= 0 &amp;&amp; ${/Visibles/CanUpdate}}"/>
+                    <Button text="Anular" icon="sap-icon://cancel" press="handleAnularAgenda"
+                            visible="{=${/ConsultarAgenda/i_Aviso} >= 0 &amp;&amp; ${/Visibles/CanDelete}}"/>
+                </Toolbar>
+            </t:extension>
+            <t:noData>
+                <Text textAlign="Center" class="sapUiTableCtrlEmptyMsg"
+                      text="No hay servicios agendados"/>
+            </t:noData>
+            <t:columns>
+                <t:Column>
+                    <Label text="Nº de Aviso"/>
+                    <t:template>
+                        <Text text="{AVISO}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Fecha"/>
+                    <t:template>
+                        <Text text="{FECHA}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Hora"/>
+                    <t:template>
+                        <Text text="{HORA}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Centro"/>
+                    <t:template>
+                        <Text text="{CENTRO}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Taller"/>
+                    <t:template>
+                        <Text text="{TALLER}"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+        </t:Table>
+
+        <endButton>
+            <Button press="closeDialog" text="Cerrar"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

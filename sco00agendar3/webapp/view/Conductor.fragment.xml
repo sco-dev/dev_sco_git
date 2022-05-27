@@ -1,0 +1,90 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="sap.m">
+    <Dialog class="sapUiSizeCompact" contentWidth="30rem" title="{=(${/Conductor/Modo} === 'C'?'Registro de':'Actualizar')} Conductor">
+        <f:Form editable="true" binding="{/Conductor}">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="1" emptySpanS="1" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Rut Cliente">
+                            <f:fields>
+                                <Input value="{=(${/Contrato/RUT_CLIENTE}?${/Contrato/RUT_CLIENTE}:${/Cliente/RUT})}" editable="false"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Rut Usuario">
+                            <f:fields>
+
+                                <Input required="true" editable="{=${Modo}==='C'}" value="{Rut}"/>
+
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Nombre Usuario">
+                            <f:fields>
+                                <Input required="true" value="{
+                                                path:'Nombre',
+                                                type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
+                                                constraints:{type:'required'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Apellido Usuario">
+                            <f:fields>
+                                <Input required="true" value="{
+                                                path:'Apellido',
+                                                type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
+                                                constraints:{type:'required'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Teléfono Móvil">
+                            <f:fields>
+                                <Input required="true" value="{
+                                                path:'TelefonoMovil',
+                                                type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
+                                                constraints:{type:'phone'}
+                                            }" placeholder="9 dígitos sin punto ni guión"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Teléfono Fijo">
+                            <f:fields>
+                                <Input required="true" value="{
+                                                path:'TelefonoFijo',
+                                                type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
+                                                constraints:{type:'phone'}
+                                            }" placeholder="9 dígitos sin punto ni guión"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Email">
+                            <f:fields>
+                                <Input required="true" value="{
+                                                path:'Email',
+                                                type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
+                                                constraints:{type:'email'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+        <beginButton>
+            <Button type="Emphasized" press="handleSaveConductor" text="Guardar"/>
+        </beginButton>
+        <endButton>
+            <Button press="closeDialog" text="Cancelar"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>
