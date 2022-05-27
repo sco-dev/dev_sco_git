@@ -1,0 +1,283 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" 
+		 xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" xmlns:m="sap.m" xmlns:t="sap.ui.table" xmlns:f="sap.ui.layout.form"
+		 xmlns:l="sap.ui.layout" xmlns:custom="sapui5agendar.sco00calendariorep_html.customelements">
+	 <Dialog class="sapUiSizeCompact" contentWidth="77rem" title="Generar reportes">
+        <Panel>
+        	<f:Form editable="true" id="reportes-filters">
+				<f:layout>
+					<f:ResponsiveGridLayout
+							labelSpanXL="5"
+							labelSpanL="5"
+							labelSpanM="5"
+							labelSpanS="12"
+							adjustLabelSpan="false"
+							emptySpanXL="0"
+							emptySpanL="0"
+							emptySpanM="0"
+							emptySpanS="0"
+							columnsXL="4"
+							columnsL="4"
+							columnsM="4"
+							singleContainerFullSize="false" />
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement>
+							    <f:label>
+							        <Label text="Tipo de reporte" required="true" />
+							    </f:label>
+								<f:fields>
+									<Select selectedKey="{/reportes/filters/i_tipoReporte}" forceSelection="true"
+											items="{/reportes/selects/tiposReporte}" >
+										<core:Item key="{key}" text="{text}" />
+									</Select>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement>
+							    <f:label>
+							        <Label text="Criterio de seleccion" required="true" />
+							    </f:label>
+								<f:fields>
+									<Select selectedKey="{/reportes/filters/i_criterio}" forceSelection="true"
+											items="{/reportes/selects/criterios}"  change="handleReportesCriteriosChange">
+										<core:Item key="{key}" text="{text}" />
+									</Select>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement visible="{= ${/reportes/filters/i_criterio} === 'centro-uno'}">
+							    <f:label>
+							        <Label text="Región" required="true" />
+							    </f:label>
+								<f:fields>
+									<Select selectedKey="{/reportes/filters/i_region}" forceSelection="true"
+											items="{/reportes/selects/regiones}"  change="handleReportesRegionChange">
+										<core:Item key="{key}" text="{text}" />
+									</Select>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement visible="{= ${/reportes/filters/i_criterio} === 'cliente-uno'}">
+							    <f:label>
+							        <Label text="Rut Cliente" required="true" />
+							    </f:label>
+								<f:fields>
+									<custom:ExtendedInput
+										showValueHelp="true"
+										valueHelpRequest="handleSelectCliente"
+										value="{
+											path:'/reportes/filters/rutCliente',
+											type : 'sap.ui.model.type.String'
+										}"
+										valueLiveUpdate="true"
+										submit="handleSearchReportes"
+									/>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+						<f:layoutData>
+							<l:GridData span="XL4 L4 M6 S6" />
+						</f:layoutData>
+					</f:FormContainer>
+					<f:FormContainer>
+						<f:formElements>
+							<f:FormElement>
+							    <f:label>
+							        <Label text="Fecha Desde" required="true" />
+							    </f:label>
+								<f:fields>
+									<DatePicker displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd" value="{/reportes/filters/fechaDesde}" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement>
+							    <f:label>
+							        <Label text="Fecha Hasta" required="true" />
+							    </f:label>
+								<f:fields>
+									<DatePicker displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd" value="{/reportes/filters/fechaHasta}" />
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement visible="{= ${/reportes/filters/i_criterio} === 'centro-uno'}">
+							    <f:label>
+							        <Label text="Centro" required="true" />
+							    </f:label>
+								<f:fields>
+									<Select selectedKey="{/reportes/filters/i_centro}" forceSelection="true"
+											items="{/reportes/selects/centros}" >
+										<core:Item key="{key}" text="{text}" />
+									</Select>
+								</f:fields>
+							</f:FormElement>
+						</f:formElements>
+						<f:layoutData>
+							<l:GridData span="XL4 L4 M6 S6" />
+						</f:layoutData>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+			<Toolbar class="noBorders">
+				<ToolbarSpacer/>
+				<Button press="handleSearchReportes" text="Buscar" icon="sap-icon://search"/>
+			</Toolbar>
+        </Panel>
+        <Panel>
+        	<t:Table rows="{/reportes/reservas}" selectedIndex="{/reportes/i_reserva}"
+        		 id="tableReservas" selectionMode="Single" selectionBehavior="RowOnly">
+				<t:extension>
+					<Toolbar>
+						<Button icon="sap-icon://excel-attachment" text="Exportar tabla" press="handleExportarReportes" />
+						<Button icon="sap-icon://workflow-tasks" text="Re-agendar" press="handleReagendar" enabled="{=${/reportes/i_reserva} >= 0 &amp;&amp; ${/reportes/canEditReserva}}"/>
+						<Button icon="sap-icon://cancel-maintenance" text="Anular agenda" press="handleAnularAgenda" enabled="{=${/reportes/i_reserva} >= 0 &amp;&amp; ${/reportes/canEditReserva}}"/>
+					</Toolbar>
+				</t:extension>
+		        <t:noData>
+		            <Text textAlign="Center" class="sapUiTableCtrlEmptyMsg"
+		                  text="Sin reservas"/>
+		        </t:noData>
+		        <t:columns>
+		            <t:Column sortProperty="USUARIO" filterProperty="USUARIO">
+		                <Label text="Usuario"/>
+		                <t:template>
+		                    <Text text="{USUARIO}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="DESC_CENTRO" filterProperty="DESC_CENTRO">
+		                <Label text="Centro" tooltip="Taller"/>
+		                <t:template>
+		                    <Text text="{DESC_CENTRO}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="RUT_CLIENTE" filterProperty="RUT_CLIENTE">
+		                <Label text="Rut cliente"/>
+		                <t:template>
+		                    <Text text="{RUT_CLIENTE}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="NOMBRE_CLIENTE">
+		                <Label text="Cliente"/>
+		                <t:template>
+		                    <Text text="{NOMBRE_CLIENTE}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="PATENTE" filterProperty="PATENTE">
+		                <Label text="Patente"/>
+		                <t:template>
+		                    <Text text="{PATENTE}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="AVISO">
+		                <Label text="Aviso"/>
+		                <t:template>
+		                    <Text text="{AVISO}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="FECHA">
+		                <Label text="Fecha"/>
+	                    <t:template>
+	                        <m:Text text="{
+	                        path : 'FECHA',
+	                        type: 'sap.ui.model.type.Date',
+	                        formatOptions: {
+	                            pattern: 'dd/MM/yyyy',
+	                            source: { pattern: 'yyyy-MM-dd' }
+	                        }}" wrapping="false" renderWhitespace="false" />
+	                    </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="HORA">
+		                <Label text="Hora"/>
+		                <t:template>
+		                    <Text text="{HORA}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="BOX">
+		                <Label text="Box"/>
+		                <t:template>
+		                    <Text text="{BOX}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="MOTIVO">
+		                <Label text="Motivo"/>
+		                <t:template>
+		                    <Text text="{MOTIVO}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="OBSERVACION">
+		                <Label text="Obs." tooltip="Observación"/>
+		                <t:template>
+		                    <Text text="{OBSERVACION}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="REEMPLAZO">
+		                <Label text="Rpzo." tooltip="Reemplazo"/>
+		                <t:template>
+		                    <Text text="{REEMPLAZO}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="HRA_REEMPLAZO">
+		                <Label text="Hrs." tooltip="Horas para el reemplazo"/>
+		                <t:template>
+		                    <Text text="{HRA_REEMPLAZO}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="ESTATUS_DES">
+		                <Label text="Estatus" tooltip="Estatus de la reserva"/>
+		                <t:template>
+		                	<l:HorizontalLayout>
+		                		<Text text="{ESTATUS_DES}" wrapping="false" renderWhitespace="false" visible="{= ${SHOW_ICON} === false}" />
+		                		<core:Icon src="sap-icon://car-rental" visible="{= ${SHOW_ICON} === true &amp;&amp; ${STATUS} === 'OC'}" tooltip="{ESTATUS_DES}"  />
+		                		<core:Icon src="sap-icon://alert" color="#cece00" visible="{= ${SHOW_ICON} === true &amp;&amp; ${STATUS} === 'OS'}" tooltip="{ESTATUS_DES}" press="handleStatusChange"/>
+		                		<core:Icon src="sap-icon://status-negative" color="#ce0000" visible="{= ${SHOW_ICON} === true &amp;&amp; ${STATUS} === 'CE'}" tooltip="{ESTATUS_DES}" />
+							</l:HorizontalLayout>
+		                </t:template>
+		            </t:Column>
+		            <!-- Modificado por Namdher Colmenares-->
+					<!-- Motivo: S142859-->
+					<!-- Fecha: 10-01-2021-->
+		            <t:Column sortProperty="NOMBRE" filterProperty="NOMBRE">
+		                <Label text="Nombre Contacto" />
+		                <t:template>
+		                    <Text text="{NOMBRE}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="TELF" >
+		                <Label text="Teléfono"/>
+		                <t:template>
+		                    <Text text="{TELF}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <t:Column sortProperty="CIUDAD" filterProperty="CIUDAD">
+		                <Label text="Ciudad"/>
+		                <t:template>
+		                    <Text text="{CIUDAD}" wrapping="false" renderWhitespace="false" />
+		                </t:template>
+		            </t:Column>
+		            <!-- Fin de modificación-->
+		        </t:columns>
+                <t:footer>
+	                <Toolbar>
+					    <core:Icon
+                			src="sap-icon://alert"
+                			color="gold">
+                		</core:Icon>
+                		<Label text="Sin Confirmar"/>
+					    <core:Icon
+                			src="sap-icon://vehicle-repair"
+                			color="gray">
+                		</core:Icon>
+                		<Label text="Confirmado"/>
+                		<core:Icon
+                			src="sap-icon://status-negative"
+                			color="#ce0000">
+                		</core:Icon>
+                		<Label text="Cerrados"/>
+	                    <ToolbarSpacer/>
+	                    <Text text="Total:"/>
+	                    <Text text="{/reportes/reservasCount}"/>
+	                </Toolbar>
+	            </t:footer>
+		    </t:Table>
+        </Panel>
+        <beginButton>
+            <Button press="closeDialog" text="Cerrar"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

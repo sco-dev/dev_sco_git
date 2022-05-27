@@ -1,0 +1,102 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+          xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:t="sap.ui.table" xmlns="sap.m"
+          controllerName="sapui5agendar.sco00calendariorep_html.controller.Master">
+    <App class="sapUiSizeCompact" id="app">
+        <Page showHeader="false" title="Calendario y reportes">
+            <content>
+				<Panel headerText="Parametros de Selección" visible="{= !${/verCalendario}}">
+					<f:Form editable="true" id="filters">
+						<f:layout>
+							<f:ResponsiveGridLayout
+									labelSpanXL="5"
+									labelSpanL="5"
+									labelSpanM="5"
+									labelSpanS="12"
+									adjustLabelSpan="false"
+									emptySpanXL="0"
+									emptySpanL="0"
+									emptySpanM="0"
+									emptySpanS="0"
+									columnsXL="4"
+									columnsL="4"
+									columnsM="4"
+									singleContainerFullSize="false" />
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer>
+								<f:formElements>
+									<f:FormElement label="Región">
+										<f:fields>
+											<Select selectedKey="{ path : '/filters/i_region', constraints : { required : 'true' }}" forceSelection="true" 
+													items="{/selects/regiones}"  change="handleRegionChange">
+												<core:Item key="{key}" text="{text}" />
+											</Select>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="Centro">
+										<f:fields>
+											<Select selectedKey="{/filters/i_centro}" forceSelection="true"
+													items="{/selects/centros}"  change="handleCentroChange">
+												<core:Item key="{key}" text="{text}" />
+											</Select>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="Días">
+										<f:fields>
+											<Select selectedKey="{/filters/i_dia}" forceSelection="true"
+													items="{/selects/dias}" >
+												<core:Item key="{key}" text="{text}" />
+											</Select>
+										</f:fields>
+									</f:FormElement>
+								</f:formElements>
+								<f:layoutData>
+									<l:GridData span="XL4 L4 M6 S6" />
+								</f:layoutData>
+							</f:FormContainer>
+						</f:formContainers>
+					</f:Form>
+					<Toolbar class="noBorders">
+						<ToolbarSpacer/>
+						<Button press="handleReportes" text="Reportes" icon="sap-icon://manager-insight"/>
+						<ToolbarSeparator/>
+						<Button press="handleConsultar" text="Consultar" icon="sap-icon://detail-view" />
+					</Toolbar>
+				</Panel>
+				<Panel headerText="{/calendarioHeader}" visible="{/verCalendario}" id="panelCalendarios">
+				    <Toolbar class="noBorders">
+				        <core:Icon
+                			src="sap-icon://color-fill"
+                			color="green">
+                		</core:Icon>
+                		<Label text="Disponible"/>
+					    <core:Icon
+                			src="sap-icon://alert"
+                			color="gold">
+                		</core:Icon>
+                		<Label text="Sin Confirmar"/>
+					    <core:Icon
+                			src="sap-icon://vehicle-repair"
+                			color="gray">
+                		</core:Icon>
+                		<Label text="Confirmado"/>
+						<ToolbarSpacer/>
+						<Button press="handleVolver" text="Volver" icon="sap-icon://sys-back" />
+					</Toolbar>
+				</Panel>
+            </content>
+            <footer>
+                <Toolbar>
+                    <Button
+                            id="errorPopover"
+                            icon="sap-icon://message-popup"
+                            visible="{= ${message>/}.length > 0}"
+                            text="{= ${message>/}.length}"
+                            type="Emphasized"
+                            press="handleMessagePopoverPress"/>
+                    <ToolbarSpacer/>
+                </Toolbar>
+            </footer>
+        </Page>
+    </App>
+</mvc:View>
