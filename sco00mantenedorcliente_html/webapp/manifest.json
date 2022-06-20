@@ -1,0 +1,139 @@
+{
+    "_version": "1.12.0",
+    "sap.app": {
+        "id": "sapui5agendar.sco00mantenedorcliente_html",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "ach": "ach",
+        "sourceTemplate": {
+            "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+            "version": "1.40.12"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "rootView": {
+            "viewName": "sapui5agendar.sco00mantenedorcliente_html.view.Master",
+            "type": "XML",
+            "async": true,
+            "id": "Master"
+        },
+        "dependencies": {
+            "minUI5Version": "1.60.1",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "sapui5agendar.sco00mantenedorcliente_html.i18n.i18n"
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "sapui5agendar.sco00mantenedorcliente_html.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "transition": "slide"
+            },
+
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "master",
+                    "target": "master"
+                },
+                {
+                    "pattern": "create",
+                    "name": "create",
+                    "target": "create"
+                },
+                {
+                    "pattern": "update",
+                    "name": "update",
+                    "target": "update"
+                },
+                {
+                    "pattern": "access",
+                    "name": "access",
+                    "target": "access"
+                },
+                {
+                    "pattern": "show",
+                    "name": "show",
+                    "target": "show"
+                }
+            ],
+
+            "targets": {
+				"master": {
+					"viewId": "master",
+					"viewName": "Master",
+					"viewLevel": 1
+				},
+				"create": {
+					"viewId": "create",
+					"viewName": "Create",
+					"viewLevel": 2
+				},
+				"update": {
+					"viewId": "update",
+					"viewName": "Update",
+					"viewLevel": 2
+				},
+				"access": {
+					"viewId": "access",
+					"viewName": "Access",
+					"viewLevel": 2
+				},
+				"show": {
+					"viewId": "show",
+					"viewName": "Show",
+					"viewLevel": 3
+				}
+			}
+        }
+    }
+}

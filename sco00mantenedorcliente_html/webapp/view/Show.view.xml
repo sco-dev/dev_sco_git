@@ -1,0 +1,1320 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+          xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:t="sap.ui.table" xmlns="sap.m"
+          xmlns:u="sap.uxap"
+          controllerName="sapui5agendar.sco00mantenedorcliente_html.controller.Show">
+    <App class="sapUiSizeCompact" id="app">
+        <Page showHeader="false">
+            <subHeader>
+                <Toolbar id="filters">
+                    <Button icon="sap-icon://nav-back" text="Atrás" press="handleBack"/>
+                </Toolbar>
+            </subHeader>
+            <content>
+                <IconTabBar class="sapUiNoContentPadding" selectedKey="{/TabKey}">
+                    <items>
+                        <IconTabFilter text="Datos Generales">
+                            <u:ObjectPageHeaderContent>
+                                <u:content>
+                                    <l:VerticalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
+                                        <ObjectStatus title="Deudor" text="{/filters/Cliente} - {/ConsultaCliente/T_ADRC/NAME1}"/>
+                                    </l:VerticalLayout>
+                                </u:content>
+                            </u:ObjectPageHeaderContent>
+
+                            <IconTabBar>
+                                <items>
+                                    <IconTabFilter text="Dirección">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Nombre"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Tratamiento">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/ANRED}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Nombres">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/NAME1}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Apellidos">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/NAME2}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Concepto de Búsqueda"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Concepto de Búsqueda 1/2">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/SORT1}"/>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/SORT2}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Dirección Calle"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Calle/Número">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/STREET}"/>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/HOUSE_NUM1}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Giro">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/STR_SUPPL3}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Código Postal/Población">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/POST_CODE1}"/>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/CITY1}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="País">
+                                                            <f:fields>
+                                                                <Link press="handlePaisDetails" text="{=${/ConsultaCliente/T_ADRC/COUNTRY} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Región">
+                                                            <f:fields>
+                                                                <Link press="handleRegionDetails" text="{=${/ConsultaCliente/T_ADRC/REGION} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Compl.">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/HOUSE_NUM2}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Apartado de Correos"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Apartado sin Número">
+                                                            <f:fields>
+                                                                <CheckBox editable="false" selected="{=${/ConsultaCliente/T_ADRC/PO_BOX_NUM}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Código Postal">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/POST_CODE2}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Destinatario Desconocido">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/DONT_USE_P}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                    <Panel>
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Comunicación"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Idioma">
+                                                            <f:fields>
+                                                                <Select enabled="false" items="{/Opciones/Idiomas}" selectedKey="{/ConsultaCliente/T_ADRC/LANGU}">
+                                                                    <core:Item key="{SPRSL}" text="{SPTXT}"/>
+                                                                </Select>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Teléfono">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/TEL_NUMBER}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Teléfono Movil">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/TEL_MOVIL}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Fax">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/FAX_NUMBER}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Email">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/EMAIL}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label=""/>
+                                                        <f:FormElement label="Extensión">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/TEL_EXTENS}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label=""/>
+                                                        <f:FormElement label="Extensión">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRC/FAX_EXTENS}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </Panel>
+                                    <Panel>
+                                        <f:Form editable="true">
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Comentarios">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_ADRCT/REMARK}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </Panel>
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Datos de Control">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Control de Cuentas"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Acreedor">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/LIFNR}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Sociedad GL. Asociada">
+                                                            <f:fields>
+                                                                <Link press="handleSociedadGLAsociadaDetails" text="{=${/ConsultaCliente/T_KNA1/VBUND} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label=""/>
+                                                        <f:FormElement label="Clave de Grupo">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/KONZS}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Datos Referencia/Zona"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Ramo">
+                                                            <f:fields>
+                                                                <Link press="handleRamoDetails" text="{=${/ConsultaCliente/T_KNA1/BRSCH} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Información Fiscal"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Nro. Identificación Fiscal 1">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/STCD1}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Código Condado">
+                                                            <f:fields>
+                                                                <Link press="handleCodigoCondadoDetails" text="{=${/ConsultaCliente/T_KNA1/COUNC} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Código Municipal">
+                                                            <f:fields>
+                                                                <Link press="handleCodigoMunicipalDetails" text="{=${/ConsultaCliente/T_KNA1/CITYC} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Persona Física">
+                                                            <f:fields>
+                                                                <CheckBox editable="false" selected="{=${/ConsultaCliente/T_KNA1/STKZN}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label=""/>
+                                                        <f:FormElement label="Domicilio Fiscal">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/TXJCD}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Marketing">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Clasificación"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Clase Cliente">
+                                                            <f:fields>
+                                                                <Link press="handleClaseClienteDetails" text="{=${/ConsultaCliente/T_KNA1/KUKLA} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Ramo">
+                                                            <f:fields>
+                                                                <Link press="handleRamoDetails" text="{=${/ConsultaCliente/T_KNA1/BRSCH} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Código Ramo 1">
+                                                            <f:fields>
+                                                                <Link press="handleCodigoRamo1Details" text="{=${/ConsultaCliente/T_KNA1/BRAN1} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Ratios"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Volumen Neg. Anual">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/UMSA1}"/>
+                                                                <Link press="handleMonedaDetails" text="{=${/ConsultaCliente/T_KNA1/UWAER} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Empleados">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/JMZAH}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="En">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/UMJAH}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="En">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNA1/JMJAH}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Adquisición"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Status Jurídico">
+                                                            <f:fields>
+                                                                <Link press="handleStatusJuridicoDetails" text="{=${/ConsultaCliente/T_KNA1/GFORM} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </IconTabFilter>
+
+                                    <IconTabFilter text="Persona de Contacto">
+                                        <Panel headerText="Persona de Contacto">
+                                            <t:Table class="sapUiSmallMargin" rows="{/ConsultaCliente/T_KNVK}" selectionMode="None" visibleRowCount="10">
+                                                <t:columns>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Tratamiento"/>
+                                                        <t:template>
+                                                            <Text text="{ANRED}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Nombre 1"/>
+                                                        <t:template>
+                                                            <Text text="{NAME1}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Nombre de Pila"/>
+                                                        <t:template>
+                                                            <Text text="{NAMEV}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Teléfono 1"/>
+                                                        <t:template>
+                                                            <Text text="{TELF1}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Departamento"/>
+                                                        <t:template>
+                                                            <Link press="handleDepartamentoDetails" text="{=${ABTNR} || '-'}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Función"/>
+                                                        <t:template>
+                                                            <Link press="handleFuncionDetails" text="{=${PAFKT} || '-'}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                </t:columns>
+                                            </t:Table>
+                                        </Panel>
+                                    </IconTabFilter>
+                                </items>
+                            </IconTabBar>
+                        </IconTabFilter>
+                        <IconTabFilter text="Datos de Area de Venta" visible="{=${/filters/OrganizacionVenta} !== ''}">
+                            <u:ObjectPageHeaderContent>
+                                <u:content>
+                                    <l:VerticalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
+                                        <ObjectStatus title="Deudor" text="{/filters/Cliente} - {/ConsultaCliente/T_ADRC/NAME1}"/>
+                                        <ObjectStatus title="Organización Ventas" text="{/filters/OrganizacionVenta}"/>
+                                        <ObjectStatus title="Canal Distribución" text="{/filters/CanalDistribucion}"/>
+                                        <ObjectStatus title="Sector" text="{/filters/Sector}"/>
+                                    </l:VerticalLayout>
+                                </u:content>
+                            </u:ObjectPageHeaderContent>
+                            <IconTabBar>
+                                <items>
+                                    <IconTabFilter text="Ventas">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Orden"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Zona de Ventas">
+                                                            <f:fields>
+                                                                <Link press="handleZonaVentasDetails" text="{=${/ConsultaCliente/T_KNVV/BZIRK} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Oficina de Ventas">
+                                                            <f:fields>
+                                                                <Link press="handleOficinaVentasDetails" text="{=${/ConsultaCliente/T_KNVV/VKBUR} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Grupo Clientes">
+                                                            <f:fields>
+                                                                <Link press="handleGrupoClientesDetails" text="{=${/ConsultaCliente/T_KNVV/KDGRP} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Clase ABC">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNVV/KLABC}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Moneda">
+                                                            <f:fields>
+                                                                <Link press="handleMonedaDetails" text="{=${/ConsultaCliente/T_KNVV/WAERS} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Perfil DRM">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNVV/PROFILE}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Determinación Precio/Estadística"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Esquema Cliente">
+                                                            <f:fields>
+                                                                <Link press="handleEsquemaClienteDetails" text="{=${/ConsultaCliente/T_KNVV/KALKS} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Lista Precios">
+                                                            <f:fields>
+                                                                <Link press="handleListaPreciosDetails" text="{=${/ConsultaCliente/T_KNVV/PLTYP} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Grupo Estad. Clientes">
+                                                            <f:fields>
+                                                                <Link press="handleGrupoEstadClientesDetails" text="{=${/ConsultaCliente/T_KNVV/VERSG} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Operación de Agencia"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Relevante para Op. Agencia">
+                                                            <f:fields>
+                                                                <CheckBox editable="false" selected="{=${/ConsultaCliente/T_KNVV/AGREL}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Expedición">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Expedición"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Prioridad Entrega">
+                                                            <f:fields>
+                                                                <Link press="handlePrioridadEntregaDetails" text="{=${/ConsultaCliente/T_KNVV/LPRIO} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Condición Expedición">
+                                                            <f:fields>
+                                                                <Link press="handleCondicionExpedicionDetails" text="{=${/ConsultaCliente/T_KNVV/VSBED} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Relevante ARE">
+                                                            <f:fields>
+                                                                <CheckBox editable="false" selected="{=${/ConsultaCliente/T_KNVV/PODKZ}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Vent. Tiempo ARE">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNVV/PODTG}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Factura">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Factura"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="">
+                                                            <f:fields>
+                                                                <CheckBox text="Rappel" editable="false" selected="{=${/ConsultaCliente/T_KNVV/BOKRE}==='X'}"/>
+                                                                <CheckBox text="Determ. Precio" editable="false" selected="{=${/ConsultaCliente/T_KNVV/PRFRE}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Fechas Facturación">
+                                                            <f:fields>
+                                                                <Link press="handleFechasFacturacionDetails" text="{=${/ConsultaCliente/T_KNVV/PERFK} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Fecha Lista Fact.">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNVV/PERRL}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Clase Plan Fact">
+                                                            <f:fields>
+                                                                <Link press="handleClasePlanFactDetails" text="{=${/ConsultaCliente/T_KNVV/FPAT} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Condiciones de Entrega y Pago"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Condicion de Pago">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNVV/ZTERM}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Área Control Crédito">
+                                                            <f:fields>
+                                                                <Link press="handleAreaControlCreditoDetails" text="{=${/ConsultaCliente/T_KNVV/KKBER} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Garantías">
+                                                            <f:fields>
+                                                                <Link press="handleGarantiasDetails" text="{=${/ConsultaCliente/T_KNVV/KABSS} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Contabilidad"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Grupo Imputación">
+                                                            <f:fields>
+                                                                <Link press="handleGrupoImputacionDetails" text="{=${/ConsultaCliente/T_KNVV/KTGRD} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <Panel headerText="Impuestos">
+                                            <t:Table class="sapUiSmallMargin" rows="{/ConsultaCliente/T_ZKNVIT}" selectionMode="None" visibleRowCount="10">
+                                                <t:columns>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="País"/>
+                                                        <t:template>
+                                                            <Text text="{ALAND}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Denominación"/>
+                                                        <t:template>
+                                                            <Text text="{LANDX}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Tipo Impuesto"/>
+                                                        <t:template>
+                                                            <Text text="{TATYP}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Denominación"/>
+                                                        <t:template>
+                                                            <Text text="{VTEXT_IMP}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Clasificación"/>
+                                                        <t:template>
+                                                            <Text text="{TAXKD}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Denominación"/>
+                                                        <t:template>
+                                                            <Text text="{VTEXT_CLA}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                </t:columns>
+                                            </t:Table>
+                                        </Panel>
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Funciones de Interlocutor">
+                                        <Panel headerText="Funciones de Interlocutor">
+                                            <t:Table class="sapUiSmallMargin" selectionMode="None" visibleRowCount="10" rows="{/ConsultaCliente/T_ZKNVPT}" >
+                                                <t:columns>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Función"/>
+                                                        <t:template>
+                                                            <Text text="{PARVW}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Denominación"/>
+                                                        <t:template>
+                                                            <Text text="{VTEXT_INT}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Interlocutor"/>
+                                                        <t:template>
+                                                            <Text text="{KTONR}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Denominación"/>
+                                                        <t:template>
+                                                            <Text text="{VTXTM}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Denominación Según Cliente"/>
+                                                        <t:template>
+                                                            <Text text="{KNREF}" wrapping="false"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                    <t:Column autoResizable="true">
+                                                        <Label text="Defecto"/>
+                                                        <t:template>
+                                                            <CheckBox editable="false" selected="{=${DEFPA}==='X'}"/>
+                                                        </t:template>
+                                                    </t:Column>
+                                                </t:columns>
+                                            </t:Table>
+                                        </Panel>
+                                    </IconTabFilter>
+                                </items>
+                            </IconTabBar>
+                        </IconTabFilter>
+                        <IconTabFilter text="Datos de Sociedad" visible="{=${/filters/Sociedad} !== ''}">
+                            <u:ObjectPageHeaderContent>
+                                <u:content>
+                                    <l:VerticalLayout class="sapUiSmallMarginTop sapUiTinyMarginBottom">
+                                        <ObjectStatus title="Deudor" text="{/filters/Cliente} - {/ConsultaCliente/T_ADRC/NAME1}"/>
+                                        <ObjectStatus title="Sociedad" text="{/filters/Sociedad}"/>
+                                    </l:VerticalLayout>
+                                </u:content>
+                            </u:ObjectPageHeaderContent>
+                            <IconTabBar>
+                                <items>
+                                    <IconTabFilter text="Gestión de Cuenta">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Gestión de Cuenta"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Cuenta Asociada">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/AKONT}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Clave Clasificación">
+                                                            <f:fields>
+                                                                <Link press="handleClaveClasificacionDetails" text="{=${/ConsultaCliente/T_KNB1/ZUAWA} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Grupo de Tesorería">
+                                                            <f:fields>
+                                                                <Link press="handleGrupoTesoreriaDetails" text="{=${/ConsultaCliente/T_KNB1/FDGRV} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Datos de Referencia"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Número Personal">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/PERNR}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Central Compras">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/EKVBD}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Pagos">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Datos de Pago"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Condiciones de Pago">
+                                                            <f:fields>
+                                                                <Link press="handleCondicionesPagoDetails" text="{=${/ConsultaCliente/T_KNB1/ZTERM} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Ind. Ces. Crédito">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/CESSION_KZ}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Grabar Historial de Pagos">
+                                                            <f:fields>
+                                                                <CheckBox editable="false" selected="{=${/ConsultaCliente/T_KNB1/XZVER}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Pagos Automáticos"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Vías de Pago">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/ZWELS}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Pagador Alternativo">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/KNRZB}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Bloqueo de Pago">
+                                                            <f:fields>
+                                                                <Link press="handleBloqueoPagoDetails" text="{=${/ConsultaCliente/T_KNB1/ZAHLS} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Banco Propio">
+                                                            <f:fields>
+                                                                <Link press="handleBancoPropioDetails" text="{=${/ConsultaCliente/T_KNB1/HBKID} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Avisos"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Conversión Origen Dif.">
+                                                            <f:fields>
+                                                                <Link press="handleConversionOrigenDifDetails" text="{=${/ConsultaCliente/T_KNB1/VRSDG} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Regla Selección">
+                                                            <f:fields>
+                                                                <Link press="handleReglaSeleccionDetails" text="{=${/ConsultaCliente/T_KNB1/SREGL} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Correspondencia">
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Datos de Reclamación"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Procedimiento Reclamación">
+                                                            <f:fields>
+                                                                <Link press="handleProcedimientoReclamDetails" text="{=${/ConsultaCliente/T_KNB5/MAHNA} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Receptor Reclamación">
+                                                            <f:fields>
+                                                                <Link press="handleReceptorReclamDetails" text="{=${/ConsultaCliente/T_KNB5/KNRMA} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Última Reclamación">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{
+                                                                                            path:'/ConsultaCliente/T_KNB5/MADAT',
+                                                                                            formatter: '.dateFormat',
+                                                                                            type: 'sap.ui.model.type.String'
+                                                                                         }"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Responsable Reclamación">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB5/BUSAB}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Bloqueo Reclamación">
+                                                            <f:fields>
+                                                                <Link press="handleBloqueoReclamDetails" text="{=${/ConsultaCliente/T_KNB5/MANSP} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Fech. Reclamación Judicial">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{
+                                                                                            path:'/ConsultaCliente/T_KNB5/GMVDT',
+                                                                                            formatter: '.dateFormat',
+                                                                                            type: 'sap.ui.model.type.String'
+                                                                                         }"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Nivel Reclamo">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB5/MAHNS}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Clave Agrupación">
+                                                            <f:fields>
+                                                                <Link press="handleClaveAgrupacionDetails" text="{=${/ConsultaCliente/T_KNB1/MGRUP} || '-'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Correspondencia"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpan="4"
+                                                        adjustLabelSpan="false"
+                                                        emptySpan="0"
+                                                        columns="2"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Responsable">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/BUSAB}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Cta. en Deudor">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/EIKTO}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Responsable Deudor">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/ZSABE}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Tel. Responsable">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/TLFNS}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Telefax Encargado">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/TLFXS}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Internet Responsable">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/INTAD}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Nota Interior">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/KVERM}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement label="Extracto de Cuenta">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/XAUSZ}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Var. Factura Colectiva">
+                                                            <f:fields>
+                                                                <Input editable="false" value="{/ConsultaCliente/T_KNB1/PERKZ}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement label="Proceso Descentralizado">
+                                                            <f:fields>
+                                                                <CheckBox editable="false" selected="{=${/ConsultaCliente/T_KNB1/XDEZV}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+
+                                        <f:Form editable="true">
+                                            <f:title>
+                                                <core:Title text="Notificación de Pago a"/>
+                                            </f:title>
+                                            <f:layout>
+                                                <f:ResponsiveGridLayout
+                                                        labelSpanXL="4"
+                                                        labelSpanL="4"
+                                                        labelSpanM="12"
+                                                        labelSpanS="12"
+                                                        adjustLabelSpan="false"
+                                                        emptySpanXL="0"
+                                                        emptySpanL="0"
+                                                        emptySpanM="0"
+                                                        emptySpanS="0"
+                                                        columnsXL="3"
+                                                        columnsL="3"
+                                                        columnsM="1"
+                                                        singleContainerFullSize="false"/>
+                                            </f:layout>
+                                            <f:formContainers>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement>
+                                                            <f:fields>
+                                                                <CheckBox editable="false" text="Deudor (con PC)" selected="{=${/ConsultaCliente/T_KNB1/ZAMIM}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement>
+                                                            <f:fields>
+                                                                <CheckBox editable="false" text="Deudor (sin PC)" selected="{=${/ConsultaCliente/T_KNB1/ZAMIO}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement>
+                                                            <f:fields>
+                                                                <CheckBox editable="false" text="Comercial" selected="{=${/ConsultaCliente/T_KNB1/ZAMIV}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                        <f:FormElement>
+                                                            <f:fields>
+                                                                <CheckBox editable="false" text="Contab. Financ." selected="{=${/ConsultaCliente/T_KNB1/ZAMIB}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                                <f:FormContainer>
+                                                    <f:formElements>
+                                                        <f:FormElement>
+                                                            <f:fields>
+                                                                <CheckBox editable="false" text="Departamento Jurídico" selected="{=${/ConsultaCliente/T_KNB1/ZAMIR}==='X'}"/>
+                                                            </f:fields>
+                                                        </f:FormElement>
+                                                    </f:formElements>
+                                                </f:FormContainer>
+                                            </f:formContainers>
+                                        </f:Form>
+                                    </IconTabFilter>
+                                </items>
+                            </IconTabBar>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+            </content>
+            <footer>
+                <Toolbar>
+                    <Button
+                            id="errorPopover"
+                            icon="sap-icon://message-popup"
+                            visible="{= ${message>/}.length > 0}"
+                            text="{= ${message>/}.length}"
+                            type="Emphasized"
+                            press="handleMessagePopoverPress"/>
+                    <ToolbarSpacer/>
+                </Toolbar>
+            </footer>
+        </Page>
+    </App>
+</mvc:View>

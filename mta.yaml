@@ -1,0 +1,50 @@
+_schema-version: "3.2"
+ID: sco00mantenedorcliente
+version: 0.0.1
+modules:
+- name: sco00mantenedorcliente-approuter
+  type: approuter.nodejs
+  path: sco00mantenedorcliente-approuter
+  requires:
+  - name: sco00mantenedorcliente_html_repo_runtime
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: sco00mantenedorcliente_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: sco00mantenedorcliente_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - sco00mantenedorcliente_html-content.zip
+      name: sco00mantenedorcliente_html
+      target-path: resources/
+- name: sco00mantenedorcliente_html
+  type: html5
+  path: sco00mantenedorcliente_html
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: sco00mantenedorcliente_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: sco00mantenedorcliente_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

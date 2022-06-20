@@ -1,0 +1,33 @@
+<mvc:View controllerName="sapui5agendar.sco00mantenedorcliente_html.controller.Master"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}" showHeader="false">
+                    <subHeader>
+                        <Toolbar id="filters">
+                            <Label class="sapUiSmallMarginBegin" text="Cliente:"/>
+
+                            <Input value="{/filters/Cliente}" 
+                            placeholder="(RUT sin puntos con guión)" width="12rem" submit="handleShow"/>
+
+
+                            <ToolbarSeparator/>
+                            <Button icon="sap-icon://add-document" text="Crear" press="handleCreate"/>
+                            <Button icon="sap-icon://write-new-document" text="Modificar" press="handleUpdate"/>
+                            <Button icon="sap-icon://display" text="Visualizar" press="handleShow"/>
+                        </Toolbar>
+                    </subHeader>
+                    <content></content>
+                    <footer>
+                        <Toolbar>
+                            <Button id="errorPopover" icon="sap-icon://message-popup" visible="{= ${message>/}.length > 0}" text="{= ${message>/}.length}" type="Emphasized" press="handleMessagePopoverPress"/>
+                            <ToolbarSpacer/>
+                        </Toolbar>
+                    </footer>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

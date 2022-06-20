@@ -1,0 +1,398 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+                         xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:t="sap.ui.table"
+                         xmlns="sap.m"
+                         xmlns:custom="sapui5agendar.sco00mantenedorcliente_html.customelements">
+    <Panel class="sapUiNoContentPadding" id="formCliente">
+        <f:Form editable="true">
+            <f:title>
+                <core:Title text="Identificación Cliente"/>
+            </f:title>
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="RUT">
+                            <f:fields>
+                                <Input editable="false"
+                                       required="true"
+                                       value="{/DatosGenerales/Rut}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Nombres">
+                            <f:fields>
+                                <Input editable="{/EditEnabled}"
+                                       required="true"
+                                       value="{
+                                                path:'/DatosGenerales/Nombres',
+                                                type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                constraints:{type:'required'}
+                                            }" liveChange="toUpperCase"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="">
+                            <f:fields>
+                                <Input
+                                        editable="{/EditEnabled}"
+                                        value="{/DatosGenerales/Apellidos}"
+                                        liveChange="toUpperCase"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Grupo de Cuentas">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{= ${/EditEnabled} &amp;&amp; ${/Modo}==='C' }"
+                                        items="{/Opciones/GruposCuentas}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_GrupoCuenta',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }"
+                                        forceSelection="false">
+                                    <core:Item key="{KTOKD}" text="{TXT30}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Giro">
+                            <f:fields>
+                                <Input required="true"
+                                       editable="{/EditEnabled}"
+                                       value="{
+                                                path:'/DatosGenerales/Giro',
+                                                type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                constraints:{type:'required'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Tratamiento">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{/EditEnabled}"
+                                        items="{/Opciones/Tratamientos}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_Tratamiento',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }"
+                                        forceSelection="false">
+                                    <core:Item key="{TITLE}" text="{TITLE_MEDI}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+        <f:Form
+                editable="true">
+            <f:title>
+                <core:Title text="Dirección y Comunicación"/>
+            </f:title>
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Dirección">
+                            <f:fields>
+                                <Input required="true"
+                                       editable="{/EditEnabled}"
+                                       value="{
+                                                path:'/DatosGenerales/Direccion',
+                                                type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                constraints:{type:'required'}
+                                            }" liveChange="toUpperCase"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Nro.">
+                            <f:fields>
+                                <Input
+                                        editable="{/EditEnabled}"
+                                        value="{/DatosGenerales/Numero}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="País">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{/EditEnabled}"
+                                        items="{/Opciones/Paises}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_Pais',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }"
+                                        forceSelection="false"
+                                        change="handlePaisChange">
+                                    <core:Item key="{LAND1}" text="{LANDX50}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Región">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{/EditEnabled}"
+                                        items="{/Opciones/Regiones}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_Region',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }"
+                                        forceSelection="false"
+                                        change="handleRegionChange">
+                                    <core:Item key="{BLAND}" text="{BEZEI}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Ciudad">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{/EditEnabled}"
+                                        items="{/Opciones/Ciudades}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_Ciudad',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }"
+                                        forceSelection="false">
+                                    <core:Item key="{COUNC}" text="{BEZEI}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Comuna">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{/EditEnabled}"
+                                        items="{/Opciones/Comunas}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_Comuna',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }"
+                                        forceSelection="false">
+                                    <core:Item key="{CITYC}" text="{BEZEI}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Teléfono">
+                            <f:fields>
+                                <Input required="true"
+                                       editable="{/EditEnabled}"
+                                       value="{
+                                                path:'/DatosGenerales/Telefono',
+                                                type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                constraints:{type:'phone'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Anexo">
+                            <f:fields>
+                                <Input editable="{/EditEnabled}"
+                                       value="{
+                                                path:'/DatosGenerales/Anexo',
+                                                type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                constraints:{type:'optionalInt'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Tel. Móvil">
+                            <f:fields>
+                                <Input editable="{/EditEnabled}"
+                                       value="{
+                                                path:'/DatosGenerales/TelefonoMovil',
+                                                type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                constraints:{type:'optionalPhone'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="E-mail">
+                            <f:fields>
+                                <Input editable="{/EditEnabled}"
+                                       required="true"
+                                       value="{
+                                                path:'/DatosGenerales/Email',
+                                                type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                constraints:{type:'email'}
+                                            }"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+        <f:Form
+                editable="true">
+            <f:title>
+                <core:Title text="Otros Datos de Contacto"/>
+            </f:title>
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Comentarios">
+                            <f:fields>
+                                <Input editable="{/EditEnabled}"
+                                       value="{/DatosGenerales/Comentarios}"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+        <f:Form editable="true" visible="{=${/Modo}==='C'}">
+            <f:title>
+                <core:Title text="Ventas"/>
+            </f:title>
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Grupo Cliente">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{=${/EditEnabled} &amp;&amp; !${/DatosGenerales/ReadonlyGrupoCliente}}"
+                                        items="{/Opciones/GruposCliente}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_GrupoCliente',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }">
+                                    <core:Item key="{KDGRP}" text="{KDGRP} - {KTEXT}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+        <f:Form editable="true" visible="{=${/Modo}==='C'}">
+            <f:title>
+                <core:Title text="Determinación Precio/Estadística"/>
+            </f:title>
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Esquema Cliente">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{/EditEnabled}"
+                                        items="{/Opciones/EsquemasCliente}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_EsquemaCliente',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }">
+                                    <core:Item key="{KALKS}" text="{KALKS} - {VTEXT}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Lista Precios">
+                            <f:fields>
+                                <custom:ExtendedSelect
+                                        required="true"
+                                        enabled="{/EditEnabled}"
+                                        items="{/Opciones/ListasPrecios}"
+                                        selectedKey="{
+                                                        path:'/DatosGenerales/i_ListaPrecio',
+                                                        type : 'sapui5agendar.sco00mantenedorcliente_html.customelements.ExtendedString',
+                                                        constraints:{type:'requiredSelect'}
+                                                    }">
+                                    <core:Item key="{PLTYP}" text="{PLTYP} - {PTEXT}"/>
+                                </custom:ExtendedSelect>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+    </Panel>
+</core:FragmentDefinition>
