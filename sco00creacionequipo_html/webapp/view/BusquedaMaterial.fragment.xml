@@ -1,0 +1,120 @@
+<core:FragmentDefinition
+        xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:t="sap.ui.table"
+        xmlns:core="sap.ui.core" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Dialog class="sapUiSizeCompact" title="Busqueda de Materiales">
+        <f:Form editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="5"
+                        labelSpanL="5"
+                        labelSpanM="5"
+                        labelSpanS="3"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="2"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Código SAP">
+                            <f:fields>
+                                <Input value="{filters/IMP_CAMPO6}" submit="handleSearchMaterial"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Descripción">
+                            <f:fields>
+                                <Input value="{filters/IMP_CAMPO5}" submit="handleSearchMaterial"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Sector">
+                            <f:fields>
+                                <Select selectedKey="{filters/IMP_CAMPO2}"
+                                        items="{/sectores}">
+                                    <core:Item key="{SPART}" text="{SPART} - {VTEXT}"/>
+                                </Select>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Código Fábrica">
+                            <f:fields>
+                                <Input value="{filters/IMP_CAMPO8}" submit="handleSearchMaterial"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Aplicación">
+                            <f:fields>
+                                <Input value="{filters/IMP_CAMPO7}" submit="handleSearchMaterial"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement>
+                            <f:fields>
+                                <Button icon="sap-icon://search" text="Buscar" press="handleSearchMaterial">
+                                    <layoutData>
+                                        <l:GridData span="XL4 L4 M4 S4" indent="XL8 L8 M8 S8"/>
+                                    </layoutData>
+                                </Button>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+        <t:Table selectionMode="Single" visibleRowCount="Auto" selectionBehavior="Row" selectedIndex="{selectedRow}"
+                 rows="{rows}"
+                 noData="Sin elementos para mostrar">
+            <t:columns>
+                <t:Column autoResizable="true">
+                    <Label text="Código"/>
+                    <t:template>
+                        <Text text="{CAMPO1}" wrapping="false"/>
+                    </t:template>
+                </t:Column>
+                <t:Column autoResizable="true">
+                    <Label text="Descripción"/>
+                    <t:template>
+                        <Text text="{CAMPO3}" wrapping="false"/>
+                    </t:template>
+                </t:Column>
+                <t:Column autoResizable="true">
+                    <Label text="Jerarquía"/>
+                    <t:template>
+                        <Text text="{CAMPO2}" wrapping="false"/>
+                    </t:template>
+                </t:Column>
+                <t:Column autoResizable="true">
+                    <Label text="Status"/>
+                    <t:template>
+                        <Text text="{CAMPO4}" wrapping="false"/>
+                    </t:template>
+                </t:Column>
+                <t:Column autoResizable="true">
+                    <Label text="Cod. Fábrica"/>
+                    <t:template>
+                        <Text text="{CAMPO18}" wrapping="false"/>
+                    </t:template>
+                </t:Column>
+                <t:Column autoResizable="true">
+                    <Label text="Stock Nac."/>
+                    <t:template>
+                        <Text text="{CAMPO11}" wrapping="false"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+        </t:Table>
+        <beginButton>
+            <Button press="closeDialog" text="Cancelar"/>
+        </beginButton>
+        <endButton>
+            <Button type="Emphasized" press="handleSelectMaterial" text="Seleccionar"
+                    enabled="{= ${selectedRow} &gt; -1}"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

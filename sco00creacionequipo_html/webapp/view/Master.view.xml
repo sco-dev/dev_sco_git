@@ -1,0 +1,241 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+          xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:t="sap.ui.table" xmlns="sap.m"
+          controllerName="sapui5agendar.sco00creacionequipo_html.controller.Master">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page showHeader="false">
+                    <content>
+                        <f:Form editable="true">
+                            <f:layout>
+                                <f:ResponsiveGridLayout labelSpanXL="3" labelSpanL="3" labelSpanM="5" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+                            </f:layout>
+                            <f:toolbar>
+                                <Toolbar>
+                                    <Title text="Datos del equipo"/>
+                                </Toolbar>
+                            </f:toolbar>
+                            <f:formContainers>
+                                <f:FormContainer title="Vehículo">
+                                    <f:formElements>
+                                        <f:FormElement label="Patente">
+                                            <f:fields>
+                                                <Input value="{
+                                                path : '/equipo/MATRICULA_I',
+                                                type : 'sap.ui.model.type.String',
+                                                constraints : {
+                                                    minLength : 1
+                                                }
+                                            }" maxLength="6" submit="handleBuscarPatente" id="txtPatente"/>
+                                                <Button text="Buscar patente" press="handleBuscarPatente">
+                                                    <layoutData>
+                                                        <l:GridData span="XL3 L3 M3 S4"/>
+                                                    </layoutData>
+                                                </Button>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Nº VIN">
+                                            <f:fields>
+                                                <Input value="{
+                                                path : '/equipo/EQUIPO_I',
+                                                type : 'sap.ui.model.type.String',
+                                                constraints : {
+                                                    minLength : 1
+                                                }
+                                            }" maxLength="17" submit="handleBuscarVin" id="txtVIN"/>
+                                                <Button text="Buscar VIN" press="handleBuscarVin">
+                                                    <layoutData>
+                                                        <l:GridData span="XL3 L3 M3 S4"/>
+                                                    </layoutData>
+                                                </Button>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Código Material">
+                                            <f:fields>
+                                                <Input value="{/datosMaterial/CAMPO1}" submit="handleSearchPedido" enabled="false">
+                                                    <layoutData>
+                                                        <l:GridData span="XL2 L2 M3 S4"/>
+                                                    </layoutData>
+                                                </Input>
+                                                <Input value="{/datosMaterial/CAMPO3}" submit="handleSearchPedido" enabled="false"/>
+                                                <Button text="Buscar Material" icon="sap-icon://sys-find" press="openBusquedaMaterialDialog">
+                                                    <layoutData>
+                                                        <l:GridData span="XL3 L3 M3 S4"/>
+                                                    </layoutData>
+                                                </Button>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Objeto Técnico">
+                                            <f:fields>
+                                                <Input value="{/datosMaterial/OBJETO_TECNICO}" submit="handleSearchPedido" enabled="false">
+                                                    <layoutData>
+                                                        <l:GridData span="XL2 L2 M3 S4"/>
+                                                    </layoutData>
+                                                </Input>
+                                                <Input value="{/datosMaterial/NOM_OBJETO_TEC}" submit="handleSearchPedido" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Tipo Equipo">
+                                            <f:fields>
+                                                <Input value="{/datosMaterial/TIPO_EQUIPO}" submit="handleSearchPedido" enabled="false">
+                                                    <layoutData>
+                                                        <l:GridData span="XL2 L2 M3 S4"/>
+                                                    </layoutData>
+                                                </Input>
+                                                <Input value="{/datosMaterial/NOM_TIPO_EQUIPO}" submit="handleSearchPedido" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Grupo Autorizador">
+                                            <f:fields>
+                                                <Input value="{/datosMaterial/GRUPO_AUTORIZA}" submit="handleSearchPedido" enabled="false">
+                                                    <layoutData>
+                                                        <l:GridData span="XL2 L2 M3 S4"/>
+                                                    </layoutData>
+                                                </Input>
+                                                <Input value="{/datosMaterial/NOM_GRUPO_AUTO}" submit="handleSearchPedido" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Encargado">
+                                            <f:fields>
+                                                <Input value="{/datosMaterial/ENCARGADO}" submit="handleSearchPedido" enabled="false">
+                                                    <layoutData>
+                                                        <l:GridData span="XL2 L2 M3 S4"/>
+                                                    </layoutData>
+                                                </Input>
+                                                <Input value="{/datosMaterial/NOM_ENCARGADO}" submit="handleSearchPedido" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Area">
+                                            <f:fields>
+                                                <Input value="{/datosMaterial/COD_AREA}" submit="handleSearchPedido" enabled="false">
+                                                    <layoutData>
+                                                        <l:GridData span="XL2 L2 M3 S4"/>
+                                                    </layoutData>
+                                                </Input>
+                                                <Input value="{/datosMaterial/NOM_AREA}" submit="handleSearchPedido" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Puntos de Medida">
+                                            <f:fields>
+                                                <CheckBox enabled="false" text="Kilómetros" selected="{/datosMaterial/KM}">
+                                                    <layoutData>
+                                                        <l:GridData span="XL3 L3 M3 S4"/>
+                                                    </layoutData>
+                                                </CheckBox>
+                                                <CheckBox enabled="false" text="Horas" selected="{/datosMaterial/HR}"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Combustible Primario">
+                                            <f:fields>
+                                                <Select selectedKey="{/equipo/tipoCombustible}" items="{/tiposCombustible}">
+                                                    <core:Item key="{CODIGO}" text="{DESCRIPCION} - {CODIGO}"/>
+                                                </Select>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Año Fabricación">
+                                            <f:fields>
+                                                <Select selectedKey="{/equipo/ano}" items="{/anos}">
+                                                    <core:Item key="{ano}" text="{ano}"/>
+                                                </Select>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="N° Poliza / CDO">
+                                            <f:fields>
+                                                <Input value="{/equipo/POLIZA}" width="8rem"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Cilindrada">
+                                            <f:fields>
+                                                <Input value="{/equipo/CILINDRADA}" width="8rem"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Fecha Venta">
+                                            <f:fields>
+                                                <DatePicker value="{/equipo/FECHA_VENTA}" displayFormat="dd/MM/yyyy" width="8rem"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                    </f:formElements>
+                                </f:FormContainer>
+                                <f:FormContainer title="Cliente">
+                                    <f:formElements>
+                                        <f:FormElement label="RUT">
+                                            <f:fields>
+                                                <Input value="{
+                                            path: '/equipo/CLIENTE',
+                                            type : 'sapui5agendar.sco00creacionequipo_html.customelements.ExtendedString',
+                                            constraints:{ type:'rut' }
+                                        }" id="txtRutCliente" submit="searchCliente">
+                                                    <layoutData>
+                                                        <l:GridData span="XL3 L3 M3 S4"/>
+                                                    </layoutData>
+                                                </Input>
+                                                <Button width="7rem" text="Buscar RUT" press="searchCliente"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Tratamiento">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/tratamiento}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Nombres">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/names}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="País">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/pais}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Región">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/region}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Ciudad">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/ciudad}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Comuna">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/comuna}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Calle / Numero">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/street}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Teléfono">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/phone}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="Fax">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/fax}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="E-Mail">
+                                            <f:fields>
+                                                <Input value="{/datosCliente/email}" enabled="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                    </f:formElements>
+                                </f:FormContainer>
+                            </f:formContainers>
+                        </f:Form>
+                    </content>
+                    <footer>
+                        <Toolbar>
+                            <Button id="errorPopover" icon="sap-icon://message-popup" visible="{= ${message>/}.length > 0}" text="{= ${message>/}.length}" type="Emphasized" press="handleMessagePopoverPress"/>
+                            <ToolbarSpacer/>
+                            <Button type="Emphasized" icon="sap-icon://save" text="Guardar" press="handleSave"/>
+                        </Toolbar>
+                    </footer>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
