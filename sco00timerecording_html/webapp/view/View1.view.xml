@@ -1,0 +1,791 @@
+<mvc:View controllerName="SCO.sco00timerecording_html.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:fb="sap.ui.comp.filterbar" 
+    xmlns:ff="sap.f">
+    <m:BusyDialog id="BusyDialogG" visible="false" title="{i18n>processing}" text=""/>
+	    <m:Page title="Time Recording" id="page">
+			<m:Dialog id="DlgDetalle" class="sapContrast sapContrastPlus" contentHeight="100%" contentWidth="100%" title="Registro de Tiempo de la Operación" resizable="true" draggable="true">
+				<m:content>
+					<m:ObjectHeader id="idObjTimer">
+						<m:statuses>
+							<m:ObjectStatus id="idObjTimerStat" text="..." state="Error"/>
+						</m:statuses>
+						<m:attributes>
+							<m:ObjectAttribute id="oa1"/>
+							<m:ObjectAttribute id="oa2"/>
+						</m:attributes>
+					</m:ObjectHeader>
+					<m:Label id="dummy" design="Bold" text="" class="ABC" visible="false"/>
+					<m:HBox justifyContent="Center" width="100%">
+						<m:FlexBox direction="RowReverse" alignItems="Start" class="VBOX">
+							<m:items>
+								<l:VerticalLayout class="sapUiContentPadding" width="100%">
+									<l:content>
+										<m:HBox justifyContent="Center">
+											<m:Label id="DDLabel" design="Bold" text="DD" class="timerHeader"/>
+											<m:Label design="Bold" text=":" class="timerHeaderAux"/>
+											<m:Label id="HHLabel" design="Bold" text="HH" class="timerHeader"/>
+											<m:Label design="Bold" text=":" class="timerHeaderAux"/>
+											<m:Label id="MMLabel" design="Bold" text="MM" class="timerHeader"/>
+											<m:Label design="Bold" text=":" class="timerHeaderAux"/>
+											<m:Label id="SSLabel" design="Bold" text="SS" class="timerHeader"/>
+											<m:Label id="MSLabel" design="Bold" text="MS" class="timerHeader" visible="false"/>
+										</m:HBox>
+										<m:HBox justifyContent="Center">
+											<m:Label id="DD3" design="Bold" text="{clock>/ddLabel}" class="timerFace"/>
+											<m:Label id="SP1" design="Bold" text=":" class="timerFaceSeparator"/>
+											<m:Label id="HH3" design="Bold" text="{clock>/hhLabel}" class="timerFace"/>
+											<m:Label id="SP2" design="Bold" text=":" class="timerFaceSeparator"/>
+											<m:Label id="MM3" design="Bold" text="{clock>/mmLabel}" class="timerFace"/>
+											<m:Label id="SP3" design="Bold" text=":" class="timerFaceSeparator"/>
+											<m:Label id="SS3" design="Bold" text="{clock>/ssLabel}" class="timerFace" visible="true"/>
+											<m:Label id="MS3" design="Bold" text="{clock>/msLabel}" class="timerFace" visible="false"/>
+										</m:HBox>
+										<m:HBox justifyContent="Center">
+											<m:Button class="myGreenButton" text="Iniciar" id="btnIniciar" press="handleStartPress" width="250px"/>
+											<m:Button class="myRedButton" text="Detener" id="btnDetener" press="handleStopPress" width="250px"/>
+											<m:Button class="myGrayButton" text="Salir" id="btnCerrar" press="cerrarDlgDetalle" width="250px"/>
+											<m:Button visible="false" class="myGrayButton" text="Salir" id="btnCerrar2" press="onCargaGrilla" width="250px"/>
+											<m:Button visible="false" class="myGrayButton" text="Salir" id="btnCerrar3" press="getTimeLog2" width="250px"/>
+										</m:HBox>
+									</l:content>
+								</l:VerticalLayout>
+							</m:items>
+						</m:FlexBox>
+					</m:HBox>
+				</m:content>
+			</m:Dialog>
+			<m:Dialog id="DlgUsuario" class="sapContrast sapContrastPlus" contentHeight="50%" contentWidth="70%" title="Seleccione Trabajador" resizable="true" draggable="true">
+				<m:content>
+					<m:Panel class="sapContrast sapContrastPlus">
+						<m:headerToolbar>
+							<m:Toolbar height="3rem">
+								<m:Title text="Seleccione Mecánico"/>
+							</m:Toolbar>
+						</m:headerToolbar>
+						<m:ComboBox width="300px" selectionChange="mostrarOrdenesPorPERNR" change="mostrarOrdenesPorPERNR" placeholder="Seleccione Tecnico" id="tecnicoDLG2" items="{path: '/LSTMEC',sorter: { path: 'PERNR' }}">
+							<core:Item key="{PERNR}" text="{PERNR} - {STEXT}"/>
+						</m:ComboBox>
+					</m:Panel>
+				</m:content>
+				<m:endButton/>
+				<m:beginButton/>
+			</m:Dialog>
+			<m:Dialog title="Motivo de detencion" contentWidth="auto" contentHeight="70%" verticalScrolling="false" id="dlg" escapeHandler=".escapeHandler">
+				<m:ScrollContainer height="75%" width="100%" horizontal="false" vertical="true" focusable="false">
+					<m:List id="sl" items="{motivos>/data}" mode="SingleSelectLeft" includeItemInSelection="true">
+						<m:StandardListItem title="{motivos>descripcion}" description="" iconDensityAware="false" iconInset="false"/>
+					</m:List>
+				</m:ScrollContainer>
+				<m:Panel id="panel1" width="auto" height="auto">
+					<m:content>
+						<m:Label text="Observaciones"/>
+						<m:TextArea id="comentarios" width="100%" height="auto" valueLiveUpdate="true" maxLength="255" value="{/value}"/>
+					</m:content>
+				</m:Panel>
+				<m:beginButton>
+					<m:Button type="Accept" text="Aceptar" press="onDialogAccept"/>
+				</m:beginButton>
+			</m:Dialog>
+			<m:Dialog id="DlgOperacion" class="sapContrast sapContrastPlus" contentHeight="50%" contentWidth="50%" title="Seleccionar Técnico" resizable="true" draggable="true">
+				<m:content>
+					<f:Form id="FormDDATOSGEN2" editable="false">
+						<f:layout>
+							<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer title="">
+								<f:formElements>
+									<f:FormElement label="Puesto">
+										<f:fields>
+											<m:ComboBox selectionChange="cambioPuesto2" placeholder="Seleccione Puesto Trabajo" id="puestosTrabajo2" items="{path: '/PUESTOTRABAJO',sorter: { path: 'ID' }}">
+												<core:Item key="{ID}" text="{NOMBRE}"/>
+											</m:ComboBox>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="Técnico">
+										<f:fields>
+											<m:ComboBox placeholder="Seleccione Técnico" id="tecnicoDLG" items="{path: '/LSTMEC',sorter: { path: 'PERNR' }}">
+												<core:Item key="{PERNR}" text="{PERNR} - {STEXT}"/>
+											</m:ComboBox>
+										</f:fields>
+									</f:FormElement>
+								</f:formElements>
+							</f:FormContainer>
+						</f:formContainers>
+					</f:Form>
+				</m:content>
+				<m:endButton>
+					<m:Button type="Accept" press="onAgregar" text="Asignar"/>
+				</m:endButton>
+				<m:beginButton>
+					<m:Button press="onCerrar" text="Cerrar"/>
+				</m:beginButton>
+			</m:Dialog>
+			
+
+			<m:Dialog id="dialogRut" visible="false" contentHeight="40%" contentWidth="40%" title="Detalle" resizable="true" draggable="true">
+				<m:content>
+					<f:Form id="FormDDATOSGEN" editable="false">
+						<f:title>
+							<core:Title text="Validación Técnico"/>
+						</f:title>
+						<f:layout>
+							<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+						</f:layout>
+						<f:formContainers>
+							<f:FormContainer title="">
+								<f:formElements>
+									<f:FormElement label="¡Bienvenido!">
+										<f:fields>
+											<m:Text id="idTextUsuarioTotem" text=""/>
+										</f:fields>
+									</f:FormElement>
+									<f:FormElement label="Rut">
+										<f:fields>
+											<m:MaskInput id="idinput1" mask="99.999.999" placeholderSymbol="." placeholder="Ingrese su Rut..."/>
+										</f:fields>
+									</f:FormElement>
+								</f:formElements>
+							</f:FormContainer>
+						</f:formContainers>
+					</f:Form>
+				</m:content>
+				<m:beginButton>
+					<m:Button press="validarRutIngreso" text="Ingresar" type="Emphasized"/>
+				</m:beginButton>
+				<m:endButton>
+					<m:Button press="cerrarDialogRut" text="Cerrar"/>
+				</m:endButton>
+			</m:Dialog>
+			
+			
+			<m:content>
+				<fb:FilterBar id="idFilterBar" visible="false" reset="onReset" search="onCargarGrilla" showRestoreButton="true" showClearButton="true">
+					<fb:filterItems>
+						<fb:FilterItem name="A" label="Centro" mandatory="true">
+							<fb:control>
+								<m:ComboBox placeholder="Seleccione Centro" id="centro" selectedKey="1SA1" selectionChange="cambiaCentro" items="{path: '/GT_CENTRO',sorter: { path: 'WERKS' }}">
+									<core:Item key="{WERKS}" text="{NAME1}"/>
+								</m:ComboBox>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="B" label="Puesto" labelTooltip="Tooltip Example" visible="true" mandatory="true">
+							<fb:control>
+								<m:ComboBox selectionChange="cambioPuesto" placeholder="Seleccione Puesto Trabajo" id="puestosTrabajo" items="{path: '/PUESTOTRABAJO',sorter: { path: 'ID' }}">
+									<core:Item key="{ID}" text="{NOMBRE}"/>
+								</m:ComboBox>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="C" label="Técnico" labelTooltip="Tooltip Example" mandatory="false">
+							<fb:control>
+								<m:ComboBox placeholder="Seleccione Tecnico" id="tecnico" items="{path: '/LSTMEC',sorter: { path: 'PERNR' }}">
+									<core:Item key="{PERNR}" text="{STEXT}"/>
+								</m:ComboBox>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="D" label="Cliente" labelTooltip="Tooltip Example" mandatory="false">
+							<fb:control>
+								<m:ComboBox placeholder="Seleccione Cliente" id="clientes" items="{path: '/GT_CLIENTES',sorter: { path: 'NOMBRE_CLIENTE' }}">
+									<core:Item key="{CLIENTE}" text="{NOMBRE_CLIENTE}"/>
+								</m:ComboBox>
+							</fb:control>
+						</fb:FilterItem>
+					</fb:filterItems>
+				</fb:FilterBar>
+				<m:Button visible="false" text="Filtrar" id="idButtonFiltrar" type="Emphasized" press="onCargaGrilla" icon="sap-icon://search"/>
+				<m:Button visible="false" text="" id="btnIrUsuario" type="Emphasized" press="irUsuario" icon="sap-icon://search"/>
+				<m:ToolbarSpacer visible="false"/>
+				<m:IconTabBar stretchContentHeight="true" id="idIconTabBar" selectedKey="Ejecución" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding" visible="false">
+					<m:items>
+						<m:IconTabFilter showAll="true" count="0" text="OP Total" key="All" id="countOrden">
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerrrr" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OP Total', descending: false } }" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="10%" visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="30%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column>
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem>
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+						<m:IconTabSeparator/>
+						<m:IconTabFilter icon="sap-icon://add-employee" iconColor="Default" count="0" text="Sin Asignar" key="Ejecución" id="contPos">
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimer" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }" growing="true" growingThreshold="500" growingScrollToLoad="false">
+								<m:headerToolbar>
+									<m:Toolbar>
+										<m:content>
+											<m:OverflowToolbar>
+												<m:SearchField placeholder="Búsqueda por OT / CLIENTE" liveChange="onSearch" width="100%"/>
+											</m:OverflowToolbar>
+			
+											<m:ToolbarSpacer/>
+											<m:Button visible="true" text="Asignar" id="idButtonAsignar" type="Emphasized" press="onEditar"/>
+										</m:content>
+									</m:Toolbar>
+								</m:headerToolbar>
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="10%">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="30%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column>
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="false" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esSinAsignar'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+						<m:IconTabFilter icon="sap-icon://alert" iconColor="Critical" count="0" text="No Iniciado" key="Overweight2" id="contNoInic">
+							<!--	<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerE2" class="sapContrast sapContrastPlus"
+								items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column >
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true">
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>									
+									
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esNoIniciado'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path: 'NOMBRE' , formatter : '.buscarNombre'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+								</m:ColumnListItem>
+							</m:Table>-->
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerrrr2" class="sapContrast sapContrastPlus" items="{/GT_ORDENESTR}" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="10%" visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="30%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column>
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esNoIniciado'}">
+									
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+									<!--
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}"
+										state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/> -->
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+						<m:IconTabFilter icon="sap-icon://hint" iconColor="Positive" count="0" text="Ejecución" key="Heavy" id="contEject">
+							<!--	<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerE" class="sapContrast sapContrastPlus"
+								items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column >
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true">
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>									
+									
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esEjecucion'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{NOMBRE}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+								</m:ColumnListItem>
+							</m:Table> -->
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerrrr3" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OP Total', descending: false } }" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="10%" visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="30%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column>
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esEjecucion'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+						<m:IconTabFilter icon="sap-icon://error" iconColor="Negative" count="0" text="Detención" key="Overweight" id="contDet">
+							<!--	<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerE3" class="sapContrast sapContrastPlus"
+								items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column >
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true">
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>									
+									
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esDetencion'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path: 'NOMBRE' , formatter : '.buscarNombre'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+								</m:ColumnListItem>
+							</m:Table> -->
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerrrr4" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OP Total', descending: false } }" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="10%" visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="30%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column>
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text="Cliente"/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esDetencion'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Text text="{NOMBRE_CLIENTE}"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+					</m:items>
+				</m:IconTabBar>
+				<!--				<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true"  id="tablaTimer" class="sapContrast sapContrastPlus"
+					items="{ path:'/ProductCollection', sorter: { path: 'OTC', descending: false } }"> -->
+				<m:IconTabBar id="idIconTabBarUsuario" selectedKey="Ejecución" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding" visible="false">
+					<m:items>
+						<m:IconTabFilter showAll="true" count="0" text="OP Total" key="All" id="countOrdenU">
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerrrrUsu" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="30%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column>
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="false" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'NOMBRE' , formatter : '.esTotalU'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:Text text="{ACTIVITY} - {DESCRIPTION}"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+						<m:IconTabSeparator/>
+						<m:IconTabFilter icon="sap-icon://hint" iconColor="Positive" count="0" text="Ejecución" key="Ejecución" id="contPosU">
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerE3UAssss" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="40%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true">
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="false" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text=""/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esEjecucion'}" press="onTimer">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Link text="{ACTIVITY} - {DESCRIPTION}" press="onTimer"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<!--<m:Button icon="sap-icon://fob-watch" type="Reject"/>-->
+									<m:Button icon="sap-icon://fob-watch" type="Accept" press="onTimer"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+						<m:IconTabFilter icon="sap-icon://status-critical" iconColor="Critical" count="0" text="No Iniciado" key="Heavy" id="conNoInicU">
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerE3UA" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="40%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true">
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="false" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text=""/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esNoIniciado'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Link text="{ACTIVITY} - {DESCRIPTION}" press="onTimer"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Button icon="sap-icon://fob-watch" type="Accept" press="onTimer"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+						<m:IconTabFilter icon="sap-icon://error" iconColor="Negative" count="0" text="Detención" key="Overweight2" id="contDetU">
+							<m:Table sticky="HeaderToolbar,InfoToolbar,ColumnHeaders" visible="true" id="tablaTimerDEU" class="sapContrast sapContrastPlus" items="{ path:'/GT_ORDENESTR', sorter: { path: 'OTC', descending: false } }" growing="true" growingThreshold="500">
+								<m:columns>
+									<m:Column mergeDuplicates="true">
+										<m:header>
+											<m:Text text="Nro OT / Desc OT"/>
+										</m:header>
+									</m:Column>
+									<m:Column visible="false">
+										<m:header>
+											<m:Text text="Selecione"/>
+										</m:header>
+									</m:Column>
+									<m:Column width="40%" demandPopin="true">
+										<m:header>
+											<m:Text text="Glosa OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true">
+										<m:header>
+											<m:Text text="Estado OP"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="false" hAlign="Left">
+										<m:header>
+											<m:Text text="Técnico Asignado"/>
+										</m:header>
+									</m:Column>
+									<m:Column minScreenWidth="Tablet" demandPopin="true" visible="true" hAlign="Left">
+										<m:header>
+											<m:Text text=""/>
+										</m:header>
+									</m:Column>
+								</m:columns>
+								<m:ColumnListItem visible="{path: 'ID_MOTIVO' , formatter : '.esDetencionUser'}">
+									<m:ObjectIdentifier title="{path: 'AUFNR' , formatter : '.formatInt'}" text="{KTEXT}"/>
+									<m:CheckBox selected="{Seleccionado}"/>
+									<m:Link text="{ACTIVITY} - {DESCRIPTION}" press="onTimer"/>
+									<m:ObjectStatus text="{path: 'ID_MOTIVO' , formatter : '.formatMotivo'}" icon="{ICON}" state="{path: 'ID_MOTIVO' , formatter : '.getStateTable'}"/>
+									<m:Text text="{path :'NOMBRE' , formatter: '.formatNombreMec'}"/>
+									<m:Button icon="sap-icon://fob-watch" type="Reject" press="onTimer"/>
+								</m:ColumnListItem>
+							</m:Table>
+						</m:IconTabFilter>
+					</m:items>
+				</m:IconTabBar>
+			</m:content>
+						<m:Panel class="sapContrast sapContrastPlus" id="idpanelTitle" visible="false">
+				<m:FlexBox id="idTittle" alignItems="Center" visible="false" alignContent="Center" direction="Row" renderType="Bare" wrap="Wrap" width="100%" displayInline="true" fitContainer="true" items="{/LSTMEC}">
+					<m:items>
+						<m:GenericTile header="{STEXT}" subheader="{PERNR}" press="validaRut">
+							<m:TileContent>
+								<ff:Avatar initials="{path: 'STEXT', formatter : '.formatNombre' }" displaySize="L"/>
+							</m:TileContent>
+						</m:GenericTile>
+					</m:items>
+				</m:FlexBox>
+			</m:Panel>
+
+			
+			<m:footer>
+				<m:Toolbar>
+					<m:Button text="Actualizar" visible="false" id="idBtnActJ" icon="sap-icon://feed" type="Accept" press="actualizarJefe"/> 
+					<m:Button text="Actualizar" visible="false" id="idBtnAct" icon="sap-icon://feed" type="Accept" press="actualizarUser"/> 
+					<m:MenuButton visible="false" text="" icon="sap-icon://customer">
+						<m:menu>
+							<m:Menu itemSelected="onMenuAction">
+								<m:items>
+									<!--	<m:MenuItem id="idMen1" text="Técnico" icon="sap-icon://collaborate"/>-->
+									<m:MenuItem id="idMen2" text="Jefe de Taller" icon="sap-icon://employee"/>
+									<m:MenuItem id="idMen3" text="Tótem" icon="sap-icon://sys-monitor"/>
+									<m:MenuItem id="idMen4" visible="false" text="Salir" icon="sap-icon://system-exit-2"/>
+								</m:items>
+							</m:Menu>
+						</m:menu>
+					</m:MenuButton>
+				</m:Toolbar>
+			</m:footer>
+		</m:Page>
+
+
+</mvc:View>
