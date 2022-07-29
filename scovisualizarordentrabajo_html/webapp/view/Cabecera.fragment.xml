@@ -1,0 +1,318 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+                         xmlns="sap.m">
+    <f:Form editable="true">
+
+        <f:layout>
+            <f:ResponsiveGridLayout
+                    labelSpanXL="2"
+                    labelSpanL="2"
+                    labelSpanM="2"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0"
+                    emptySpanL="0"
+                    emptySpanM="0"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false"/>
+        </f:layout>
+        <f:formContainers>
+            <f:FormContainer>
+                <f:formElements>
+                    <f:FormElement label="Solicitante">
+                        <f:fields>
+                            <Input value="{Solicitante}" editable="false">
+                                <layoutData>
+                                    <l:GridData span="L2 M2 S2"/>
+                                </layoutData>
+                            </Input>
+
+                            <Input value="{TxtSolicitante}" editable="false">
+                                <layoutData>
+                                    <l:GridData span="L7 M7 S7"/>
+                                </layoutData>
+                            </Input>
+                            <l:HorizontalLayout>
+                                <Button icon="sap-icon://edit" text="Editar" visible="{/Visibles/Cabecera/Editar}" press="handleEditarCabecera"/>
+                            </l:HorizontalLayout>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="Calle/Nº">
+                        <f:fields>
+                            <Input value="{CalleNum}" editable="false"/>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="Poblacion">
+                        <f:fields>
+                            <Input value="{Comuna}" editable="false"/>
+                            <Input value="{Poblacion}" editable="false"/>
+                            <Input value="{Pais}" editable="false">
+                                <layoutData>
+                                    <l:GridData span="L1 M1 S1"/>
+                                </layoutData>
+                            </Input>
+                            <Input value="{Region}" editable="false">
+                                <layoutData>
+                                    <l:GridData span="L1 M1 S1"/>
+                                </layoutData>
+                            </Input>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="Teléfono/Fax">
+                        <f:fields>
+                            <Input value="{Telefono}" editable="false"/>
+                            <Input value="{Fax}" editable="false"/>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement label="Huso Horario Inter.">
+                        <f:fields>
+                            <DatePicker displayFormat="dd/MM/yyyy" value="{Fecha}" editable="false"/>
+                            <TimePicker displayFormat="HH:mm:ss" value="{Hora}" editable="false"/>
+                            <Input value="{TxtPais}" editable="false"/>
+                        </f:fields>
+                    </f:FormElement>
+                </f:formElements>
+            </f:FormContainer>
+        </f:formContainers>
+    </f:Form>
+    <l:Splitter>
+        <Panel headerText="Responsable" height="15rem" binding="{Responsable}">
+            <layoutData><l:SplitterLayoutData size="50%" resizable="false"/></layoutData>
+            <f:Form editable="true">
+                <f:layout>
+                    <f:ResponsiveGridLayout
+                            labelSpanXL="2"
+                            labelSpanL="2"
+                            labelSpanM="2"
+                            labelSpanS="3"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false"/>
+                </f:layout>
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="Grupo Planificador">
+                                <f:fields>
+                                    <Select items="{/Opciones/Cabecera/Responsable/Planes}"  selectedKey="{i_Plan}" enabled="{/Editables/Cabecera/Responsable/Plan}">
+                                        <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                                    </Select>
+                                    <Select items="{/Opciones/Cabecera/Responsable/Grupos}" selectedKey="{i_Grupo}" enabled="{/Editables/Cabecera/Responsable/Grupo}">
+                                        <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                                    </Select>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="Puesto de Trabajo">
+                                <f:fields>
+                                    <Select items="{/Opciones/Cabecera/Responsable/PlanesPuestoTrabajo}" change="handleSelectPtoTrabajo" selectedKey="{i_PlanPuestoTrabajo}" enabled="{/Editables/Cabecera/Responsable/PlanPuestoTrabajo}">
+                                        <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                                    </Select>
+                                    <Select items="{/Opciones/Cabecera/Responsable/PuestosTrabajo}" selectedKey="{i_PuestoTrabajo}" enabled="{/Editables/Cabecera/Responsable/PuestoTrabajo}">
+                                        <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                                    </Select>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="Responsable">
+                                <f:fields>
+                                    <Input value="{Responsable}" editable="false">
+                                        <layoutData>
+                                            <l:GridData span="L3 M3 S3"/>
+                                        </layoutData>
+                                    </Input>
+                                    <Text text="{TxtResponsable}"/>
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+        </Panel>
+        <Panel headerText=" " height="15rem" backgroundDesign="Translucent">
+            <layoutData><l:SplitterLayoutData size="50%" resizable="false"/></layoutData>
+            <f:Form editable="true">
+                <f:layout>
+                    <f:ResponsiveGridLayout
+                            labelSpanXL="2"
+                            labelSpanL="2"
+                            labelSpanM="2"
+                            labelSpanS="3"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false"/>
+                </f:layout>
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="Aviso">
+                                <f:fields>
+                                    <Input value="{Aviso}" editable="false"/>
+                                    <Button icon="sap-icon://sys-find" visible="{/Visibles/Cabecera/IrAviso}" press="handleIrAviso">
+                                        <layoutData>
+                                            <l:GridData span="L1 M1 S1"/>
+                                        </layoutData>
+                                    </Button>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="Clase Act. PM">
+                                <f:fields>
+                                    <Select items="{/Opciones/Cabecera/ClasesActividadPM}" selectedKey="{i_ClaseActividadPM}" enabled="{/Editables/Cabecera/ClaseActividadPM}">
+                                        <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                                    </Select>
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+        </Panel>
+    </l:Splitter>
+
+    <Panel headerText="Objeto de Referencia" binding="{ObjetoReferencia}">
+        <f:Form editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="3"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="2"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Equipo">
+                            <f:fields>
+                                <Input value="{Equipo}" editable="false">
+                                    <layoutData>
+                                        <l:GridData span="L5 M5 S5"/>
+                                    </layoutData>
+                                </Input>
+                                <Link text="Buscar Equipo" visible="{/Visibles/Cabecera/BuscarEquipo}" press="handleBuscarEquipo">
+                                    <layoutData>
+                                        <l:GridData span="L4 M4 S4"/>
+                                    </layoutData>
+                                </Link>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Material">
+                            <Input value="{Material}" editable="false">
+                                <layoutData>
+                                    <l:GridData span="L5 M5 S5"/>
+                                </layoutData>
+                            </Input>
+                            <Text text="{TxtMaterial}"/>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Patente">
+                            <f:fields>
+                                <Input value="{Patente}" editable="false">
+                                    <layoutData>
+                                        <l:GridData span="L5 M5 S5"/>
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+    </Panel>
+
+    <Panel headerText="Organización"  binding="{Organizacion}">
+        <f:Form editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="3"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        adjustLabelSpan="false"
+                        emptySpanXL="2"
+                        emptySpanL="2"
+                        emptySpanM="2"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="2"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="Sociedad">
+                            <f:fields>
+                                <Input value="{Sociedad}" editable="false">
+                                    <layoutData>
+                                        <l:GridData span="L2 M2 S2"/>
+                                    </layoutData>
+                                </Input>
+                                <Text text="{TxtSociedad}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="División">
+                            <f:fields>
+                                <Input value="{Division}" editable="false">
+                                    <layoutData>
+                                        <l:GridData span="L2 M2 S2"/>
+                                    </layoutData>
+                                </Input>
+                                <Text text="{TxtDivision}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Sociedad CO">
+                            <f:fields>
+                                <Input value="{SociedadCO}" editable="false">
+                                    <layoutData>
+                                        <l:GridData span="L2 M2 S2"/>
+                                    </layoutData>
+                                </Input>
+                                <Text text="{TxtSociedadCO}"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="CeCo responsable">
+                            <f:fields>
+                                <Link text="{CeCoResponsable}" press="handleSelectCeCo">
+                                    <layoutData>
+                                        <l:GridData span="L2 M3 S3"/>
+                                    </layoutData>
+                                </Link>
+                                <Text text="{TxtCeCoResponsable}"/>
+                            </f:fields>
+                        </f:FormElement>
+                        <f:FormElement label="Centro de Beneficio">
+                            <f:fields>
+                                <Link text="{CentroBeneficio}" press="handleSelectCentroBeneficio">
+                                    <layoutData>
+                                        <l:GridData span="L2 M3 S3"/>
+                                    </layoutData>
+                                </Link>
+                                <Text text="{TxtCentroBeneficio}"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+    </Panel>
+</core:FragmentDefinition>

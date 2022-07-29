@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+    <Dialog class="sapUiSizeCompact" contentWidth="40rem" title="Grupo Hojas de Ruta">
+        <t:Table rows="{Grupos}" selectedIndex="{i_Grupo}"
+                 selectionMode="Single" selectionBehavior="RowOnly" visibleRowCount="5" noData="" rowSelectionChange="handleRowChangeGrp">
+            <t:columns>
+                <t:Column filterProperty="HOJA_RUTA" width="10rem">
+                    <Label text="Hoja de Ruta"/>
+                    <t:template>
+                        <Text text="{HOJA_RUTA}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column width="6rem">
+                    <Label text="Contador"/>
+                    <t:template>
+                        <Text text="{CONTADOR}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column filterProperty="TEXTO">
+                    <Label text="Texto"/>
+                    <t:template>
+                        <Text text="{TEXTO}"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+            <t:footer>
+                <Toolbar>
+                    <Text text="Total: {= ${Grupos}.length }"/>
+                </Toolbar>
+            </t:footer>
+        </t:Table>
+        <beginButton>
+            <Button text="Aceptar" icon="sap-icon://accept" type="Emphasized" enabled="{=${i_Grupo} >= 0}" press="handleAceptarGrp3"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cerrar" icon="sap-icon://decline" press="closeDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

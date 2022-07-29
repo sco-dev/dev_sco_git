@@ -1,0 +1,242 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+
+    <t:Table visible="{=!${/ModoEdicion}}" rows="{Pedidos}" selectedIndex="{i_Pedido}" selectionMode="Single" selectionBehavior="RowOnly" visibleRowCount="10" noData="" id="tablePedidos">
+        <t:extension>
+            <Toolbar>
+                <Button text="Nuevo Pedido" icon="sap-icon://add-document" press="handleNuevoPedido" visible="{=!${/Pedidos/Completo} &amp;&amp; ${/Visibles/Pedidos/Nuevo}}"/>
+                <Button text="Editar" icon="sap-icon://edit" press="handleEditarPedido" enabled="{=${i_Pedido} >= 0}" visible="{=${Pedidos}.length > 0 &amp;&amp;${/Visibles/Pedidos/Editar}}"/>
+                <Button text="Eliminar" icon="sap-icon://delete" press="handleEliminarPedido" enabled="{=${i_Pedido} >= 0}" visible="{=${Pedidos}.length > 0 &amp;&amp; ${/Visibles/Pedidos/Eliminar}}"/>
+                <Button text="Imprimir" icon="sap-icon://print" press="handleImprimirPedido" enabled="{=${i_Pedido} >= 0}" visible="{=${Pedidos}.length > 0 &amp;&amp;${/Visibles/Pedidos/Imprimir}}"/>
+                <Button text="Enviar Pedido a Cliente" icon="sap-icon://email" press="handleEnviarPedido" enabled="{=${i_Pedido} >= 0}" visible="{/Visibles/Pedidos/Enviar}"/>
+                <Button text="Solicitar Facturación" icon="sap-icon://sales-quote" press="handleFacturacionPedido"  visible="{/Visibles/Pedidos/Facturar}"/>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column autoResizable="true">
+                <Label text="Para Facturar"/>
+                <t:template>
+                    <CheckBox selected="{PARA_FACTURAR}" enabled="{HABILITADO_FACTURAR}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="N° Pedido"/>
+                <t:template>
+                    <Text text="{NRO_PEDIDO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Fecha Creación"/>
+                <t:template>
+                    <Text text="{path:'FECHA_CREACION',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy', source:{pattern:'yyyy-MM-dd'}}}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Oferta"/>
+                <t:template>
+                    <Text text="{OFERTA}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Facturado"/>
+                <t:template>
+                    <Text text="{FACTURADO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true" hAlign="Right">
+                <Label text="Neto"/>
+                <t:template>
+                    <Text text="{path:'NETO',type : 'sap.ui.model.type.Integer', formatOptions: {groupingEnabled:true}}" textAlign="Right"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="RUT Resp. Pago"/>
+                <t:template>
+                    <Text text="{RUT_RESPONSABLE_PAGO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Responsable Pago"/>
+                <t:template>
+                    <Text text="{RESPONSABLE_PAGO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Of. Venta"/>
+                <t:template>
+                    <Text text="{OFICINA_VENTA}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="false">
+                <Label text="Responsable"/>
+                <t:template>
+                    <Text text="{RESPONSABLE}"/>
+                </t:template>
+            </t:Column>
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${Pedidos}.length }"/>
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+
+    <t:Table visible="{/ModoEdicion}" rows="{DocumentoNuevo/Posiciones}" selectionMode="None" visibleRowCount="5" noData="" id="tableCrearPedido">
+        <t:extension>
+            <Toolbar visible="{DocumentoNuevo/Cabecera/VisibleClase}">
+                <Select  width="15rem"  items="{DocumentoNuevo/Cabecera/Clases}" selectedKey="{DocumentoNuevo/Cabecera/i_Clase}">
+                    <core:Item key="{KEY}" text="{TEXT}"/>
+                </Select>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="" textAlign="Center" />
+                    <Label text="Material" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="{HtmlTag}{Material}{HtmlTagEnd}"/>
+                </t:template>
+            </t:Column>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="" textAlign="Center" />
+                    <Label text="Descripción" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="{HtmlTag}{Short_Text}{HtmlTagEnd}"/>
+                </t:template>
+            </t:Column>
+
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Original" textAlign="Center" />
+                    <Label text="Importe" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="&lt;span style='text-align: right; display:block;' &gt;{HtmlTag}{path:'Importe_Original',type:'sap.ui.model.type.Float'}{HtmlTagEnd}&lt;/span&gt;" />
+                </t:template>
+            </t:Column>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Original" textAlign="Center" />
+                    <Label text="Cantidad" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="&lt;span style='text-align: right; display:block;' &gt;{HtmlTag}{path:'Cantidad_Original',type:'sap.ui.model.type.Float'}{HtmlTagEnd}&lt;/span&gt;" />
+                </t:template>
+            </t:Column>
+
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="En Pedido" textAlign="Center" />
+                    <Label text="Importe" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="&lt;span style='text-align: right; display:block;' &gt;{HtmlTag}{path:'Importe_Facturado',type:'sap.ui.model.type.Float'}{HtmlTagEnd}&lt;/span&gt;" />
+                </t:template>
+            </t:Column>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="En Pedido" textAlign="Center" />
+                    <Label text="Cantidad" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="&lt;span style='text-align: right; display:block;' &gt;{HtmlTag}{path:'Cantidad_Facturada',type:'sap.ui.model.type.Float'}{HtmlTagEnd}&lt;/span&gt;" />
+                </t:template>
+            </t:Column>
+
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Pendiente Asignación Pedido" textAlign="Center" />
+                    <Label text="Importe" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="&lt;span style='text-align: right; display:block;' &gt;{HtmlTag}{path:'Importe_Pendiente',type:'sap.ui.model.type.Float'}{HtmlTagEnd}&lt;/span&gt;" />
+                </t:template>
+            </t:Column>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Pendiente Asignación Pedido" textAlign="Center" />
+                    <Label text="Cantidad" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="&lt;span style='text-align: right; display:block;' &gt;{HtmlTag}{path:'Cantidad_Pendiente',type:'sap.ui.model.type.Float'}{HtmlTagEnd}&lt;/span&gt;" />
+                </t:template>
+            </t:Column>
+
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Particiones" textAlign="Center" />
+                    <Label text="Tipo" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <Select width="6rem" visible="{=!${ParticionTipohab}}" change="handleSelectTipoParticion" enabled="{=!${ParticionTipohab}}" items="{path:'/Pedidos/DocumentoNuevo/TiposPosiciones', templateShareable:true}" selectedKey="{ParticionTipo}">
+                        <core:Item key="{KEY}" text="{TEXT}"/>
+                    </Select>
+                </t:template>
+            </t:Column>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Particiones" textAlign="Center" />
+                    <Label text="$ a Fact." textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <Input width="6rem" value="{path:'ParticionMonto',type:'sap.ui.model.type.Float'}" textAlign="Right" enabled="{=!${ParticionMontoHab}}" submit="handleAjustarMonto"/>
+                </t:template>
+            </t:Column>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Particiones" textAlign="Center" />
+                    <Label text="# a Fact." textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <Input width="6rem" value="{path:'ParticionCantidad',type:'sap.ui.model.type.Float'}" textAlign="Right" enabled="{=!${ParticionCantidadHab}}" submit="handleAjustarCantidad"/>
+                </t:template>
+            </t:Column>
+            <t:Column headerSpan="2,1" autoResizable="true" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="Particiones" textAlign="Center" />
+                    <Label text="% a Fact" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <Input width="6rem" value="{path:'ParticionPorcentaje',type:'sap.ui.model.type.Float'}" textAlign="Right" enabled="{=!${ParticionPorcentajeHab}}" submit="handleAjustarPorcentaje"/>
+                </t:template>
+            </t:Column>
+
+            <t:Column headerSpan="1,1" width="6rem" hAlign="Center">
+                <t:multiLabels>
+                    <Label text="" textAlign="Center" />
+                    <Label text="Total Neto" textAlign="Center" />
+                </t:multiLabels>
+
+                <t:template>
+                    <FormattedText htmlText="&lt;span style='text-align: right; display:block;' &gt;{HtmlTag}{path:'Importe_Neto_Original',type:'sap.ui.model.type.Float'}{HtmlTagEnd}&lt;/span&gt;"  />
+                </t:template>
+            </t:Column>
+
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${DocumentoNuevo/Posiciones}.length }"/>
+                <ToolbarSpacer/>
+                <Button text="Crear" type="Emphasized" icon="sap-icon://accept" press="handleCrearPedido" />
+                <Button text="Cancelar" icon="sap-icon://decline" press="handleCancelarPedido" />
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+</core:FragmentDefinition>

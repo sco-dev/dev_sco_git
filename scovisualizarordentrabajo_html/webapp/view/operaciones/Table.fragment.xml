@@ -1,0 +1,214 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+    <t:Table rows="{Operaciones}" selectedIndex="{i_Operacion}" rowSelectionChange="handleTableOperacionesSelect" selectionMode="{=${Accion} === 'NECESIDADES'?'Single':'None'}" selectionBehavior="RowOnly" visibleRowCount="10" noData="" id="tableOperaciones" visible="{=${Accion} !== 'EDITAR' &amp;&amp; ${Accion} !== 'SERVICIO_EXTERNO'}">
+        <t:extension>
+            <Toolbar visible="{=${Accion} === 'MAIN'}">
+                <Button text="Editar" icon="sap-icon://edit" press="handleOperacionesEditar" visible="{/Visibles/Operaciones/EditarOperacion}"/>
+                <Button text="Mano de Obra" icon="sap-icon://eam-work-order" press="handleOperacionesManoObra" visible="{/Visibles/Operaciones/ManoObra}"/>
+                <Button text="Servicio Externo" icon="sap-icon://offsite-work" press="handleOperacionesServicioExterno" visible="{/Visibles/Operaciones/ServicioExterno}"/>
+                <Button text="Asign. Necesidades" icon="sap-icon://add-product" press="handleOperacionesNecesidades" visible="{/Visibles/Operaciones/AsignarNecesidades}"/>
+                <Button text="Notificación" icon="sap-icon://share-2" press="handleOperacionesNotificacion" visible="{/Visibles/Operaciones/Notificar}"/>
+                <Button text="Desnotificación" icon="sap-icon://cancel-share" press="handleOperacionesDesnotificacion" visible="{/Visibles/Operaciones/Desnotificar}"/>
+            </Toolbar>
+            <Toolbar visible="{=${Accion} === 'NECESIDADES'}">
+                <Button text="Finalizar Asignación" icon="sap-icon://nav-back" press="handleOperacionesVolver"/>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column autoResizable="true">
+                <Label text="Operación"/>
+                <t:template>
+                    <Text text="{OPERACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Sub. Oper."/>
+                <t:template>
+                    <Text text="{SUB_OPERACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Puesto Trabajo"/>
+                <t:template>
+                    <Text text="{PUESTO_TRABAJO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Centro"/>
+                <t:template>
+                    <Text text="{CENTRO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Clave Control"/>
+                <t:template>
+                    <Text text="{CLAVE_CONTROL}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Txt. Operación"/>
+                <t:template>
+                    <Text text="{TXT_OPERACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Trabajo"/>
+                <t:template>
+                    <Text text="{TRABAJO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Unidad"/>
+                <t:template>
+                    <Text text="{UNIDAD}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true" visible="{=${Accion} === 'NECESIDADES' || ${Accion} === 'MAIN'}">
+                <Label text="Unidad 2"/>
+                <t:template>
+                    <Text text="{UNIDAD2}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true" visible="{=${Accion} !== 'NECESIDADES'}">
+                <Label text="Cantidad"/>
+                <t:template>
+                    <Text text="{CANTIDAD}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Duración"/>
+                <t:template>
+                    <Text text="{DURACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="false">
+                <Label text="Clase Actividad"/>
+                <t:template>
+                    <Text text="{CLASE_ACTIVIDAD}"/>
+                </t:template>
+            </t:Column>
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${Operaciones}.length }"/>
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+
+    <t:Table rows="{OperacionesEditar}"
+             selectedIndex="{i_OperacionEditar}"
+             selectionMode="Single"
+             selectionBehavior="RowOnly"
+             visibleRowCount="10"
+             noData=""
+             id="tableOperacionesEditar"
+             visible="{=${Accion} === 'EDITAR' || ${Accion} === 'SERVICIO_EXTERNO'}">
+        <t:extension>
+            <Toolbar visible="{=${Accion} === 'EDITAR'}">
+                <Button text="Volver" icon="sap-icon://nav-back" press="handleOperacionesVolver"/>
+                <Button text="Eliminar" icon="sap-icon://delete" enabled="{=${i_OperacionEditar} >= 0}" press="handleOperacionDelete"/>
+                <Button text="Grabar" icon="sap-icon://save" press="handleOperacionesSave"/>
+            </Toolbar>
+            <Toolbar visible="{=${Accion} === 'SERVICIO_EXTERNO'}">
+                <Button text="Volver" icon="sap-icon://nav-back" press="handleOperacionesVolver"/>
+                <Button text="Agregar" icon="sap-icon://add" press="handleOperacionesAdd"/>
+                <Button text="Modificar" icon="sap-icon://edit" visible="{=${i_OperacionEditar} >= 0 &amp;&amp; ${OperacionesEditar}[${i_OperacionEditar}].CLAVE_CONTROL === 'SAL2'}"  press="handleOperacionesUpdate"/>
+                <Button text="Eliminar" icon="sap-icon://delete"  visible="{=${i_OperacionEditar} >= 0 &amp;&amp; ${OperacionesEditar}[${i_OperacionEditar}].CLAVE_CONTROL === 'SAL2'}"  press="handleOperacionDelete"/>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column autoResizable="true">
+                <Label text="Operación"/>
+                <t:template>
+                    <Text text="{OPERACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Sub. Oper."/>
+                <t:template>
+                    <Text text="{SUB_OPERACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Puesto Trabajo"/>
+                <t:template>
+                    <Text text="{PUESTO_TRABAJO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Centro"/>
+                <t:template>
+                    <Text text="{CENTRO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Clave Control"/>
+                <t:template>
+                    <Text text="{CLAVE_CONTROL}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Clave Modelo"/>
+                <t:template>
+                    <Text text="{CLAVE_MODELO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Txt. Brv. Operación"/>
+                <t:template>
+                    <Text text="{TXT_OPERACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Trabajo"/>
+                <t:template>
+                    <Text text="{TRABAJO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Unidad"/>
+                <t:template>
+                    <Text text="{UNIDAD}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Cantidad"/>
+                <t:template>
+                    <Text text="{CANTIDAD}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Duración"/>
+                <t:template>
+                    <Text text="{DURACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="false">
+                <Label text="Clave Cálculo"/>
+                <t:template>
+                    <Text text="{CLAVE_CALCULO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="false" visible="{=${Accion} === 'EDITAR'}" width="15rem">
+                <Label text="Clase Actividad"/>
+                <t:template>
+                    <Select items="{path:'CLASES_ACTIVIDAD',templateShareable:false}" selectedKey="{i_CLASE_ACTIVIDAD}">
+                        <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                    </Select>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="false" visible="{=${Accion} === 'SERVICIO_EXTERNO'}">
+                <Label text="Clase Actividad"/>
+                <t:template>
+                    <Text text="{i_CLASE_ACTIVIDAD}"/>
+                </t:template>
+            </t:Column>
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${OperacionesEditar}.length }"/>
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+</core:FragmentDefinition>

@@ -1,0 +1,93 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+    <t:Table rows="{Desnotificables}" selectionMode="None" visibleRowCount="10" noData="No se encontraron notificaciones para anular" id="tableDesnotificar">
+        <t:extension>
+            <Toolbar>
+                <Button text="Volver" icon="sap-icon://nav-back" press="handleOperacionesVolver"/>
+                <Button text="Grabar" icon="sap-icon://save" enabled="{=${Desnotificables}.length > 0}" press="handleOperacionesDesnotificarSave"/>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column autoResizable="true">
+                <Label text="Operación"/>
+                <t:template>
+                    <Text text="{OPERACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Contador"/>
+                <t:template>
+                    <Text text="{CONTADOR}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="N. Final"/>
+                <t:template>
+                    <Text text="{NOT_FINAL}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Fec. Cont"/>
+                <t:template>
+                    <Text text="{FECHA_CONTA}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Pto. Trab."/>
+                <t:template>
+                    <Text text="{PUESTO_TRABAJO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Nº Personal"/>
+                <t:template>
+                    <Text text="{NUMERO_PERSONAL}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Nombre Técnico"/>
+                <t:template>
+                    <Text text="{NOMBRE_TECNICO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Tr. Real"/>
+                <t:template>
+                    <Text text="{TRABAJO_REAL}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Unidad"/>
+                <t:template>
+                    <Text text="{UNIDAD}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Clase Actividad"/>
+                <t:template>
+                    <Text text="{CLASE_ACTIVIDAD}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Descripción Operación"/>
+                <t:template>
+                    <Text text="{DESCRIPCION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Motivo"/>
+                <t:template>
+                    <Select selectedKey="{i_MOTIVO}" items="{path:'/Operaciones/Motivos', templateShareable : true}">
+                        <core:Item key="{KEY}" text="{TEXT}"/>
+                    </Select>
+                </t:template>
+            </t:Column>
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${Desnotificables}.length }"/>
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+</core:FragmentDefinition>

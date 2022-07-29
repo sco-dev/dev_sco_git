@@ -1,0 +1,89 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+    <Panel headerText="Costos">
+        <t:Table class="tblFirstRow" rows="{Costos}"
+                 selectionMode="None" visibleRowCount="5" noData="" fixedRowCount="1">
+            <t:columns>
+                <t:Column>
+                    <Label text="Costes"/>
+                    <t:template>
+                        <Text text="{COSTES}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Costos Estimados"/>
+                    <t:template>
+                        <Text text="{path:'COSTOS_ESTIMADOS',type:'sap.ui.model.type.Float'}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Costos Planificados"/>
+                    <t:template>
+                        <Text text="{path:'COSTOS_PLANIFICADOS',type:'sap.ui.model.type.Float'}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Costos Reales"/>
+                    <t:template>
+                        <Text text="{path:'COSTOS_REALES',type:'sap.ui.model.type.Float'}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Moneda"/>
+                    <t:template>
+                        <Text text="{MONEDA}"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+            <t:footer>
+                <Toolbar>
+                    <Text text="Total: {= ${Costos}.length }"/>
+                </Toolbar>
+            </t:footer>
+        </t:Table>
+    </Panel>
+    <Panel headerText="Ingresos">
+        <t:Table class="tblFirstRow" rows="{Ingresos}"
+                 selectionMode="None" visibleRowCount="5" noData="" fixedRowCount="1">
+            <t:columns>
+                <t:Column>
+                    <Label text="Ingresos"/>
+                    <t:template>
+                        <Text text="{INGRESOS}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Ingresos Estimados"/>
+                    <t:template>
+                        <Text text="{path:'INGRESOS_ESTIMADOS',type:'sap.ui.model.type.Float'}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Ingresos Planificados"/>
+                    <t:template>
+                        <Text text="{path:'INGRESOS_PLANIFICADOS',type:'sap.ui.model.type.Float'}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Ingresos Reales"/>
+                    <t:template>
+                        <Text text="{path:'INGRESOS_REALES',type:'sap.ui.model.type.Float'}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Moneda"/>
+                    <t:template>
+                        <Text text="{MONEDA}"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+            <t:footer>
+                <Toolbar>
+                    <Text text="Total: {= ${Ingresos}.length }"/>
+                </Toolbar>
+            </t:footer>
+        </t:Table>
+    </Panel>
+
+</core:FragmentDefinition>

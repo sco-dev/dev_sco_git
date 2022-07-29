@@ -1,0 +1,72 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+    <t:Table rows="{/Componentes}" selectionMode="None" visibleRowCount="10" noData="" id="tableComponentes">
+        <t:extension>
+            <Toolbar>
+                <Button text="Editar Componentes" icon="sap-icon://edit" visible="{/Visibles/Operaciones/Componente}" press="handleComponentesEditar"/>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column autoResizable="true">
+                <Label text="Posición"/>
+                <t:template>
+                    <Text text="{POSICION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Componente"/>
+                <t:template>
+                    <Text text="{COMPONENTE}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Denominación"/>
+                <t:template>
+                    <Text text="{DENOMINACION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Ctd. Necesaria"/>
+                <t:template>
+                    <Text text="{CTD_NECESARIA}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="UM"/>
+                <t:template>
+                    <Text text="{UNIDAD_MEDIDA}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="TP"/>
+                <t:template>
+                    <Text text="{TP}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Almacén"/>
+                <t:template>
+                    <Text text="{ALMACEN}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Centro"/>
+                <t:template>
+                    <Text text="{CENTRO}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="false">
+                <Label text="Operación"/>
+                <t:template>
+                    <Text text="{OPERACION}"/>
+                </t:template>
+            </t:Column>
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${/Componentes}.length }"/>
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+</core:FragmentDefinition>

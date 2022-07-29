@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <VBox visible="{=${Accion} === 'MAIN'}">
+        <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.operaciones.Table" id="fgmMain" type="XML"/>
+    </VBox>
+
+    <VBox visible="{=${Accion} === 'EDITAR'}">
+        <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.operaciones.Table" id="fgmEditar" type="XML"/>
+    </VBox>
+
+    <VBox visible="{=${Accion} === 'SERVICIO_EXTERNO'}">
+        <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.operaciones.Table" id="fgmServicioExterno" type="XML"/>
+    </VBox>
+
+    <VBox visible="{=${Accion} === 'NECESIDADES'}">
+        <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.operaciones.Necesidades" id="fgmNecesidades" type="XML"/>
+    </VBox>
+
+    <VBox visible="{=${Accion} === 'NOTIFICAR'}">
+        <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.operaciones.Notificar" type="XML" id="fgmNotificar"/>
+    </VBox>
+
+    <VBox visible="{=${Accion} === 'DESNOTIFICAR'}">
+        <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.operaciones.Desnotificar" type="XML" id="fgmDesnotificar"/>
+    </VBox>
+</core:FragmentDefinition>

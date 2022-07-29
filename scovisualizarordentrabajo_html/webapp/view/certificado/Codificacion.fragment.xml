@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+    <Dialog class="sapUiSizeCompact" contentWidth="50rem" title="Seleccionar Codificación">
+        <t:Table rows="{Codificaciones}" selectedIndex="{i_Codificacion}" selectionMode="Single" selectionBehavior="RowOnly" visibleRowCount="5" noData="" rowSelectionChange="handleCodificacionSelectChange">
+            <t:columns>
+                <t:Column width="7rem">
+                    <Label text="Gr. Códigos"/>
+                    <t:template>
+                        <Text text="{GRUPO}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column filterProperty="DENOMINACION">
+                    <Label text="Denominación"/>
+                    <t:template>
+                        <Text text="{DENOMINACION}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column width="6rem">
+                    <Label text="Código"/>
+                    <t:template>
+                        <Text text="{CODIGO}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Denominación"/>
+                    <t:template>
+                        <Text text="{DENOMINACION2}"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+            <t:footer>
+                <Toolbar>
+                    <Text text="Total: {= ${Codificaciones}.length }"/>
+                </Toolbar>
+            </t:footer>
+        </t:Table>
+        <beginButton>
+            <Button text="Seleccionar" icon="sap-icon://accept" type="Emphasized" enabled="{=${i_Codificacion}>=0}" press="handleSelectCodificacion"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cancelar" icon="sap-icon://decline" press="closeDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

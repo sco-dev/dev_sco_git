@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns:t="sap.ui.table"
+                         xmlns="sap.m">
+    <t:Table rows="{path:'/Interlocutores'}" selectionMode="{=(${/ModoEdicion}?'Single':'None')}" selectedIndex="{/i_Interlocutor}" selectionBehavior="RowOnly" visibleRowCount="10" noData="" id="tableInterlocutores">
+        <t:extension>
+            <Toolbar>
+                <Button text="Editar" icon="sap-icon://edit" visible="{=${/Visibles/Interlocutores/Editar} &amp;&amp; !${/ModoEdicion}}" press="handleEditarInterlocutores"/>
+                <Button text="Volver" icon="sap-icon://nav-back" visible="{/ModoEdicion}" press="handleOperacionesVolver"/>
+                <Button text="Agregar" icon="sap-icon://add" visible="{/ModoEdicion}" press="handleAgregarInterlocutores"/>
+                <Button text="Modificar" icon="sap-icon://edit" visible="{/ModoEdicion}" press="handleModificarInterlocutores" enabled="{=${/i_Interlocutor} >= 0}"/>
+                <Button text="Eliminar" icon="sap-icon://delete" visible="{/ModoEdicion}" press="handleEliminarInterlocutores" enabled="{=${/i_Interlocutor} >= 0}"/>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column autoResizable="true">
+                <Label text="Función"/>
+                <t:template>
+                    <Select enabled="false"  items="{path:'/Opciones/Interlocutores/Funciones',templateShareable:true}" selectedKey="{I_FUNCION}">
+                        <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                    </Select>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Interlocutor"/>
+                <t:template>
+                    <Text text="{INTERLOCUTOR}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Nombre"/>
+                <t:template>
+                    <Text text="{NOMBRE}"/>
+                </t:template>
+            </t:Column>
+            <t:Column>
+                <Label text="Dirección"/>
+                <t:template>
+                    <Text text="{DIRECCION}"/>
+                </t:template>
+            </t:Column>
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${/Interlocutores}.length }"/>
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+</core:FragmentDefinition>

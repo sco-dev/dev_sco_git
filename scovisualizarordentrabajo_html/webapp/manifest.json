@@ -1,0 +1,124 @@
+{
+    "_version": "1.12.0",
+    "sap.app": {
+        "id": "sapui5agendar.scovisualizarordentrabajo_html",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "ach": "ach",
+        "sourceTemplate": {
+            "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+            "version": "1.40.12"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "rootView": {
+            "viewName": "sapui5agendar.scovisualizarordentrabajo_html.view.Master",
+            "type": "XML"
+        },
+        "dependencies": {
+            "minUI5Version": "1.60.1",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "sapui5agendar.scovisualizarordentrabajo_html.i18n.i18n"
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "sapui5agendar.scovisualizarordentrabajo_html.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "master",
+                    "target": "master"
+                },
+                {
+                    "pattern": "certificado",
+                    "name": "certificado",
+                    "target": "certificado"
+                },
+                {
+                    "pattern": "aviso",
+                    "name": "aviso",
+                    "target": "aviso"
+                },
+                {
+                    "pattern": "manoObra",
+                    "name": "manoObra",
+                    "target": "manoObra"
+                }
+            ],
+            "targets": {
+                "master": {
+                    "viewId": "master",
+                    "viewName": "Master",
+                    "viewLevel": 1
+                },
+                "certificado": {
+                    "viewId": "certificado",
+                    "viewName": "Certificado",
+                    "viewLevel": 2
+                },
+                "aviso": {
+                    "viewId": "aviso",
+                    "viewName": "Aviso",
+                    "viewLevel": 2
+                },
+                "manoObra": {
+                    "viewId": "manoObra",
+                    "viewName": "ManoObra",
+                    "viewLevel": 2
+                }
+            }
+        }
+    }
+}

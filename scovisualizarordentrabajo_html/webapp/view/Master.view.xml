@@ -1,0 +1,164 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+          xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:t="sap.ui.table" xmlns="sap.m"
+          controllerName="sapui5agendar.scovisualizarordentrabajo_html.controller.Master">
+    <App class="sapUiSizeCompact" id="app">
+        <Page showHeader="false">
+            <subHeader>
+                <Toolbar id="filters">
+                    <Label class="sapUiSmallMarginBegin" text="Ingrese Nº Orden" required="true"/>
+                    <Input value="{
+                                path:'/filters/Orden',
+                                type : 'sapui5agendar.scovisualizarordentrabajo_html.customelements.ExtendedString',
+                                constraints:{type:'int'}
+                            }"
+                           width="10rem"
+                           enabled="{=!${/FromExternal}}"
+                           submit="handleSearchOT"/>
+                    <Button text="Buscar" icon="sap-icon://search" press="handleSearchOT" visible="{=!${/FromExternal}}"/>
+                </Toolbar>
+            </subHeader>
+            <content>
+                <Panel headerText="Detalle de Orden de Trabajo" binding="{/Detalle}" visible="{/Visibles/Contenido}">
+                    <f:Form editable="true">
+                        <f:layout>
+                            <f:ResponsiveGridLayout
+                                    labelSpanXL="2"
+                                    labelSpanL="2"
+                                    labelSpanM="2"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    columnsXL="1"
+                                    columnsL="1"
+                                    columnsM="1"
+                                    singleContainerFullSize="false"/>
+                        </f:layout>
+                        <f:formContainers>
+                            <f:FormContainer>
+                                <f:formElements>
+                                    <f:FormElement label="Orden">
+                                        <f:fields>
+                                            <Input value="{TipoOrden}" editable="false">
+                                                <layoutData>
+                                                    <l:GridData span="L1 M1 S1"/>
+                                                </layoutData>
+                                            </Input>
+                                            <Input value="{Orden}" editable="false">
+                                                <layoutData>
+                                                    <l:GridData span="L2 M2 S2"/>
+                                                </layoutData>
+                                            </Input>
+                                            <Input value="{TxtOrden}" editable="{/Editables/Detalle/TxtOrden}">
+                                                <layoutData>
+                                                    <l:GridData span="L6 M6 S6"/>
+                                                </layoutData>
+                                            </Input>
+                                            <MenuButton icon="sap-icon://print" width="3rem" visible="{=!${/Visibles/Cabecera/Grabar}}">
+                                                <menu>
+                                                    <Menu itemSelected="onMenuAction">
+                                                        <items>
+                                                            <MenuItem text="Certificado" icon="sap-icon://approvals" press="handlePrintCertificado"/>
+                                                            <MenuItem text="Formulario" icon="sap-icon://form" press="handlePrintFormulario"/>
+                                                        </items>
+                                                    </Menu>
+                                                </menu>
+                                            </MenuButton>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Status del Sistema">
+                                        <f:fields>
+                                            <Input value="{StatusSistema}" editable="false">
+                                                <layoutData>
+                                                    <l:GridData span="L5 M5 S5"/>
+                                                </layoutData>
+                                            </Input>
+                                            <Input value="{UltimoStatus}" editable="false">
+                                                <layoutData>
+                                                    <l:GridData span="L5 M5 S5"/>
+                                                </layoutData>
+                                            </Input>
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                        </f:formContainers>
+                    </f:Form>
+                </Panel>
+                <IconTabBar
+                        visible="{/Visibles/Contenido}"
+                        expanded="true"
+                        select="handleIconTabBarSelect"
+                        class="sapUiNoContentPadding"
+                        expandable="false"
+                        selectedKey="{/Seccion}">
+                    <items>
+                        <IconTabFilter
+                                text="Cabecera"
+                                key="Cabecera"
+                                binding="{/Cabecera}">
+                            <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.Cabecera" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter
+                                text="Operaciones"
+                                key="Operaciones"
+                                visible="{=!${/Visibles/Cabecera/Grabar}}"
+                                binding="{/Operaciones}">
+                            <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.Operaciones" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter
+                                text="Componentes"
+                                key="Componentes"
+                                visible="{=!${/Visibles/Cabecera/Grabar}}"
+                                binding="{/Componentes}">
+                            <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.Componentes" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter
+                                text="Costes"
+                                key="Costes"
+                                visible="{=!${/Visibles/Cabecera/Grabar}}"
+                                binding="{/Costes}">
+                            <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.Costes" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter
+                                text="Interlocutores"
+                                key="Interlocutores"
+                                visible="{=!${/Visibles/Cabecera/Grabar}}"
+                                binding="{/Interlocutores}">
+                            <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.Interlocutores" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter
+                                text="Oferta"
+                                key="Oferta"
+                                visible="{=!${/Visibles/Cabecera/Grabar}}"
+                                binding="{/Oferta}">
+                            <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.Oferta" id="fgmOferta" type="XML"/>
+                        </IconTabFilter>
+                        <IconTabFilter
+                                text="Pedidos"
+                                key="Pedidos"
+                                visible="{=!${/Visibles/Cabecera/Grabar}}"
+                                binding="{/Pedidos}">
+                            <core:Fragment fragmentName="sapui5agendar.scovisualizarordentrabajo_html.view.Pedidos" id="fgmPedidos" type="XML"/>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+            </content>
+            <footer>
+                <Toolbar>
+                    <Button
+                            id="errorPopover"
+                            icon="sap-icon://message-popup"
+                            visible="{= ${message>/}.length > 0}"
+                            text="{= ${message>/}.length}"
+                            type="Emphasized"
+                            press="handleMessagePopoverPress"/>
+                    <ToolbarSpacer/>
+                    <Button icon="sap-icon://nav-back" text="Volver a Monitor" type="Emphasized" visible="{=${/FromExternal} &amp;&amp; !${/Visibles/Cabecera/Grabar}}" press="handleBack"/>
+                    <Button icon="sap-icon://save" text="Grabar" type="Emphasized" visible="{/Visibles/Cabecera/Grabar}" press="handleGrabarCabecera"/>
+                    <Button icon="sap-icon://decline" text="Cancelar" visible="{/Visibles/Cabecera/Cancelar}" press="handleCancelarCabecera"/>
+                </Toolbar>
+            </footer>
+        </Page>
+    </App>
+</mvc:View>

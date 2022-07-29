@@ -1,0 +1,73 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:t="sap.ui.table" xmlns="sap.m">
+    <Toolbar visible="{Crear}">
+        <Label text="Ingrese Fecha Precio"/>
+        <DatePicker value="{Fecha}" width="10rem" displayFormat="dd/MM/yyyy" valueFormat="yyyyMMdd" enabled="false"/>
+        <Button text="Crear" icon="sap-icon://add-document" press="handleCrearOferta" visible="{/Visibles/Oferta/Crear}"/>
+    </Toolbar>
+
+    <t:Table visible="{Crear2}" rows="{Determinaciones}" class="tblFirstRow" selectionMode="None" visibleRowCount="10" noData="" id="tableDeterminaciones" fixedRowCount="1">
+        <t:extension>
+            <Toolbar>
+                <Button text="Crear Oferta" icon="sap-icon://add-document" press="handleCrearOfertaFinal" enabled="{=${Determinaciones}.length &gt; 1}"/>
+                <Button text="Cancelar" icon="sap-icon://decline" press="handleCancelarCrearOferta"/>
+            </Toolbar>
+        </t:extension>
+        <t:columns>
+            <t:Column autoResizable="true">
+                <Label text="Cantidad"/>
+                <t:template>
+                    <Text text="{CANTIDAD}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Descripción"/>
+                <t:template>
+                    <Text text="{DESCRIPCION}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Material"/>
+                <t:template>
+                    <Text text="{MATERIAL}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Valor Neto"/>
+                <t:template>
+                    <Text text="{path:'VALOR_NETO',type:'sap.ui.model.type.Float'}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="true">
+                <Label text="Moneda"/>
+                <t:template>
+                    <Text text="{MONEDA}"/>
+                </t:template>
+            </t:Column>
+            <t:Column autoResizable="false">
+                <Label text="Neto"/>
+                <t:template>
+                    <Text text="{path:'NETO',type:'sap.ui.model.type.Float'}"/>
+                </t:template>
+            </t:Column>
+        </t:columns>
+        <t:footer>
+            <Toolbar>
+                <Text text="Total: {= ${Determinaciones}.length }"/>
+            </Toolbar>
+        </t:footer>
+    </t:Table>
+
+    <Panel id="pnlAppOferta" visible="{Creado}" height="60rem" class="sapUiNoContentPadding noScrollPanel">
+        <Toolbar>
+            <!--<Button text="Ver Oferta" icon="sap-icon://show" press="handleVerOferta"/>-->
+            <Button icon="sap-icon://edit" press="handleEditarOferta" text="Editar" visible="{/Visibles/Oferta/Editar}"/>
+            <Button icon="sap-icon://print" press="handleImprimirOferta" text="Imprimir" visible="{/Visibles/Oferta/Imprimir}"/>
+            <Button icon="sap-icon://delete" press="handleBorrarOferta" text="Borrar" visible="{/Visibles/Oferta/Editar}"/>
+            <Button icon="sap-icon://approvals" press="handleAceptarOferta" text="Aceptar Oferta" visible="{= ${/Visibles/Oferta/Aceptar} &amp;&amp; ${Aceptada} !== 'X'}"/>
+            <ToolbarSpacer/>
+            <Label text="#Documento: {NroOferta}"/>
+        </Toolbar>
+    </Panel>
+
+
+</core:FragmentDefinition>

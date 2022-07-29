@@ -1,0 +1,198 @@
+<mvc:View xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns:t="sap.ui.table" xmlns="sap.m"
+          controllerName="sapui5agendar.scovisualizarordentrabajo_html.controller.ManoObra">
+    <App class="sapUiSizeCompact">
+        <Page showHeader="false">
+            <subHeader>
+                <Toolbar>
+                    <Button icon="sap-icon://nav-back" text="Volver" press="handleBack"/>
+                    <Label text="Nº Orden" required="true"/>
+                    <Input value="{/filters/NroOrden}" width="10rem" editable="{/Editables/Orden}"/>
+                    <Label visible="{/Visibles/HojaRuta}" text="Grupo Hoja de Ruta" required="true"/>
+                    <Input visible="{/Visibles/HojaRuta}" value="{/filters/GrupoHojaRuta}" width="7rem" editable="false"/>
+                    <Label visible="{/Visibles/Contador}" text="Contador" required="true"/>
+                    <Input visible="{/Visibles/Contador}" value="{/filters/Contador}" width="4rem" editable="false"/>
+                    <Text  visible="{/Visibles/Contador}" text="{/filters/Texto}"/>
+                    <!--<ToolbarSeparator/>-->
+                    <!--<Button text="Ejecutar" icon="sap-icon://accept" visible="{/Visibles/Ejecutar}" press="handleEjecutar"/>-->
+                </Toolbar>
+            </subHeader>
+            <content>
+                <Panel visible="{/Visibles/Datos}" binding="{/Cabecera}">
+                    <f:Form editable="true" >
+                        <f:layout>
+                            <f:ResponsiveGridLayout
+                                    labelSpanXL="4"
+                                    labelSpanL="4"
+                                    labelSpanM="4"
+                                    labelSpanS="4"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="3"
+                                    columnsL="3"
+                                    columnsM="3"
+                                    singleContainerFullSize="false"/>
+                        </f:layout>
+                        <f:formContainers>
+                            <f:FormContainer>
+                                <f:formElements>
+                                    <f:FormElement label="Usuario">
+                                        <f:fields>
+                                            <Text text="{USUARIO}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Objeto Técnico">
+                                        <f:fields>
+                                            <Text text="{OBJETO_TECNICO}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Material">
+                                        <f:fields>
+                                            <Text text="{MATERIAL}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Orden">
+                                        <f:fields>
+                                            <Text text="{ORDEN}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <!--<f:FormElement label="Contador">-->
+                                        <!--<f:fields>-->
+                                            <!--<Text text="{CONTADOR}"/>-->
+                                        <!--</f:fields>-->
+                                    <!--</f:FormElement>-->
+                                </f:formElements>
+                            </f:FormContainer>
+                            <f:FormContainer>
+                                <f:formElements>
+                                    <f:FormElement label="Fecha Creación">
+                                        <f:fields>
+                                            <Text text="{FECHA}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Marca/Modelo">
+                                        <f:fields>
+                                            <Text text="{MARCA_MODELO}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Centro Logistico">
+                                        <f:fields>
+                                            <Text text="{CENTRO_LOGISTICO}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Año">
+                                        <f:fields>
+                                            <Text text="{ANIO}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                            <f:FormContainer>
+                                <f:formElements>
+                                    <f:FormElement label="Hoja de Ruta">
+                                        <f:fields>
+                                            <Text text="{HOJA_RUTA}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Denominación">
+                                        <f:fields>
+                                            <Text text="{DENOMINACION}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Servicio">
+                                        <f:fields>
+                                            <Text text="{SERVICIO}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="Status">
+                                        <f:fields>
+                                            <Text text="{STATUS}" wrapping="false"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                        </f:formContainers>
+                    </f:Form>
+                </Panel>
+                <Panel>
+                    <t:Table id="tblOperaciones" rows="{/Operaciones}" selectedIndex="{/i_Operacion}" selectionMode="Single" selectionBehavior="RowOnly" visibleRowCount="6" noData="" visible="{/Visibles/Datos}" rowSelectionChange="handleOperacionesSelectChange">
+                        <t:extension>
+                            <Toolbar>
+                                <Button text="Componentes" icon="sap-icon://product" press="handleComponentes" enabled="{=${/i_Operacion} >= 0}"/>
+                            </Toolbar>
+                        </t:extension>
+                        <t:columns>
+                            <t:Column autoResizable="true">
+                                <t:template>
+                                    <CheckBox selected="{FLAG}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column autoResizable="true">
+                                <Label text="Operación"/>
+                                <t:template>
+                                    <Text text="{OPERACION}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column autoResizable="true">
+                                <Label text="Clase Actividad"/>
+                                <t:template>
+                                    <Input value="{CLASE_ACTIVIDAD}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column filterProperty="TEXTO_CLASE_ACTIVIDAD" autoResizable="true">
+                                <Label text="Texto Clase Actividad"/>
+                                <t:template>
+                                    <Text text="{TEXTO_CLASE_ACTIVIDAD}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column autoResizable="true">
+                                <Label text="Clave Modelo"/>
+                                <t:template>
+                                    <Text text="{CLAVE_MODELO}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column filterProperty="TEXTO" autoResizable="true">
+                                <Label text="Texto"/>
+                                <t:template>
+                                    <Text text="{TEXTO}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column autoResizable="true">
+                                <Label text="Trabajo Op."/>
+                                <t:template>
+                                    <Text text="{TRABAJO_OP}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column>
+                                <Label text="Materiales"/>
+                                <t:template>
+                                    <CheckBox editable="false" selected="{=${MATERIALES}==='X'}"/>
+                                </t:template>
+                            </t:Column>
+                        </t:columns>
+                        <t:footer>
+                            <Toolbar>
+                                <Text text="Total: {= ${/Operaciones}.length }"/>
+                            </Toolbar>
+                        </t:footer>
+                    </t:Table>
+                </Panel>
+            </content>
+            <footer>
+                <Toolbar>
+                    <Button
+                            id="errorPopover"
+                            icon="sap-icon://message-popup"
+                            visible="{= ${message>/}.length > 0}"
+                            text="{= ${message>/}.length}"
+                            type="Emphasized"
+                            press="handleMessagePopoverPress"/>
+                    <ToolbarSpacer/>
+                    <Button icon="sap-icon://save" text="Grabar" type="Emphasized" enabled="{/Visibles/Datos}" press="handleGrabar"/>
+                </Toolbar>
+            </footer>
+        </Page>
+    </App>
+</mvc:View>

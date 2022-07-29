@@ -1,0 +1,116 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns="sap.m"
+                         xmlns:f="sap.ui.layout.form"
+                         xmlns:l="sap.ui.layout"
+                         xmlns:custom="sapui5agendar.scovisualizarordentrabajo_html.customelements">
+    <Dialog class="sapUiSizeCompact" contentWidth="40rem" title="Modif. Orden de Servicio Reparación Pesado {Orden} : Operación tratamiento">
+
+        <f:Form editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="1"
+                        labelSpanL="1"
+                        labelSpanM="1"
+                        labelSpanS="1"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsXL="1"
+                        columnsL="1"
+                        columnsM="1"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Txt. Brv. Operación:&#160;" class="sapUiTinyMargin" textAlign="Right">
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S3"/>
+                                    </layoutData>
+                                </Label>
+                                <Input value="{TextoBreve}">
+                                    <layoutData>
+                                        <l:GridData span="L9 M9 S9"/>
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Cant. Operación:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{CantidadOperacion}"/>
+
+                                <Label text="Unidad Medida:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{UnidadMedida}" editable="false"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Precio:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{Precio}"/>
+
+                                <Label text="Moneda:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{Moneda}" editable="false"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Grupo Artículos:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{GrupoArticulos}" editable="false"/>
+
+                                <Label text="Clase de Coste:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{ClaseCoste}" editable="false"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Grupo de Compras:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Select items="{path:'GruposCompra',templateShareable:true}" selectedKey="{i_GrupoCompra}">
+                                    <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                                </Select>
+
+                                <Label text="Acreedor:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input
+                                        showValueHelp="true"
+                                        valueHelpRequest="handleSelectClienteOperacion"
+                                        value="{Acreedor}"
+                                        valueLiveUpdate="true"
+                                        submit="handleSearch"
+                                />
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                    <f:formElements>
+                        <f:FormElement visible="{CamposVisibles}">
+                            <f:fields>
+                                <Label text="Sol. Pedido:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{SolicitudPedido}" editable="false"/>
+
+                                <Label text="Doc. Compras:&#160;" class="sapUiTinyMargin" textAlign="Right"/>
+                                <Input value="{DocumentoCompras}" editable="false"/>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+
+        <beginButton>
+            <Button text="Aceptar" icon="sap-icon://accept" type="Emphasized" press="handleAceptarAgregarOperacion"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cerrar" icon="sap-icon://decline" press="closeDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

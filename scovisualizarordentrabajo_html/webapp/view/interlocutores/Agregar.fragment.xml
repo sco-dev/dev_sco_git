@@ -1,0 +1,145 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns="sap.m"
+                         xmlns:f="sap.ui.layout.form"
+                         xmlns:t="sap.ui.table"
+                         xmlns:l="sap.ui.layout">
+    <Dialog class="sapUiSizeCompact" contentWidth="60rem" title="Interlocutor">
+        <f:Form editable="true">
+            <f:layout>
+                <f:ResponsiveGridLayout
+                        labelSpanXL="0"
+                        labelSpanL="0"
+                        labelSpanM="0"
+                        labelSpanS="0"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsXL="1"
+                        columnsL="1"
+                        columnsM="1"
+                        singleContainerFullSize="false"/>
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Función:&#160;" class="sapUiTinyMargin" textAlign="Right">
+                                    <layoutData>
+                                        <l:GridData span="L1 M1 S1"/>
+                                    </layoutData>
+                                </Label>
+
+                                <Select items="{/Opciones/Interlocutores/Funciones}" selectedKey="{i_Funcion}" change="handleChangeSelectFunciones" enabled="{=!${Modifica}}">
+                                    <core:Item key="{KEY}" text="{= (${KEY}!==''?${KEY}+' - '+${TEXT}:${TEXT}) }"/>
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S3"/>
+                                    </layoutData>
+                                </Select>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+                <f:FormContainer visible="{Interlocutor}" class="sapUiNoContentPadding">
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Código:&#160;" class="sapUiTinyMargin" textAlign="Right">
+                                    <layoutData>
+                                        <l:GridData span="L1 M1 S1"/>
+                                    </layoutData>
+                                </Label>
+                                <Input value="{Codigo}" submit="handleSearchInterlocutorCodigo">
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S3"/>
+                                    </layoutData>
+                                </Input>
+                                <Label text="Nombre:&#160;" class="sapUiTinyMargin" textAlign="Right">
+                                    <layoutData>
+                                        <l:GridData span="L1 M1 S1"/>
+                                    </layoutData>
+                                </Label>
+                                <Input value="{Nombre}" submit="handleSearchInterlocutorNombre">
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S3"/>
+                                    </layoutData>
+                                </Input>
+                                <Label text="Apellido:&#160;" class="sapUiTinyMargin" textAlign="Right">
+                                    <layoutData>
+                                        <l:GridData span="L1 M1 S1"/>
+                                    </layoutData>
+                                </Label>
+                                <Input value="{Apellido}" submit="handleSearchInterlocutorApellido">
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S3"/>
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+
+                <f:FormContainer visible="{Cliente}">
+                    <f:formElements>
+                        <f:FormElement>
+                            <f:fields>
+                                <Label text="Código:&#160;" class="sapUiTinyMargin" textAlign="Right">
+                                    <layoutData>
+                                        <l:GridData span="L1 M1 S1"/>
+                                    </layoutData>
+                                </Label>
+                                <Input value="{Codigo}" submit="handleSearchClienteCodigo">
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S3"/>
+                                    </layoutData>
+                                </Input>
+                                <Label text="Nombre:&#160;" class="sapUiTinyMargin" textAlign="Right">
+                                    <layoutData>
+                                        <l:GridData span="L1 M1 S1"/>
+                                    </layoutData>
+                                </Label>
+                                <Input value="{Nombre}" submit="handleSearchClienteNombre">
+                                    <layoutData>
+                                        <l:GridData span="L3 M3 S3"/>
+                                    </layoutData>
+                                </Input>
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+
+        <t:Table rows="{Interlocutores}" selectedIndex="{i_Interlocutor}"
+                 selectionMode="Single" selectionBehavior="RowOnly" visibleRowCount="5" noData="">
+            <t:columns>
+                <t:Column width="10rem">
+                    <Label text="Código"/>
+                    <t:template>
+                        <Text text="{CODIGO}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column>
+                    <Label text="Nombre" />
+                    <t:template>
+                        <Text text="{NOMBRE}"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+            <t:footer>
+                <Toolbar>
+                    <Text text="Total: {= ${Interlocutores}.length }"/>
+                </Toolbar>
+            </t:footer>
+        </t:Table>
+
+
+        <beginButton>
+            <Button text="Grabar" icon="sap-icon://save" enabled="{=${i_Interlocutor} >= 0}" type="Emphasized" press="handleAceptarAgregarInterlocutor"/>
+        </beginButton>
+        <endButton>
+            <Button text="Cerrar" icon="sap-icon://decline" press="closeDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
