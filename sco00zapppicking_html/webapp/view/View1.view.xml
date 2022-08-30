@@ -1,0 +1,204 @@
+<mvc:View controllerName="sapui5agendar.sco00zapppicking_html.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:uit="sap.ui.table" xmlns:dnd="sap.ui.core.dnd" xmlns:l="sap.ui.layout" xmlns:unified="sap.ui.unified" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page title="{i18n>title}">
+                    <content>
+                        <f:Form id="FormChange354" editable="true">
+                            <f:title>
+                                <core:Title text="{i18n>title.search}"/>
+                            </f:title>
+                            <f:layout>
+                                <f:ResponsiveGridLayout labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+                            </f:layout>
+                            <f:formContainers>
+                                <f:FormContainer>
+                                    <f:formElements>
+                                        <f:FormElement label="{i18n>label.search.1}">
+                                            <f:fields>
+                                                <Input value="1S1N - Vespucio Neumáticos" id="idInputPto" placeholder="Ingrese un puerto..." showValueHelp="false" showSuggestion="true" suggestionItems="{/GT_PTOEXP}">
+                                                    <suggestionItems>
+                                                        <core:Item key="{VSTEL}" text="{VSTEL} - {VTEXT}"/>
+                                                    </suggestionItems>
+                                                    <layoutData>
+                                                        <l:GridData span="XL4 L4 M4 S10"/>
+                                                    </layoutData>
+                                                </Input>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="{i18n>label.search.2}">
+                                            <f:fields>
+                                                <DatePicker value="" displayFormat="dd.MM.YYYY" valueFormat="dd/MM/yyyy" id="fdesde">
+                                                    <layoutData>
+                                                        <l:GridData span="XL4 L4 M4 S10"/>
+                                                    </layoutData>
+                                                </DatePicker>
+                                                <DatePicker value="" displayFormat="dd.MM.YYYY" valueFormat="dd/MM/yyyy" id="fhasta">
+                                                    <layoutData>
+                                                        <l:GridData span="XL4 L4 M4 S10"/>
+                                                    </layoutData>
+                                                </DatePicker>
+                                                <Input value="{Street}" visible="false"/>
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="{i18n>label.search.3}">
+                                            <f:fields>
+                                                <Input value="" type="Number" id="idInputEnt" placeholder="Ingrese una entrega...">
+                                                    <layoutData>
+                                                        <l:GridData span="XL4 L4 M4 S10"/>
+                                                    </layoutData>
+                                                </Input>
+                                            </f:fields>
+                                        </f:FormElement>
+                                    </f:formElements>
+                                </f:FormContainer>
+                            </f:formContainers>
+                        </f:Form>
+                        <BusyDialog id="bd_buscar" title="Por favor espere..." text=""/>
+                        <BusyDialog id="bd" title="Por favor espere..." text="" close="onCloseBusyDialog"/>
+                        <!--INI Dialog -->
+                        <Dialog id="idDialogEnt" visible="false" state="Success" icon="sap-icon://shipping-status" class="sapContrast sapContrastPlus" title="Listado Entregas" contentWidth="100%" contentHeight="100%" afterOpen="onDialogAfterOpen">
+                            <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+                                <headerToolbar>
+                                    <Toolbar height="3rem">
+                                        <Title id="idPanelTitle" text=""/>
+                                    </Toolbar>
+                                </headerToolbar>
+
+                                <content>
+                                    <Input class="myClass" value="" submit="onPickMaterial" visible="false" id="idInputHidden" placeholder="Scan Neumático..."/>
+                                    <ProgressIndicator visible="false" id="idPB" percentValue="" width="100%" displayValue="" showValue="true" state="Error" />
+                                    <Toolbar>
+                                        <ToolbarSpacer/>
+                                        <ToolbarSpacer/>
+                                        <Button visible="false" id="idConf" text="Confirmar" type="Emphasized" icon="sap-icon://supplier" press="esConfirmacion"/>
+                                        <Button visible="false" id="idConf2" text="Confirmar" type="Accept" icon="sap-icon://supplier" press="aaa"/>
+                                    </Toolbar>
+
+
+                                    <Table id="idTablaEnt" items="{path: '/FiltroBusqueda',sorter:{path:'KODAT',descending: false, group: true},groupHeaderFactory: '.getGroupHeader'}" class="sapContrast sapContrastPlus" visible="true" width="100%" noDataText="Sin Datos" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true">
+                                        <columns>
+                                            <Column width="10%" visible="true">
+                                                <Text text="Entrega"/>
+                                            </Column>
+                                            <Column width="8%" visible="true">
+                                                <Text text="Cant"/>
+                                            </Column>
+                                            <Column width="8%" visible="true">
+                                                <Text text="Clase"/>
+                                            </Column>
+                                            <Column width="20%" visible="true">
+                                                <Text text="Cliente"/>
+                                            </Column>
+                                            <Column minScreenWidth="Tablet" demandPopin="true" visible="true">
+                                                <Text text="Pto "/>
+                                            </Column>
+                                            <Column minScreenWidth="Tablet" demandPopin="true" visible="true">
+                                                <Text text="Seleccionar"/>
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem visible="true">
+                                                <cells>
+                                                    <ObjectStatus class="sapUiSmallMarginBottom" text="{VBELN}"/>
+                                                    <ObjectStatus class="sapUiSmallMarginBottom" text=""/>
+                                                    <ObjectStatus class="sapUiSmallMarginBottom" text="{LFART}"/>
+                                                    <ObjectAttribute class="sapUiSmallMarginBottom" title="{NAME_WE}" text="{KUNNR}"/>
+                                                    <ObjectStatus class="sapUiSmallMarginBottom" text="{VSTEL}"/>
+                                                    <Button icon="sap-icon://bar-code" text="Picking" enabled="true" type="Reject" press="cargaPicking"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+
+                                    <f:Form id="idFormMaterial" visible="false" editable="false">
+                                        <f:title></f:title>
+                                        <f:layout>
+                                            <f:ResponsiveGridLayout labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+                                        </f:layout>
+                                        <f:formContainers>
+                                            <f:FormContainer>
+                                                <f:formElements>
+                                                    <f:FormElement label="Código Sap" visible="true">
+                                                        <f:fields>
+                                                            <Text text="" id="idMaterial"/>
+                                                            <ProgressIndicator id="idCtdConteo" percentValue="0" displayValue="" showValue="true" state="Error"/>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                    <f:FormElement label="Descripcion" visible="false">
+                                                        <f:fields>
+                                                            <Text text="" id="idTextoBreve"/>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                    <f:FormElement label="Texto Breve" visible="false">
+                                                        <f:fields>
+                                                            <Text text=""/>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                    <f:FormElement label="CTD CONTEO" id="idFormConteo" visible="false">
+                                                        <f:fields>
+                                                            <ProgressIndicator id="idCtdConteo2" percentValue="0" displayValue="" showValue="true" state="Error"/>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                </f:formElements>
+                                            </f:FormContainer>
+                                        </f:formContainers>
+                                    </f:Form>
+                                    <Table id="idTablaMateriales" visible="false" items="{path: '/Materiales', groupHeaderFactory: '.getGroupHeader'}" class="sapContrast sapContrastPlus" width="100%" noDataText="Sin Datos" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true">
+                                        <columns>
+                                            <Column width="10%" visible="true">
+                                                <Text text="Material"/>
+                                            </Column>
+                                            <Column width="8%" visible="false">
+                                                <Text text="Cant"/>
+                                            </Column>
+                                            <Column width="8%" visible="false">
+                                                <Text text="Pick"/>
+                                            </Column>
+                                            <Column width="8%" visible="true">
+                                                <Text text="Progreso"/>
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem visible="true">
+                                                <cells>
+                                                    <ObjectStatus class="sapUiSmallMarginBottom" state="{path : 'EAN11' , formatter : '.estadoMaterial'}" text="{path : 'MATNR' , formatter : '.formatCero'} - {ARKTX}"/>
+                                                    <ObjectStatus class="sapUiSmallMarginBottom" text="{LFIMG}"/>
+                                                    <ObjectStatus class="sapUiSmallMarginBottom" text="{PIKMG}"/>
+                                                    <!-- <ObjectStatus class="sapUiSmallMarginBottom" text="{LFIMG}/{PIKMG}"/> @frivera -->
+                                                    <ProgressIndicator id="idPBTablaMat" percentValue="{PERCENT}" displayValue="{PIKMG} / {LFIMG}" showValue="true" state="{STATE}"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </content>
+                            </Panel>
+                            <beginButton>
+                                <Button text="Cerrar" type="Emphasized" press="cerrarDialog" id="btnCerrar" visible="true"/>
+                            </beginButton>
+                            <endButton>
+                                <Button text="Volver" type="Emphasized" press="volverDialog" id="btnVolver" visible="false"/>
+                            </endButton>
+                            <!--<beginButton>-->
+                            <!--	<Button text="Confirmar" type="Accept" icon="sap-icon://supplier" press="confirmarEntrega"/>-->
+                            <!--</beginButton>-->
+                        </Dialog>
+                        <!--Fin Dialog -->
+                    </content>
+                    <footer>
+                        <Toolbar>
+                            <ToolbarSpacer/>
+                            <Button text="Limpiar" id="idBtnLimpiar" press="onLimpiar" type="Accept"/>
+                            <Button text="Buscar" id="idBtnBuscar" press="validarBusqueda" type="Accept"/>
+                            <Button id="idBtnRepetir" visible="false" press="onRepetir" text="Repetir Demo" icon="sap-icon://refresh" type="Accept"/>
+                        </Toolbar>
+                    </footer>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
