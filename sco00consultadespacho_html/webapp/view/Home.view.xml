@@ -1,0 +1,416 @@
+<mvc:View controllerName="sapui5agendar.sco00consultadespacho_html.controller.Home" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:sf="sap.ui.layout.form" xmlns:f="sap.f" xmlns:layout="sap.ui.layout" xmlns:t="sap.ui.table"
+	xmlns:fb="sap.ui.comp.filterbar" height="100%">
+	<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+		<!-- DynamicPage Title -->
+		<f:title >
+			<f:DynamicPageTitle >
+				<f:heading>
+					<Title text="{i18n>title}"/>
+				</f:heading>
+				<f:actions>
+					<Link text="Salir" press="handleSalir" visible="{mainView>/VisibleSalir}"/>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<!-- DynamicPage Header -->
+		<f:content>
+			<VBox displayInline="false" fitContainer="true" alignItems="Center" height='100%' width='100%'>
+				<!-- INICIO Login -->
+				<FlexBox height="100px" alignItems="Center" justifyContent="Center" visible="{mainView>/VisibleLogin}">
+					<layout:Grid defaultSpan="XL4 L6 M6 S12">
+						<layout:VerticalLayout >
+							<Label text="Rut" labelFor="ipRut"/>
+							<Input id="ipRut" placeholder="XXXXXXXX-X" value="{mainView>/Rut}" width='200px' required="true"/>
+						</layout:VerticalLayout>
+					</layout:Grid>
+				</FlexBox>
+				<FlexBox height="100px" alignItems="Center" justifyContent="Center" visible="{mainView>/VisibleLogin}">
+					<layout:Grid defaultSpan="XL4 L6 M6 S12">
+						<layout:VerticalLayout>
+							<Label text="Patente" labelFor="ipPatente"/>
+							<Input id="ipPatente" placeholder="Ingrese patente" value="{mainView>/Patente}" width='200px' required="true"/>
+						</layout:VerticalLayout>
+					</layout:Grid>
+				</FlexBox>
+				<FlexBox height="100px" alignItems="Center" justifyContent="Center" visible="{mainView>/VisibleLogin}">
+					<layout:Grid defaultSpan="XL4 L6 M6 S12">
+						<layout:VerticalLayout>
+							<Label text="Contraseña" labelFor="ipContrasena"/>
+							<Input id="ipContrasena" type="Password" placeholder="Ingrese contraseña" value="{mainView>/Clave}" width='200px' maxLength="4"
+								required="true"/>
+						</layout:VerticalLayout>
+					</layout:Grid>
+				</FlexBox>
+				<FlexBox height="100px" alignItems="Center" justifyContent="Center" visible="{mainView>/VisibleLogin}">
+					<Button text="Iniciar Sesión" press="handleLogin" visible="{/VisibleResultado}" type="Emphasized"/>
+				</FlexBox>
+				<!-- FIN Login -->
+				<!-- INICIO Despacho -->
+				<FlexBox alignItems="Start" justifyContent="Start" visible="{mainView>/VisibleBuscarFolio}">
+					<layout:Grid width="100%" hSpacing='0' vSpacing='0'>
+						<layout:HorizontalLayout>
+							<SearchField showRefreshButton="false" id="idSearch" placeholder="Folio Transportista" width="250px" search="onSearch"
+								value="{mainView>/FolioSearch}"/>
+						</layout:HorizontalLayout>
+					</layout:Grid>
+				</FlexBox>
+				<!--
+	
+	<Panel headerText="Detalle del folio cliente " visible="{mainView>/VisibleDespacho}"  class="sapUiSmallMarginTop sapUiTinyMarginBegin" width="100%">
+	<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleDespacho}">
+		<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+			<layout:HorizontalLayout>
+				<Label text="Folio: " labelFor="idFolio"/>
+				<Text text="{mainView>/DespachoFolio}"  id="idFolio" class="sapUiTinyMarginBegin"/>
+			</layout:HorizontalLayout>
+		</layout:Grid>
+	</FlexBox>
+	
+	<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleDespacho}">
+		<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+			<layout:HorizontalLayout>
+				<Label text="Estado: " labelFor="idEstado"/>
+				<Text text="{mainView>/DespachoEstado}"  id="idEstado" class="sapUiTinyMarginBegin"/>
+			</layout:HorizontalLayout>
+		</layout:Grid>
+	</FlexBox>
+	
+	<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleDespacho}">
+		<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+			<layout:HorizontalLayout>
+				<Label text="Centro: " labelFor="idCentro"/>
+				<Text text=" {mainView>/DespachoCentro} - {mainView>/DespachoCentroTxt}" id="idCentro" class="sapUiTinyMarginBegin" />
+			</layout:HorizontalLayout>
+		</layout:Grid>
+	</FlexBox>				
+	
+	<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleDespacho}">
+		<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+			<layout:HorizontalLayout>
+				<Label text="RUT Chofer: " labelFor="idRut"/>
+				<Text text="{mainView>/Rut}"  id="idRut" class="sapUiTinyMarginBegin" />
+			</layout:HorizontalLayout>
+		</layout:Grid>
+	</FlexBox>				
+	
+	<FlexBox alignItems="Start" justifyContent="Start" visible="{mainView>/VisibleDespacho}">
+		<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+			<layout:HorizontalLayout>
+				<Label text="Nombre del Chofer: " labelFor="idNombre"/>
+				<Text text="{mainView>/DespachoNombreChofer}"  id="idNombre" class="sapUiTinyMarginBegin" />
+			</layout:HorizontalLayout>
+		</layout:Grid>
+	</FlexBox>	
+	
+	<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleDespacho}">
+		<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+			<layout:HorizontalLayout>
+				<Label text="Patente: " labelFor="idPatente"/>
+				<Text text="{mainView>/Patente}"  id="idPatente" class="sapUiTinyMarginBegin" />
+			</layout:HorizontalLayout>
+		</layout:Grid>
+	</FlexBox>
+
+	</Panel>
+	-->
+				<Table id="idDespacho" inset="false" mode="None" updateFinished="onTableUpdateFinished" growing="true" growingThreshold="20"
+					visible="{mainView>/VisibleDespacho}" class="sapUiNoMarginBegin sapUiNoMarginTop">
+					<headerToolbar>
+						<OverflowToolbar >
+							<Title text="Detalle del folio transportista "/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column class="sapUiNoMarginBegin"></Column>
+					</columns>
+					<items>
+						<ColumnListItem >
+							<cells >
+								<layout:Grid width="100%" hSpacing='0' vSpacing='0.5'>
+									<layout:HorizontalLayout>
+										<Label text="Folio: " labelFor="idFolio"/>
+										<Text text="{mainView>/DespachoFolio}" id="idFolio" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="Estado: " labelFor="idEstado"/>
+										<Text text="{mainView>/DespachoEstado} - {mainView>/DespachoEstadoTxt}" id="idEstado" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="Centro: " labelFor="idCentro"/>
+										<Text text=" {mainView>/DespachoCentro} - {mainView>/DespachoCentroTxt}" id="idCentro" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="RUT Chofer: " labelFor="idRut"/>
+										<Text text="{mainView>/Rut}" id="idRut" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="Nombre del Chofer: " labelFor="idNombre"/>
+										<Text text="{mainView>/DespachoNombreChofer}" id="idNombre" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="Patente: " labelFor="idPatente"/>
+										<Text text="{mainView>/Patente}" id="idPatente" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+								</layout:Grid>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<Table id="idFoliosDespachoTable" inset="false" items="{path: 'mainView>/FoliosDepacho'}" mode="None" updateFinished="onTableUpdateFinished"
+					growing="true" growingThreshold="20" visible="{mainView>/VisibleDespacho}" alternateRowColors="true">
+					<headerToolbar>
+						<OverflowToolbar id="otbSubheader">
+							<Title id="lineItemsHeader" text="{mainView>/lineItemTableTitle}"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column id="colFolioCliente">
+							<Text text="Folio Cliente"/>
+						</Column>
+						<Column id="colEstado">
+							<Text text="Estado"/>
+						</Column>
+						<Column id="colCliente">
+							<Text text="Cliente"/>
+						</Column>
+						<Column id="colNAT">
+							<Text text="NAT"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem type="DetailAndActive" detailPress="onEditDespacho">
+							<cells>
+								<Text id="idFolioCliente" text="{path: 'mainView>FolioCliente'}"/>
+								<ObjectStatus text="{path: 'mainView>EstadoTxt'}" state="{path: 'mainView>EstadoColor'}"/>
+								<ObjectIdentifier text="{path: 'mainView>Cliente'}"/>
+								<CheckBox editable="{path: 'mainView>VisibleAceptar'}" selected="{path: 'mainView>Selected'}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<FlexBox alignItems="End" justifyContent="End" visible="{mainView>/VisibleFinDespacho}">
+					<layout:Grid vSpacing='1'>
+						<layout:HorizontalLayout>
+							<Button type="Accept" text="Finalizar Despacho" class="sapUiSmallMarginTop sapUiTinyMarginBegin" press="onPressFinalizarDespacho"/>
+						</layout:HorizontalLayout>
+					</layout:Grid>
+				</FlexBox>
+				<!-- FIN Despacho -->
+				<!-- INICIO Detalle del Folio Cliente -->
+				<Table id="idFolioClienteDetalle" inset="false" mode="None" growing="true" growingThreshold="20" visible="{mainView>/VisibleFolioCliente}"
+					class="sapUiNoMarginBegin sapUiNoMarginTop">
+					<headerToolbar>
+						<OverflowToolbar >
+							<Title text="Detalle del folio cliente"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column class="sapUiNoMarginBegin"></Column>
+					</columns>
+					<items>
+						<ColumnListItem >
+							<cells >
+								<layout:Grid width="100%" hSpacing='0' vSpacing='0.5'>
+									<layout:HorizontalLayout>
+										<Label text="Folio: " labelFor="idFolioC"/>
+										<Text text="{mainView>/FCFolio}" id="idFolioC" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="Estado: " labelFor="idEstadoFC"/>
+										<Text text="{mainView>/FCEstado} - {mainView>/FCEstadoTxt}" id="idEstadoFC" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="Centro: " labelFor="idCentroFC"/>
+										<Text text=" {mainView>/DespachoCentro} - {mainView>/DespachoCentroTxt}" id="idCentroFC" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+									<layout:HorizontalLayout>
+										<Label text="Cliente: " labelFor="idCliente"/>
+										<Text text="{mainView>/FCCliente} -{mainView>/FCClienteTxt}" id="idCliente" class="sapUiTinyMarginBegin"/>
+									</layout:HorizontalLayout>
+								</layout:Grid>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<!--	<Panel headerText="Detalle del folio cliente " visible="{mainView>/VisibleFolioCliente}" >
+		<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleFolioCliente}">
+			<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+				<layout:HorizontalLayout>
+					<Label text="Folio: " labelFor="idFolioC"/>
+					<Text text="{mainView>/FCFolio}"  id="idFolioC" class="sapUiTinyMarginBegin"/>
+				</layout:HorizontalLayout>
+			</layout:Grid>
+		</FlexBox>
+		
+		<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleFolioCliente}">
+			<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+				<layout:HorizontalLayout>
+					<Label text="Estado: " labelFor="idEstadoFC"/>
+					<Text text="{mainView>/FCEstado} - {mainView>/FCEstadoTxt}"  id="idEstadoFC" class="sapUiTinyMarginBegin"/>
+				</layout:HorizontalLayout>
+			</layout:Grid>
+		</FlexBox>
+		
+		<FlexBox alignItems="Start" justifyContent="Start"  visible="{mainView>/VisibleFolioCliente}">
+			<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+				<layout:HorizontalLayout>
+					<Label text="Centro: " labelFor="idCentroFC"/>
+					<Text text=" {mainView>/DespachoCentro} - {mainView>/DespachoCentroTxt}" id="idCentroFC" class="sapUiTinyMarginBegin" />
+				</layout:HorizontalLayout>
+			</layout:Grid>
+		</FlexBox>				
+		
+		<FlexBox alignItems="Start" justifyContent="Start">
+			<layout:Grid width="100%" hSpacing = '0' vSpacing = '0.5'>
+				<layout:HorizontalLayout>
+					<Label text="Cliente: " labelFor="idCliente"/>
+					<Text text="{mainView>/FCCliente} -{mainView>/FCClienteTxt}"  id="idCliente" class="sapUiTinyMarginBegin" />
+				</layout:HorizontalLayout>
+			</layout:Grid>
+		</FlexBox>	
+	</Panel> -->
+				<IconTabBar visible="{mainView>/VisibleFolioCliente}" selectedKey="{mainView>/FCTab}">
+					<items>
+						<IconTabFilter text="Vacios">
+							<Table id="idVaciosTable" inset="true" items="{path: 'mainView>/Vacios'}" growing="true" growingThreshold="20"
+								visible="{mainView>/VisibleFolioCliente}" alternateRowColors="true">
+								<columns >
+									<Column id="colFormato">
+										<Text text="Formato" width="80px"/>
+									</Column>
+									<Column id="colNormal" width="50px">
+										<Text text="Nor."/>
+									</Column>
+									<Column id="colAbastible" width="50px">
+										<Text text="Abst."/>
+									</Column>
+									<Column id="colLipigas" width="50px">
+										<Text text="Lipg."/>
+									</Column>
+									<Column id="colOtros" width="50px">
+										<Text text="Otrs"/>
+									</Column>
+									<Column id="colTotal" width="50px">
+										<Text text="Total"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem >
+										<cells >
+											<Text id="idFormato" text="{path: 'mainView>Formato'}" width="80px"/>
+											<Text id="idNormal" text="{path: 'mainView>VaciosNor'}" width="50px"/>
+											<Text id="idAbastible" text="{path: 'mainView>VaciosAba'}" textAlign="Right" width="50px"/>
+											<Text id="idLipigas" text="{path: 'mainView>VaciosLip'}" textAlign="Right" width="50px"/>
+											<Text id="idOtros" text="{path: 'mainView>VaciosOtc'}" textAlign="Right" width="50px"/>
+											<Text id="idTotal" text="{path: 'mainView>Total'}" textAlign="Right" width="50px"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</IconTabFilter>
+						<IconTabFilter text="Llenos">
+							<Table id="idLlenosTable" inset="true" items="{path: 'mainView>/Llenos'}" growing="true" growingThreshold="20"
+								visible="{mainView>/VisibleFolioCliente}" alternateRowColors="true">
+								<columns>
+									<Column id="colFormato2">
+										<Text text="Formato" width="80px"/>
+									</Column>
+									<Column id="colLlenosNor">
+										<Text text="Normal" width="65px"/>
+									</Column>
+									<Column id="colLlenosCat">
+										<Text text="Catalíticos" width="65px"/>
+									</Column>
+									<Column id="colTotal2">
+										<Text text="Total" width="65px"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem >
+										<cells>
+											<Text id="idFormato2" text="{path: 'mainView>Formato'}" width="80px"/>
+											<Text id="idLlenosNo" text="{path: 'mainView>LlenosNor'}" width="65px"/>
+											<Text id="idLlenosCat" text="{path: 'mainView>LlenosCat'}" width="65px"/>
+											<Text id="idTotal2" text="{path: 'mainView>Total'}" width="65px"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</IconTabFilter>
+						<IconTabFilter text="Fallados">
+							<Table id="idFallidosTable" inset="true" items="{path: 'mainView>/Fallidos'}" growing="true" growingThreshold="20"
+								visible="{mainView>/VisibleFolioCliente}" alternateRowColors="true">
+								<columns>
+									<Column id="colFormato3">
+										<Text text="Formato" width="80px"/>
+									</Column>
+									<Column id="colFallidosNor">
+										<Text text="Normal" width="65px"/>
+									</Column>
+									<Column id="colFallidosCat">
+										<Text text="Catalíticos" width="65px"/>
+									</Column>
+									<Column id="colTotal3">
+										<Text text="Total" width="65px"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem >
+										<cells>
+											<Text id="idFormato3" text="{path: 'mainView>Formato'}" width="80px"/>
+											<Text id="idFallidosNo" text="{path: 'mainView>FalladosNor'}" width="65px"/>
+											<Text id="idFallidosCat" text="{path: 'mainView>FalladosCat'}" width="65px"/>
+											<Text id="idTotal3" text="{path: 'mainView>Total'}" width="65px"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</IconTabFilter>
+						<IconTabFilter text="Vales">
+							<Table id="idValesTable" inset="true" items="{path: 'mainView>/Vales'}" growing="true" growingThreshold="20"
+								visible="{mainView>/VisibleFolioCliente}" alternateRowColors="true">
+								<columns>
+									<Column id="colFormato4">
+										<Text text="Formato" width="80px"/>
+									</Column>
+									<Column id="colValesCar">
+										<Text text="Carga" width="65px"/>
+									</Column>
+									<Column id="colValesGar">
+										<Text text="Garantía" width="65px"/>
+									</Column>
+									<Column id="colTotal4">
+										<Text text="Total" width="65px"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem >
+										<cells>
+											<Text id="idFormato4" text="{path: 'mainView>Formato'}" width="80px"/>
+											<Text id="idValesCar" text="{path: 'mainView>ValesCar'}" width="65px"/>
+											<Text id="idValesGar" text="{path: 'mainView>ValesGar'}" width="65px"/>
+											<Text id="idTotal4" text="{path: 'mainView>Total'}" width="65px"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</IconTabFilter>
+					</items>
+				</IconTabBar>
+				<FlexBox alignItems="End" justifyContent="End" visible="{mainView>/VisibleFolioCliente}">
+					<layout:Grid vSpacing='1'>
+						<layout:HorizontalLayout>
+							<Button text="Volver" class="sapUiSmallMarginTop sapUiTinyMarginBegin" press="onPressVolver"/>
+							<Button type="Accept" text="Aceptar" class="sapUiSmallMarginTop sapUiTinyMarginBegin" press="onPressAceptarFC"
+								visible="{mainView>/FCVisibleAceptar}"/>
+						</layout:HorizontalLayout>
+					</layout:Grid>
+				</FlexBox>
+				<!-- FIN Despacho -->
+			</VBox>
+		</f:content>
+		<!-- DynamicPage Footer -->
+		<f:footer></f:footer>
+	</f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,2 @@
+// @ts-nocheck
+(function(t,i){"use strict";t.writeText=function(t,e,n,r){r=r||{};var a={align:"left",width:this.internal.pageSize.width};var h=i.extend({},a,r);var s=this.internal.getFontSize();var l=this.getStringUnitWidth(n)*s/this.internal.scaleFactor;if(h.align==="center")t+=(h.width-l)/2;else if(h.align==="right")t+=h.width-l;this.text(n,t,e)}})(jsPDF.API,jQuery);
