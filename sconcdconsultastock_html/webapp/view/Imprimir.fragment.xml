@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sapui5agendar.sconcdconsultastock_html.controller.App" displayBlock="true" autoFocus="false">
+	<Dialog id="frag_nuevoItem" title="Imprimir">
+		<sap.ui.layout.form:SimpleForm xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" layout="ResponsiveGridLayout" id="form0" adjustLabelSpan="false" singleContainerFullSize="false" columnsL="1" emptySpanL="3">
+			<sap.ui.layout.form:content>
+				<Label text="Almacen" required="true"/>
+				<ComboBox items="{path: 'detalleStock>/Almacenes'}" selectedKey="{_AlmacenImpresion}" visible="true">
+					<core:Item key="{detalleStock>ALMACEN}" text="{detalleStock>ALMACEN} - {detalleStock>DESCRIP}"/>
+				</ComboBox>
+				<Label text="Seleccione impresora" required="true"/>
+				<ComboBox items="{path: 'detalleStock>/Impresoras'}" selectedKey="{_Impresora}" visible="true">
+					<core:Item key="{detalleStock>IMPRESORA}" text="{detalleStock>IMPRESORA} - {detalleStock>NOMBRE_IMP}"/>
+				</ComboBox>
+				<Label text="Cantidad" required="true"/>
+				<Input value="{_CantidadImpresion}" enabled="true" required="false" width="100%"/>
+			</sap.ui.layout.form:content>
+		</sap.ui.layout.form:SimpleForm>
+		<buttons>
+			<Button type="Emphasized" icon="sap-icon://print" press="pressConfirm"/>
+			<Button icon="sap-icon://decline" press="addCancel" type="Reject"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

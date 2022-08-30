@@ -1,0 +1,287 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:u="sap.ui.unified" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sapui5agendar.sconcdconsultastock_html.controller.App" visible="true">
+	<semantic:DetailPage id="idFrag_detalleStock" navButtonPress="onNavBackDetalle" showNavButton="true" title="{i18n>detalleStockTitle}" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<semantic:content>
+			<Panel xmlns="sap.m" width="auto" expandable="false" expanded="true">
+				<Panel xmlns="sap.m" width="auto" expandable="true" expanded="true">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Material"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</headerToolbar>
+					<f:SimpleForm width="100%" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" editable="true" emptySpanS="0" layout="ResponsiveGridLayout">
+						<f:content>
+							<f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+								<f:content>
+									<Label text="Código de Material"/>
+									<ObjectStatus text="{detalleStock>/MATERIAL}" class="sapMObjectStatusLarge" state="Warning"/>
+									<Label text="Material"/>
+									<ObjectStatus text="{detalleStock>/DESCRIP}" class="sapMObjectStatusLarge" state="Warning"/>
+								</f:content>
+							</f:SimpleForm>
+							<f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+								<f:content>
+									<Label text="Código de Parte"/>
+									<ObjectStatus text="{detalleStock>/COD_PARTE}" class="sapMObjectStatusLarge" state="Warning"/>
+									<Label text="Stock Total"/>
+									<ObjectStatus icon="sap-icon://SAP-icons-TNT/instance-specification" text="{detalleStock>/STOCK_TOTAL}" class="sapMObjectStatusLarge" state="Error"/>
+								</f:content>
+							</f:SimpleForm>
+							<f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+								<f:content>
+									<Label text="Cantidad por paquete"/>
+									<ObjectStatus text="{detalleStock>/CANTIDAD_PAQUETIZADA}" class="sapMObjectStatusLarge" state="Warning"/>
+									<Label text="Proveedor"/>
+									<ObjectStatus text="{detalleStock>/PROVEEDOR}" class="sapMObjectStatusLarge" state="Warning"/>
+								</f:content>
+							</f:SimpleForm>
+						</f:content>
+					</f:SimpleForm>
+				</Panel>
+				<Panel xmlns="sap.m" width="auto" expandable="true" expanded="true">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Almacenes"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</headerToolbar>
+					<content>
+						<Table items="{detalleStock>/Almacenes}">
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{detalleStock>ALMACEN}"/>
+										<Text text="{detalleStock>DESCRIP}"/>
+										<Text text="{detalleStock>CANTIDAD}"/>
+										<Text text="{detalleStock>UBI_ACTUAL}"/>
+										<Text text="{detalleStock>UBI_ANTIGUA}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+							<columns>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Cod. Almacén" design="Bold"/>
+									</header>
+								</Column>
+								<Column>
+									<header>
+										<Label text="Almacén" design="Bold"/>
+									</header>
+								</Column>
+								<Column hAlign="End">
+									<header>
+										<Label text="Cantidad" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Ubicación Actual" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Ubicación Antigua" design="Bold"/>
+									</header>
+								</Column>
+							</columns>
+						</Table>
+					</content>
+				</Panel>
+				<Panel xmlns="sap.m" width="auto" expandable="true">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Detalle de Stock"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</headerToolbar>
+					<content>
+						<Table items="{detalleStock>/DetalleStock}">
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{detalleStock>ALMACEN}"/>
+										<Text text="{detalleStock>STOCK_CALZADO}"/>
+										<Text text="{detalleStock>STOCK_RESERVA}"/>
+										<Text text="{detalleStock>STOCK_TRANSITO}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+							<columns>
+								<Column>
+									<header>
+										<Label text="Cod. Almacén" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Stock Calzado" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Stock Reserva" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Stock Transito" design="Bold"/>
+									</header>
+								</Column>
+							</columns>
+						</Table>
+					</content>
+				</Panel>
+				<Panel xmlns="sap.m" width="auto" expandable="true" visible="{MOSTRAR_MOVIMIENTOS}">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Movimientos"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</headerToolbar>
+					<content>
+						<Table items="{detalleStock>/Movimientos}">
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{detalleStock>FECHA}"/>
+										<Text text="{detalleStock>MOVIEMINTO}"/>
+										<Text text="{detalleStock>CANTIDAD}"/>
+										<Text text="{detalleStock>RESPONSABLE}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+							<columns>
+								<Column>
+									<header>
+										<Label text="Fecha" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Movimiento" design="Bold"/>
+									</header>
+								</Column>
+								<Column hAlign="End">
+									<header>
+										<Label text="Cantidad" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Responsable" design="Bold"/>
+									</header>
+								</Column>
+							</columns>
+						</Table>
+					</content>
+				</Panel>
+				<Panel xmlns="sap.m" width="auto" expandable="true">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Código Parte"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</headerToolbar>
+					<content>
+						<Table items="{detalleStock>/CodigoParte}">
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{detalleStock>COD_PARTE}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+							<columns>
+								<Column>
+									<header>
+										<Label text="Código Parte" design="Bold"/>
+									</header>
+								</Column>
+							</columns>
+						</Table>
+					</content>
+				</Panel>
+				<Panel xmlns="sap.m" width="auto" expandable="true" visible="{MOSTRAR_DEMANDA}">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Demanda"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</headerToolbar>
+					<content>
+						<Table items="{detalleStock>/Demanda}">
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{detalleStock>STOCK_NAC}"/>
+										<Text text="{detalleStock>STOCK_REPOSICION}"/>
+										<Text text="{detalleStock>DEMANDA}"/>
+										<Text text="{detalleStock>FECHA_COMPRA}"/>
+										<Text text="{detalleStock>FECHA_VENTA}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+							<columns>
+								<Column>
+									<header>
+										<Label text="Stock Nacional" design="Bold"/>
+									</header>
+								</Column>
+								<Column hAlign="End">
+									<header>
+										<Label text="Reposición" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="DDA Nacional" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Fec. Ult. Compra" design="Bold"/>
+									</header>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<header>
+										<Label text="Fec. Ult. Venta" design="Bold"/>
+									</header>
+								</Column>
+							</columns>
+						</Table>
+					</content>
+				</Panel>
+				<Panel xmlns="sap.m" width="auto" expandable="true">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Historial de ubicaciones"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</headerToolbar>
+					<content>
+						<Table items="{detalleStock>/HistorialUbi}">
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{detalleStock>UBICACION}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+							<columns>
+								<Column>
+									<header>
+										<Label text="Ubicación" design="Bold"/>
+									</header>
+								</Column>
+							</columns>
+						</Table>
+					</content>
+				</Panel>
+			</Panel>
+		</semantic:content>
+		<semantic:customFooterContent>
+			<Button text="Imprimir" press="pressImprimir"  icon="sap-icon://print"/>
+		</semantic:customFooterContent>
+	</semantic:DetailPage>
+</core:FragmentDefinition>

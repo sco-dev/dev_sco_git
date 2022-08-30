@@ -1,0 +1,105 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:u="sap.ui.unified"
+	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="sapui5agendar.sconcdconsultastock_html.controller.App" visible="true">
+	<semantic:DetailPage id="idFrag_consultaStock" title="{i18n>consultaStockTitle}">
+		<semantic:content>
+			<Panel id="panel1" xmlns="sap.m" width="auto" expandable="true" expanded="true">
+				<headerToolbar>
+					<Toolbar id="Toolbar1">
+						<Title id="Title1" text="Filtros"/>
+						<ToolbarSpacer id="ToolbarSpacer1" />
+					</Toolbar>
+				</headerToolbar>
+				<content>
+					<f:SimpleForm id="SimpleForm1" width="100%" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" editable="true" emptySpanS="0"
+						layout="ResponsiveGridLayout">
+						<f:content>
+							<f:SimpleForm id="SimpleForm2" editable="true" layout="ResponsiveGridLayout">
+								<f:content>
+									<Label id="MaterialLabel" text="Material" required="true"/>
+									<Input id ="MaterialInput" value="{MATERIAL}" submit="handlePressSearch" valueLiveUpdate="true" maxLength="18" liveChange="inputNumeric"/>
+									<Label id="CodParteLabel" text="Código de Parte" required="true"/>
+									<Input id="CodParteInput" value="{COD_PARTE}" submit="handlePressSearch" valueLiveUpdate="true" maxLength="40"/>
+									<Label id="UbicacionLabel" text="Ubicación" required="true"/>
+									<Input id="UbicacionInput" value="{UBICACION}" submit="handlePressSearch" valueLiveUpdate="true" maxLength="10"/>
+								</f:content>
+							</f:SimpleForm>
+							<f:SimpleForm id="SimpleForm3" editable="true" layout="ResponsiveGridLayout">
+								<f:content>
+									<Label id="FechaDesdeLabel" text="Fecha Movimiento Desde" required="true"/>
+									<DatePicker id="FechaDesdeDatePicker" value="{FECHA_INI}" valueFormat="yyyy/MM/dd" displayFormat="dd/MM/yyyy"/>
+									<Label id="FechaHastaLabel" text="Fecha Movimiento Hasta" required="true"/>
+									<DatePicker id="FechaHastaPicker" value="{FECHA_FIN}" valueFormat="yyyy/MM/dd" displayFormat="dd/MM/yyyy"/>
+								</f:content>
+							</f:SimpleForm>
+							<f:SimpleForm id="SimpleForm4" editable="true" layout="ResponsiveGridLayout">
+								<f:content>
+									<Label id="CentroLabel" text="Centro" required="true"/>
+									<ComboBox id="comboCentro" items="{path: '/Centros', sorter: {path: 'CENTRO'}}" selectedKey="{i_centro}">
+										<core:Item id="core1" key="{CENTRO}" text="{CENTRO} - {DESCRIPCION}"/>
+									</ComboBox>
+								</f:content>
+							</f:SimpleForm>
+						</f:content>
+					</f:SimpleForm>
+					<VBox id="VBox1" width="100%" direction="Column" alignItems="Baseline">
+						<items>
+							<HBox id="HBox1" width="100%" alignItems="End" alignContent="End" justifyContent="End">
+								<CheckBox id="Checkbox1" text="Movimientos" selected="{MOSTRAR_MOVIMIENTOS}"/>
+								<CheckBox id="Checkbox2" text="Demanda" selected="{MOSTRAR_DEMANDA}"/>
+							</HBox>
+							<HBox id="HBox2" width="100%" alignItems="End" alignContent="End" justifyContent="End">
+								<items>
+								<Toolbar id="Toolbar2" class="noBorders">
+										<Button id="ButtonSearch" press="handlePressSearch" text="Buscar" icon="sap-icon://search" textDirection="RTL"/>
+										<ToolbarSpacer id="ToolbarSpacer2"/>
+										<Button id="ButtonLimpiar" press="handleLimpiarPress" text="Limpiar" icon="sap-icon://delete" type="Reject"/>
+								</Toolbar>
+								</items>
+							</HBox>
+						</items>
+					</VBox>
+				</content>
+			</Panel>
+			<Table id="lineItemsList" updateFinished="onListUpdateFinished" items="{/Resultado/MATERIALES}">
+				<headerToolbar>
+					<Toolbar id="lineItemsToolbar">
+						<Title id="lineItemsHeader" text="{/lineItemListTitle}"/>
+					</Toolbar>
+				</headerToolbar>
+				<items>
+					<ColumnListItem id="ColumnListItem1" type="Navigation" press="onPress">
+						<cells>
+							<Text id="TextMaterial" text="{MATERIAL}"/>
+							<Text id="TextDescrip" text="{DESCRIP}"/>
+							<Text id="TextCodParte" text="{COD_PARTE}"/>
+							<Text id="TextStockTotal" text="{STOCK_TOTAL}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+				<columns>
+					<Column id="Column1" minScreenWidth="Tablet" demandPopin="true">
+						<header>
+							<Label id="CodMaterialLabel" text="Cod. Material"/>
+						</header>
+					</Column>
+					<Column id="Column2">
+						<header>
+							<Label id="DescripLabel" text="Descripción Material"/>
+						</header>
+					</Column>
+					<Column id="Column3">
+						<header>
+							<Label id="DescripcCodParte" text="Cod. Parte"/>
+						</header>
+					</Column>
+					<Column id="Column4" hAlign="End">
+						<header>
+							<Label id="StockTotalLabel" text="Stock Total"/>
+						</header>
+					</Column>
+				</columns>
+			</Table>
+		</semantic:content>
+	</semantic:DetailPage>
+</core:FragmentDefinition>

@@ -1,0 +1,12 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar"
+	controllerName="sapui5agendar.sconcdconsultastock_html.controller.App" visible="true">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content></content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
