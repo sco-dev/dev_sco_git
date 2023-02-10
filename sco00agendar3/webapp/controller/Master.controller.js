@@ -105,7 +105,9 @@ sap.ui.define([
                 }
             },
 
-            _iniciarCampos: function () {
+            _iniciarCampos: function (l) {
+
+
                 this.set('/Visibles', {
                     VistaSalfa: false,
                     VistaSalfaRent: false,
@@ -151,10 +153,21 @@ sap.ui.define([
 
                 this.set('/i_Conductor', -1);
 
-                this.set('/Vehiculos', []);
+                
                 this.set('/HistorialMantenciones', []);
 
-                this._iniciarContrato();
+                  // para pantalla de creación de vehículo...
+
+      //          this.set('/Contrato', {});
+                
+                if (l !== "X")  {
+                    
+                    this.set('/Vehiculos', []);
+                    this._iniciarContrato();
+                    this.set('/Vehiculo', {});
+
+                } 
+                
                 this._iniciarCliente();
                 this._iniciarConductor('C');
                 this._iniciarConsultarDisponibilidad();
@@ -164,6 +177,7 @@ sap.ui.define([
             },
 
             _iniciarContrato: function () {
+                               
                 this.set('/Contrato', {
                     RUT_CLIENTE: '',
                     ADMINISTRADOR: '',
@@ -176,7 +190,10 @@ sap.ui.define([
                     KM_CONTRATADO: '',
                     PLAZO_CONTRATADO: '',
                     RENDIMIENTO_NEUMATICO: ''
+
                 });
+
+                
             },
 
             _iniciarCliente: function () {
@@ -203,6 +220,23 @@ sap.ui.define([
                     TelefonoFijo: '',
                     Email: ''
                 });
+            },
+
+            _iniciarVehiculo: function (modo) {
+
+
+                this.set('/Vehiculo', {
+                    //            Modo: modo,
+                    Marca: '',
+                    Modelo: '',
+                    Patente: '',
+                    Ano: '',
+                    kmregistrado: '',
+                    kmactual: ''
+
+                });
+
+
             },
 
             _iniciarConsultarDisponibilidad: function () {
@@ -246,13 +280,23 @@ sap.ui.define([
                 }
             },
 
+            handleSearch1: function (e) {
+                let validator = new Validator();
+                //       let valid = validator.validate(e.getSource().getParent());
+                this.set('/Visibles/VistaSalfaRent', false);
+                //  if (valid) {
+                this._getEquipo();
+                //   }
+            },
+
+
             _getEquipo: function () {
 
                 let that = this;
                 this.set('/Visibles/VistaSalfaRent', false);
 
                 let patente = this.get('/filters/Patente');
-                this._iniciarCampos();
+                this._iniciarCampos("X");
                 this.set('/filters/Patente', patente);
 
                 let resultOk = true;
@@ -340,18 +384,22 @@ sap.ui.define([
                 });
 
                 //            if (vehiculoOrigen) {
-                this.set('/Vehiculos', [
-                    {
-                        ANIO: '2022',
-                        MARCA: 'HONDA',
-                        MODELO: 'HONDA WRV',
-                        KILOMETRAJE: '400000',
-                        KILOMETRAJE_ACTUAL: 0,
-                        PATENTE: 'BBWW68',
-                        VIN: 'LKAKJSIWUBD',
-                        FLAG_ACT_KM: false
-                    }
-                ]);
+
+
+                // this.set('/Vehiculos', [
+                //     {
+                //         ANIO: '2022',
+                //         MARCA: 'HONDA',
+                //         MODELO: 'HONDA WRV',
+                //         KILOMETRAJE: '400000',
+                //         KILOMETRAJE_ACTUAL: 0,
+                //         PATENTE: 'BBWW68',
+                //         VIN: 'LKAKJSIWUBD',
+                //         FLAG_ACT_KM: false
+                //     }
+                // ]);
+
+
                 /*    
                                     if (vehiculoOrigen.TIPO_EQUI.toUpperCase() === "J" || vehiculoOrigen.TIPO_EQUI.toUpperCase() === "K" || vehiculoOrigen.TIPO_EQUI.toUpperCase() === "F") {
                                         this.set('/Visibles/VistaSalfa', false);
@@ -371,19 +419,23 @@ sap.ui.define([
 
             _buscarDatosContrato(success) {
 
-                this.set('/Contrato', {
-                    RUT_CLIENTE: '7787823-U',
-                    ADMINISTRADOR: 'RAMON VAZQUEZ',
-                    FONO: '35',
-                    DEDUCIBLE: '3500',
-                    POSEE_REEMPLAZO: 'Sí',
-                    HORAS_REEMPLAZO: '598',
-                    CLIENTE: 'LAS CONDES',
-                    EMAIL: 'lascondes@gmail.com',
-                    KM_CONTRATADO: '78000',
-                    PLAZO_CONTRATADO: '8',
-                    RENDIMIENTO_NEUMATICO: '5'
-                });
+
+                /*
+                                this.set('/Contrato', {
+                                    RUT_CLIENTE: '77123123-1',
+                                    ADMINISTRADOR: 'RAMON VAZQUEZ',
+                                    FONO: '223456789',
+                                    DEDUCIBLE: '3500',
+                                    POSEE_REEMPLAZO: 'Sí',
+                                    HORAS_REEMPLAZO: '598',
+                                    CLIENTE: 'LAS CONDES',
+                                    EMAIL: 'cliente1@compania1.com',
+                                    KM_CONTRATADO: '78000',
+                                    PLAZO_CONTRATADO: '8',
+                                    RENDIMIENTO_NEUMATICO: '5'
+                                });
+                
+                                */
 
                 this.set('/Visibles/Contrato', true);
                 this.set('/Visibles/Cliente', false);
@@ -543,13 +595,85 @@ sap.ui.define([
                 let regiones = [];
 
                 regiones.push({
-                    ID_REGION: 'AT',
-                    DES_REGION: 'Atacama'
+                    ID_REGION: 'I',
+                    DES_REGION: 'I - Tarapacá '
                 });
 
                 regiones.push({
-                    ID_REGION: 'SN',
-                    DES_REGION: 'Santiago'
+                    ID_REGION: 'II',
+                    DES_REGION: 'II - Antofagasta'
+                });
+
+                regiones.push({
+                    ID_REGION: 'III',
+                    DES_REGION: 'III - Atacama '
+                });
+
+                regiones.push({
+                    ID_REGION: 'IV',
+                    DES_REGION: 'IV - Coquimbo'
+                });
+
+                regiones.push({
+                    ID_REGION: 'V',
+                    DES_REGION: 'V - Valparaíso'
+                });
+
+
+                regiones.push({
+                    ID_REGION: 'VI',
+                    DES_REGION: 'VI - OHiggins'
+                });
+
+                regiones.push({
+                    ID_REGION: 'VII',
+                    DES_REGION: 'VII - El Maule'
+                });
+
+                regiones.push({
+                    ID_REGION: 'VIII',
+                    DES_REGION: 'VIII - El Bío Bío'
+                });
+
+                regiones.push({
+                    ID_REGION: 'IX',
+                    DES_REGION: 'IX - La Araucanía'
+                });
+
+                regiones.push({
+                    ID_REGION: 'X',
+                    DES_REGION: 'X - Los Lagos'
+                });
+
+                regiones.push({
+                    ID_REGION: 'XI',
+                    DES_REGION: 'XI - Aysén'
+                });
+
+
+                regiones.push({
+                    ID_REGION: 'XII',
+                    DES_REGION: 'XII - Magallanes y Antártica Chilena'
+                });
+
+                regiones.push({
+                    ID_REGION: 'XIII',
+                    DES_REGION: 'XIII - Región Metropolitana'
+                });
+
+                regiones.push({
+                    ID_REGION: 'XIV',
+                    DES_REGION: 'XIV - Los Ríos '
+                });
+
+                regiones.push({
+                    ID_REGION: 'XV',
+                    DES_REGION: 'XV - Arica y Parinacota'
+                });
+
+                regiones.push({
+                    ID_REGION: 'XVI',
+                    DES_REGION: 'XVI - Ñuble'
                 });
 
                 that.set('/Opciones/Regiones', regiones);
@@ -680,15 +804,29 @@ sap.ui.define([
                 talleres.push({
                     ID_REGION: 'Atacama',
                     ID_CENTRO: '001',
-                    DES_CENTRO: 'CENTRO 001',
-                    DES_COMPLETO: 'CENTRO 001'
+                    DES_CENTRO: 'TALLER 001',
+                    DES_COMPLETO: 'TALLER 001'
                 });
 
                 talleres.push({
                     ID_REGION: 'Santiago',
                     ID_CENTRO: '002',
-                    DES_CENTRO: 'CENTRO 002',
-                    DES_COMPLETO: 'CENTRO 002'
+                    DES_CENTRO: 'TALLER 002',
+                    DES_COMPLETO: 'TALLER 002'
+                });
+
+                talleres.push({
+                    ID_REGION: 'Atacama',
+                    ID_CENTRO: '003',
+                    DES_CENTRO: 'TALLER 003',
+                    DES_COMPLETO: 'TALLER 003'
+                });
+
+                talleres.push({
+                    ID_REGION: 'Santiago',
+                    ID_CENTRO: '004',
+                    DES_CENTRO: 'TALLER 004',
+                    DES_COMPLETO: 'TALLER 004'
                 });
 
                 that.set('/Opciones/Talleres', talleres);
@@ -754,90 +892,90 @@ sap.ui.define([
                 let fechas = [];
                 let horas = [];
 
-                fechas.push({ DATE: utils.dateFromFormat('2022-05-23', 'yyyy-MM-dd') });
-                fechas.push({ DATE: utils.dateFromFormat('2022-05-24', 'yyyy-MM-dd') });
-                fechas.push({ DATE: utils.dateFromFormat('2022-05-25', 'yyyy-MM-dd') });
-                fechas.push({ DATE: utils.dateFromFormat('2022-05-26', 'yyyy-MM-dd') });
-                fechas.push({ DATE: utils.dateFromFormat('2022-05-27', 'yyyy-MM-dd') });
+                fechas.push({ DATE: utils.dateFromFormat('2022-07-11', 'yyyy-MM-dd') });
+                fechas.push({ DATE: utils.dateFromFormat('2022-07-12', 'yyyy-MM-dd') });
+                fechas.push({ DATE: utils.dateFromFormat('2022-07-13', 'yyyy-MM-dd') });
+                fechas.push({ DATE: utils.dateFromFormat('2022-07-14', 'yyyy-MM-dd') });
+                fechas.push({ DATE: utils.dateFromFormat('2022-07-15', 'yyyy-MM-dd') });
 
                 that.set('/Opciones/FechasDisponibles', fechas);
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-23', 'yyyy-MM-dd'),
-                    HORA_INI: '06:30:00',
-                    HORA_FIN: '07:00:00',
+                    DATE: utils.dateFromFormat('2022-07-11', 'yyyy-MM-dd'),
+                    HORA_INI: '08:30:00',
+                    HORA_FIN: '09:00:00',
                     CANT_BOX: '3',
                     CAP_RECEPCION: '2'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-23', 'yyyy-MM-dd'),
-                    HORA_INI: '07:00:00',
-                    HORA_FIN: '07:30:00',
+                    DATE: utils.dateFromFormat('2022-07-11', 'yyyy-MM-dd'),
+                    HORA_INI: '09:00:00',
+                    HORA_FIN: '09:30:00',
                     CANT_BOX: '4',
                     CAP_RECEPCION: '1'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-24', 'yyyy-MM-dd'),
-                    HORA_INI: '06:30:00',
-                    HORA_FIN: '07:00:00',
+                    DATE: utils.dateFromFormat('2022-07-12', 'yyyy-MM-dd'),
+                    HORA_INI: '08:30:00',
+                    HORA_FIN: '09:00:00',
                     CANT_BOX: '3',
                     CAP_RECEPCION: '2'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-24', 'yyyy-MM-dd'),
-                    HORA_INI: '07:00:00',
-                    HORA_FIN: '07:30:00',
+                    DATE: utils.dateFromFormat('2022-07-12', 'yyyy-MM-dd'),
+                    HORA_INI: '09:00:00',
+                    HORA_FIN: '09:30:00',
                     CANT_BOX: '4',
                     CAP_RECEPCION: '1'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-25', 'yyyy-MM-dd'),
-                    HORA_INI: '06:30:00',
-                    HORA_FIN: '07:00:00',
+                    DATE: utils.dateFromFormat('2022-07-13', 'yyyy-MM-dd'),
+                    HORA_INI: '08:30:00',
+                    HORA_FIN: '09:00:00',
                     CANT_BOX: '3',
                     CAP_RECEPCION: '2'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-25', 'yyyy-MM-dd'),
-                    HORA_INI: '07:00:00',
-                    HORA_FIN: '07:30:00',
+                    DATE: utils.dateFromFormat('2022-07-13', 'yyyy-MM-dd'),
+                    HORA_INI: '09:00:00',
+                    HORA_FIN: '09:30:00',
                     CANT_BOX: '4',
                     CAP_RECEPCION: '1'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-26', 'yyyy-MM-dd'),
-                    HORA_INI: '06:30:00',
-                    HORA_FIN: '07:00:00',
+                    DATE: utils.dateFromFormat('2022-07-14', 'yyyy-MM-dd'),
+                    HORA_INI: '08:30:00',
+                    HORA_FIN: '09:00:00',
                     CANT_BOX: '3',
                     CAP_RECEPCION: '2'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-26', 'yyyy-MM-dd'),
-                    HORA_INI: '07:00:00',
-                    HORA_FIN: '07:30:00',
+                    DATE: utils.dateFromFormat('2022-07-14', 'yyyy-MM-dd'),
+                    HORA_INI: '09:00:00',
+                    HORA_FIN: '09:30:00',
                     CANT_BOX: '4',
                     CAP_RECEPCION: '1'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-27', 'yyyy-MM-dd'),
-                    HORA_INI: '06:30:00',
-                    HORA_FIN: '07:00:00',
+                    DATE: utils.dateFromFormat('2022-07-15', 'yyyy-MM-dd'),
+                    HORA_INI: '08:30:00',
+                    HORA_FIN: '09:00:00',
                     CANT_BOX: '3',
                     CAP_RECEPCION: '2'
                 });
 
                 horas.push({
-                    DATE: utils.dateFromFormat('2022-05-27', 'yyyy-MM-dd'),
-                    HORA_INI: '070000',
-                    HORA_FIN: '073000',
+                    DATE: utils.dateFromFormat('2022-07-15', 'yyyy-MM-dd'),
+                    HORA_INI: '09:00:00',
+                    HORA_FIN: '09:30:00',
                     CANT_BOX: '4',
                     CAP_RECEPCION: '1'
                 });
@@ -1362,6 +1500,12 @@ sap.ui.define([
                 this.openDialog("Conductor");
             },
 
+            handleCrearVehiculo: function () {
+                this._iniciarVehiculo('C');
+                this.openDialog("Vehiculo");
+            },
+
+
             _iniciarConductor: function (modo) {
                 this.set('/Conductor', {
                     Modo: modo,
@@ -1410,6 +1554,82 @@ sap.ui.define([
                 sap.m.MessageBox.success('Se guardado con exito el conductor', { title: "Éxito" });
 
                 that.closeDialog();
+                /*
+                                if (valid) {
+                                    let conductor = this.get('/Conductor');
+                                    let datosConductor = {
+                                        NOMBRE: conductor.Nombre + '/]' + conductor.Apellido,
+                                        RUT: conductor.Rut,
+                                        TELEFONO: conductor.TelefonoMovil,
+                                        FONO_FIJO: conductor.TelefonoFijo,
+                                        MAIL: conductor.Email,
+                                        VENC_LICEN_COND: ''
+                                    };
+                                    utils.httpCall({
+                                        service: "ZF353_CAMBIACONDUCTOR",
+                                        type: 'POST',
+                                        query: {
+                                            IDEQUIPO: this.get('/Vehiculos/0').VIN,
+                                            DATOSCONDUCTOR: datosConductor
+                                        },
+                                        success: result => {
+                                            if (result.SERVICESTATUS.CODE != '0') {
+                                                that.addMessage(result.SERVICESTATUS.MESSAGE, 'E');
+                                            } else {
+                                                if (result.SERVICESTATUS.CODE == '0') {
+                                                    sap.m.MessageBox.success(result.SERVICESTATUS.MESSAGE, {title: "Éxito"});
+                                                } else {
+                                                    that.addMessage(result.SERVICESTATUS.MESSAGE, 'W');
+                                                }
+                                                that._buscarDatosConductores();
+                                                that.closeDialog();
+                                            }
+                                        }
+                                    });
+                                }
+                
+                                */
+            },
+
+            handleSaveVehiculo: function (e) {
+
+                let that = this;
+                //               let validator = new Validator();
+                //                let valid = validator.validate(e.getSource().getParent());
+                let Vehiculo = this.get('/Vehiculo');
+                let Vehiculos = [];
+                Vehiculos = that.get('/Vehiculos');
+
+                Vehiculos.push({
+                    MARCA: Vehiculo.Marca,
+                    MODELO: Vehiculo.Modelo,
+                    PATENTE: Vehiculo.Patente,
+                    ANIO: Vehiculo.Ano,
+                    KILOMETRAJE: Vehiculo.kmregistrado,
+                    KILOMETRAJE_ACTUAL: Vehiculo.kmactual
+                });
+
+                that.set('/Vehiculos', Vehiculos);
+
+
+                /*
+                                let datosConductor = {
+                                    NOMBRE: conductor.Nombre + '/]' + conductor.Apellido,
+                                    RUT: conductor.Rut,
+                                    TELEFONO: conductor.TelefonoMovil,
+                                    FONO_FIJO: conductor.TelefonoFijo,
+                                    MAIL: conductor.Email,
+                                    VENC_LICEN_COND: ''
+                                };
+                
+                                */
+
+                sap.m.MessageBox.success('Se guardado con exito el Vehiculo', { title: "Éxito" });
+
+                that.closeDialog();
+
+
+                that.handleSearch1();
                 /*
                                 if (valid) {
                                     let conductor = this.get('/Conductor');

@@ -1,0 +1,135 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="sap.m">
+    <Dialog class="sapUiSizeCompact" contentWidth="30rem" title="{=(${/Conductor/Modo} === 'C'?'Registro de':'Actualizar')} Patente">
+        <f:Form editable="true" binding="{/Vehiculo}">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="1" emptySpanS="1" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+            </f:layout>
+
+            <f:title>
+                <core:Title text="Vehículo" />
+            </f:title>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+
+
+                        <f:FormElement label="Marca">
+                            <f:fields>
+                                <Input required="true" value="{Marca}" editable="true"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Modelo">
+                            <f:fields>
+
+                                <Input required="true" value="{Modelo}"/>
+
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Patente">
+                            <f:fields>
+                                <Input required="true" value="{Patente}"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Año">
+                            <f:fields>
+                                <Input required="true" value="{Ano}"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Km Registrado">
+                            <f:fields>
+                                <Input required="true" value="{kmregistrado}" />
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Km Actual">
+                            <f:fields>
+
+                                <Input required="true" value="{kmactual}"/>
+                            </f:fields>
+
+                        </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+
+                <f:Form editable="true" binding="{/Contrato}">
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="1" emptySpanS="1" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+            </f:layout>
+
+            <f:title>
+                <core:Title text="Cliente" />
+            </f:title>
+
+            <f:formContainers>
+
+                <f:FormContainer>
+                
+                    <f:formElements>
+
+
+                        <f:FormElement label="RUT CLIENTE">
+                            <f:fields>
+                                <Input required="true" value="{RUT_CLIENTE}" editable="true"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Fono">
+                            <f:fields>
+
+                                <Input required="true" value="{FONO}"/>
+
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Cliente">
+                            <f:fields>
+                                <Input required="true" value="{CLIENTE}"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Email Adm">
+                            <f:fields>
+                                <Input required="true" value="{EMAIL}"/>
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Administrador">
+                            <f:fields>
+                                <Input required="true" value="{ADMINISTRADOR}" />
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="Seguro">
+                            <f:fields>
+
+                                <Input required="true" value="HDI Seguros"/>
+                            </f:fields>
+
+                        </f:FormElement>
+
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+
+        
+        <beginButton>
+            <Button type="Emphasized" press="handleSaveVehiculo" text="Guardar"/>
+        </beginButton>
+        <endButton>
+            <Button press="closeDialog" text="Cancelar"/>
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

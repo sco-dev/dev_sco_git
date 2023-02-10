@@ -1,57 +1,33 @@
-<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
-                         xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" xmlns:u="sap.ui.unified"
-                         xmlns:t="sap.ui.table" xmlns:c="sap.suite.ui.commons"
-                         xmlns:custom="sapui5agendar.sco00agendar3.customelements">
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:t="sap.ui.table"
+    xmlns:c="sap.suite.ui.commons"
+    xmlns:custom="sapui5agendar.sco00agendar3.customelements">
     <Dialog id="DIALOG1" class="sapUiSizeCompact" contentWidth="80rem" title="Consultar Disponibilidad">
-        <IconTabBar id="ICONTAB1"
-                expanded="true"
-                select="handleIconTabBarSelect"
-                class="sapUiResponsiveContentPadding customIconTabBar"
-                binding="{/ConsultarDisponibilidad}"
-                selectedKey="{/ConsultarDisponibilidad/Step}">
+        <IconTabBar id="ICONTAB1" expanded="true" select="handleIconTabBarSelect" class="sapUiResponsiveContentPadding customIconTabBar" binding="{/ConsultarDisponibilidad}" selectedKey="{/ConsultarDisponibilidad/Step}">
             <items>
-                <IconTabFilter id="ICONTABFILTER2"
-                        icon="sap-icon://calendar"
-                        iconColor="Default"
-                        design="Horizontal"
-                        text="Seleccione Fecha y Hora"
-                        count="1"
-                        key="FechaHora">
-                    <Panel  headerText="Datos de la Solicitud" class="sapUiNoContentPadding" >
+                <IconTabFilter id="ICONTABFILTER2" icon="sap-icon://calendar" iconColor="Default" design="Horizontal" text="Seleccione Fecha y Hora" count="1" key="FechaHora">
+                    <Panel headerText="Datos de la Solicitud" class="sapUiNoContentPadding">
                         <Panel id="PANEL20" class="sapUiNoContentPadding">
                             <f:Form editable="true">
                                 <f:layout>
-                                    <f:ResponsiveGridLayout 
-                                            labelSpanXL="2"
-                                            labelSpanL="2"
-                                            labelSpanM="2"
-                                            labelSpanS="2"
-                                            adjustLabelSpan="false"
-                                            emptySpanXL="8"
-                                            emptySpanL="8"
-                                            emptySpanM="8"
-                                            emptySpanS="8"
-                                            columnsXL="1"
-                                            columnsL="1"
-                                            columnsM="1"
-                                            singleContainerFullSize="false"/>
+                                    <f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="2" adjustLabelSpan="false" emptySpanXL="8" emptySpanL="8" emptySpanM="8" emptySpanS="8" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
                                 </f:layout>
                                 <f:formContainers>
                                     <f:FormContainer >
                                         <f:formElements>
                                             <f:FormElement label="Seleccione la Region">
                                                 <f:fields>
-                                                    <custom:ExtendedSelect 
-                                                            required="true"
-                                                            items="{/Opciones/Regiones}"
-                                                            selectedKey="{
+                                                    <custom:ExtendedSelect required="true" items="{/Opciones/Regiones}" selectedKey="{
                                                                 path:'i_Region',
                                                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                                                 constraints:{type:'requiredSelect'}
-                                                            }"
-                                                            change="handleRegionChange"
-                                                            forceSelection="false">
-                                                        <core:Item  key="{ID_REGION}" text="{DES_REGION}"/>
+                                                            }" change="handleRegionChange" forceSelection="false">
+                                                        <core:Item key="{ID_REGION}" text="{DES_REGION}"/>
                                                     </custom:ExtendedSelect>
                                                 </f:fields>
                                             </f:FormElement>
@@ -60,40 +36,22 @@
                                 </f:formContainers>
                             </f:Form>
                         </Panel>
-                        <Panel  class="sapUiNoContentPadding">
-                            <f:Form  editable="true">
+                        <Panel class="sapUiNoContentPadding">
+                            <f:Form editable="true">
                                 <f:layout>
-                                    <f:ResponsiveGridLayout 
-                                            labelSpanXL="2"
-                                            labelSpanL="2"
-                                            labelSpanM="2"
-                                            labelSpanS="2"
-                                            adjustLabelSpan="false"
-                                            emptySpanXL="8"
-                                            emptySpanL="8"
-                                            emptySpanM="8"
-                                            emptySpanS="8"
-                                            columnsXL="1"
-                                            columnsL="1"
-                                            columnsM="1"
-                                            singleContainerFullSize="false"/>
+                                    <f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="2" adjustLabelSpan="false" emptySpanXL="8" emptySpanL="8" emptySpanM="8" emptySpanS="8" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
                                 </f:layout>
                                 <f:formContainers>
                                     <f:FormContainer >
                                         <f:formElements>
-                                            <f:FormElement  label="Seleccione el Taller">
+                                            <f:FormElement label="Seleccione el Taller">
                                                 <f:fields>
-                                                    <custom:ExtendedSelect 
-                                                            required="true"
-                                                            items="{/Opciones/Talleres}"
-                                                            selectedKey="{
+                                                    <custom:ExtendedSelect required="true" items="{/Opciones/Talleres}" selectedKey="{
                                                                 path:'i_Taller',
                                                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                                                 constraints:{type:'requiredSelect'}
-                                                            }"
-                                                            change="handleTallerChange"
-                                                            forceSelection="false">
-                                                        <core:Item  key="{ID_CENTRO}" text="{DES_COMPLETO}"/>
+                                                            }" change="handleTallerChange" forceSelection="false">
+                                                        <core:Item key="{ID_CENTRO}" text="{DES_COMPLETO}"/>
                                                     </custom:ExtendedSelect>
                                                 </f:fields>
                                             </f:FormElement>
@@ -105,52 +63,36 @@
                         <Panel >
                             <l:VerticalLayout >
                                 <l:content>
-                                    <u:Calendar id="calendarDisponibilidad" months="3" width="70rem" select="handleFechaSelect"
-                                                specialDates="{/Opciones/FechasDisponibles}" disabledDates="{/Opciones/DisabledDates}"
-                                                startDateChange="handleMonthChange">
+                                    <u:Calendar id="calendarDisponibilidad" months="3" width="70rem" select="handleFechaSelect" specialDates="{/Opciones/FechasDisponibles}" disabledDates="{/Opciones/DisabledDates}" startDateChange="handleMonthChange">
                                         <u:specialDates>
-                                            <u:DateTypeRange  type="Type08" startDate="{DATE}"></u:DateTypeRange>
+                                            <u:DateTypeRange type="Type08" startDate="{DATE}"></u:DateTypeRange>
                                         </u:specialDates>
                                         <u:disabledDates>
-                                            <u:DateRange  startDate="{DATE}"></u:DateRange>
+                                            <u:DateRange startDate="{DATE}"></u:DateRange>
                                         </u:disabledDates>
                                         <u:selectedDates>
-                                            <u:DateRange  startDate="{i_Fecha}"></u:DateRange>
+                                            <u:DateRange startDate="{i_Fecha}"></u:DateRange>
                                         </u:selectedDates>
                                     </u:Calendar>
                                     <u:CalendarLegend class="customLegend">
                                         <u:items>
-                                            <u:CalendarLegendItem  type="Type01" text="Disponible" color="#6e8c1f"/>
+                                            <u:CalendarLegendItem type="Type01" text="Disponible" color="#6e8c1f"/>
                                         </u:items>
                                     </u:CalendarLegend>
                                 </l:content>
                             </l:VerticalLayout>
                         </Panel>
                         <Panel >
-                            <f:Form  editable="true">
+                            <f:Form editable="true">
                                 <f:layout>
-                                    <f:ResponsiveGridLayout 
-                                            labelSpanXL="6"
-                                            labelSpanL="6"
-                                            labelSpanM="6"
-                                            labelSpanS="6"
-                                            adjustLabelSpan="false"
-                                            emptySpanXL="0"
-                                            emptySpanL="0"
-                                            emptySpanM="0"
-                                            emptySpanS="0"
-                                            columnsXL="3"
-                                            columnsL="3"
-                                            columnsM="3"
-                                            singleContainerFullSize="false"/>
+                                    <f:ResponsiveGridLayout labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="6" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false"/>
                                 </f:layout>
                                 <f:formContainers>
                                     <f:FormContainer >
                                         <f:formElements>
-                                            <f:FormElement  label="Fecha Seleccionada">
+                                            <f:FormElement label="Fecha Seleccionada">
                                                 <f:fields>
-                                                    <Input  required="true"
-                                                           value="{
+                                                    <Input required="true" value="{
                                                                 path:'i_Fecha',
                                                                 type:'sap.ui.model.type.Date',
                                                                 formatOptions:{pattern:'dd/MM/yyyy'}
@@ -161,19 +103,14 @@
                                     </f:FormContainer>
                                     <f:FormContainer>
                                         <f:formElements>
-                                            <f:FormElement  label="Hora Inicio">
+                                            <f:FormElement label="Hora Inicio">
                                                 <f:fields>
-                                                    <custom:ExtendedSelect 
-                                                            required="true"
-                                                            items="{/Opciones/HorasDisponibles}"
-                                                            selectedKey="{
+                                                    <custom:ExtendedSelect required="true" items="{/Opciones/HorasDisponibles}" selectedKey="{
                                                                 path:'i_Hora',
                                                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                                                 constraints:{type:'requiredSelect'}
-                                                            }"
-                                                            forceSelection="false"
-                                                            change="handleHoraChange">
-                                                        <core:Item  key="{HORA_INI}" text="{HORA_INI}"/>
+                                                            }" forceSelection="false" change="handleHoraChange">
+                                                        <core:Item key="{HORA_INI}" text="{HORA_INI}"/>
                                                     </custom:ExtendedSelect>
                                                 </f:fields>
                                             </f:FormElement>
@@ -181,18 +118,14 @@
                                     </f:FormContainer>
                                     <f:FormContainer >
                                         <f:formElements>
-                                            <f:FormElement label="Box Disponible">
+                                            <f:FormElement label="Box">
                                                 <f:fields>
-                                                    <custom:ExtendedSelect 
-                                                            required="true"
-                                                            items="{/Opciones/BoxesDisponibles}"
-                                                            selectedKey="{
+                                                    <custom:ExtendedSelect required="true" items="{/Opciones/BoxesDisponibles}" selectedKey="{
                                                                 path:'i_Box',
                                                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                                                 constraints:{type:'requiredSelect'}
-                                                            }"
-                                                            forceSelection="false">
-                                                        <core:Item  key="{ID_BOX}" text="{DESC_BOX}"/>
+                                                            }" forceSelection="false">
+                                                        <core:Item key="{ID_BOX}" text="{DESC_BOX}"/>
                                                     </custom:ExtendedSelect>
                                                 </f:fields>
                                             </f:FormElement>
@@ -203,53 +136,28 @@
                         </Panel>
                     </Panel>
                 </IconTabFilter>
-                <IconTabSeparator  icon="sap-icon://open-command-field"/>
+                <IconTabSeparator icon="sap-icon://open-command-field"/>
 
                 <!--Workarround segundo tab con disabled no cambia-->
 
-                <IconTabFilter 
-                        icon="sap-icon://vehicle-repair"
-                        iconColor="Default"
-                        design="Horizontal"
-                        count="2"
-                        text="Seleccione Servicio y Raparaciones"
-                        enabled="false"
-                        visible="{=${Step} !== 'ServicioReparaciones'}"/>
+                <IconTabFilter icon="sap-icon://vehicle-repair" iconColor="Default" design="Horizontal" count="2" text="Seleccione Servicio y Raparaciones" enabled="false" visible="{=${Step} !== 'ServicioReparaciones'}"/>
                 <!--End Workarround-->
 
-                <IconTabFilter 
-                        icon="sap-icon://vehicle-repair"
-                        iconColor="Default"
-                        design="Horizontal"
-                        count="2"
-                        text="Seleccione Servicio y Raparaciones"
-                        key="ServicioReparaciones"
-                        visible="{=${Step} === 'ServicioReparaciones'}">
-                    <Panel  headerText="Datos del Servicio">
+                <IconTabFilter icon="sap-icon://vehicle-repair" iconColor="Default" design="Horizontal" count="2" text="Seleccione Servicio y Raparaciones" key="ServicioReparaciones" visible="{=${Step} === 'ServicioReparaciones'}">
+                    <Panel headerText="Datos del Servicio">
                         <Panel >
-                            <l:VerticalLayout  width="100%">
-                                <Label  required="true" text="Seleccione un Servicio"/>
+                            <l:VerticalLayout width="100%">
+                                <Label required="true" text="Seleccione un Servicio"/>
                                 <f:Form editable="true" formContainers="{Servicios}">
                                     <f:layout>
-                                        <f:ResponsiveGridLayout 
-                                                labelSpanXL="0"
-                                                labelSpanL="0"
-                                                labelSpanM="0"
-                                                adjustLabelSpan="true"
-                                                emptySpanXL="0"
-                                                emptySpanL="0"
-                                                emptySpanM="0"
-                                                columnsXL="4"
-                                                columnsL="4"
-                                                columnsM="4"
-                                                singleContainerFullSize="false"/>
+                                        <f:ResponsiveGridLayout labelSpanXL="0" labelSpanL="0" labelSpanM="0" adjustLabelSpan="true" emptySpanXL="0" emptySpanL="0" emptySpanM="0" columnsXL="4" columnsL="4" columnsM="4" singleContainerFullSize="false"/>
                                     </f:layout>
                                     <f:formContainers>
                                         <f:FormContainer >
                                             <f:formElements>
                                                 <f:FormElement >
                                                     <f:fields>
-                                                        <CheckBox  text="{DESCRIPCION}" selected="{SELECTED}" valueState="{/ConsultarDisponibilidad/ServiciosState}"/>
+                                                        <CheckBox text="{DESCRIPCION}" selected="{SELECTED}" valueState="{/ConsultarDisponibilidad/ServiciosState}"/>
                                                     </f:fields>
                                                 </f:FormElement>
                                             </f:formElements>
@@ -261,36 +169,19 @@
                         <Panel >
                             <f:Form editable="true" id="frmServicios">
                                 <f:layout>
-                                    <f:ResponsiveGridLayout 
-                                            labelSpanXL="4"
-                                            labelSpanL="4"
-                                            labelSpanM="4"
-                                            labelSpanS="4"
-                                            adjustLabelSpan="false"
-                                            emptySpanXL="4"
-                                            emptySpanL="4"
-                                            emptySpanM="4"
-                                            emptySpanS="4"
-                                            columnsXL="2"
-                                            columnsL="2"
-                                            columnsM="2"
-                                            singleContainerFullSize="false"/>
+                                    <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="4" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
                                 </f:layout>
                                 <f:formContainers>
                                     <f:FormContainer >
                                         <f:formElements>
-                                            <f:FormElement  label="Presenta Reparaciones">
+                                            <f:FormElement label="Presenta Reparaciones">
                                                 <f:fields>
-                                                    <custom:ExtendedSelect 
-                                                            required="true"
-                                                            items="{/Opciones/SiNo}"
-                                                            selectedKey="{
+                                                    <custom:ExtendedSelect required="true" items="{/Opciones/SiNo}" selectedKey="{
                                                                 path:'i_Presenta_Reparaciones',
                                                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                                                 constraints:{type:'requiredSelect'}
-                                                            }"
-                                                            forceSelection="false">
-                                                        <core:Item  key="{KEY}" text="{TEXT}"/>
+                                                            }" forceSelection="false">
+                                                        <core:Item key="{KEY}" text="{TEXT}"/>
                                                     </custom:ExtendedSelect>
                                                 </f:fields>
                                             </f:FormElement>
@@ -298,18 +189,14 @@
                                     </f:FormContainer>
                                     <f:FormContainer >
                                         <f:formElements>
-                                            <f:FormElement  label="Presenta Siniestro">
+                                            <f:FormElement label="Presenta Siniestro">
                                                 <f:fields>
-                                                    <custom:ExtendedSelect 
-                                                            required="true"
-                                                            items="{/Opciones/SiNo}"
-                                                            selectedKey="{
+                                                    <custom:ExtendedSelect required="true" items="{/Opciones/SiNo}" selectedKey="{
                                                                 path:'i_Presenta_Siniestro',
                                                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                                                 constraints:{type:'requiredSelect'}
-                                                            }"
-                                                            forceSelection="false">
-                                                        <core:Item  key="{KEY}" text="{TEXT}"/>
+                                                            }" forceSelection="false">
+                                                        <core:Item key="{KEY}" text="{TEXT}"/>
                                                     </custom:ExtendedSelect>
                                                 </f:fields>
                                             </f:FormElement>
@@ -318,30 +205,19 @@
                                 </f:formContainers>
                             </f:Form>
                         </Panel>
-                        <Panel  visible="{=${i_Presenta_Siniestro}==='SI'}">
+                        <Panel visible="{=${i_Presenta_Siniestro}==='SI'}">
                             <l:VerticalLayout width="100%">
                                 <Label text="Antecedentes Requeridos"/>
-                                <f:Form  editable="true" formContainers="{AntecedentesRequeridos}">
+                                <f:Form editable="true" formContainers="{AntecedentesRequeridos}">
                                     <f:layout>
-                                        <f:ResponsiveGridLayout 
-                                                labelSpanXL="0"
-                                                labelSpanL="0"
-                                                labelSpanM="0"
-                                                adjustLabelSpan="true"
-                                                emptySpanXL="0"
-                                                emptySpanL="0"
-                                                emptySpanM="0"
-                                                columnsXL="4"
-                                                columnsL="4"
-                                                columnsM="4"
-                                                singleContainerFullSize="false"/>
+                                        <f:ResponsiveGridLayout labelSpanXL="0" labelSpanL="0" labelSpanM="0" adjustLabelSpan="true" emptySpanXL="0" emptySpanL="0" emptySpanM="0" columnsXL="4" columnsL="4" columnsM="4" singleContainerFullSize="false"/>
                                     </f:layout>
                                     <f:formContainers>
                                         <f:FormContainer >
                                             <f:formElements>
                                                 <f:FormElement >
                                                     <f:fields>
-                                                        <CheckBox  text="{DESCRIPCION}" selected="true" editable="false"/>
+                                                        <CheckBox text="{DESCRIPCION}" selected="true" editable="false"/>
                                                     </f:fields>
                                                 </f:FormElement>
                                             </f:formElements>
@@ -350,30 +226,17 @@
                                 </f:Form>
                             </l:VerticalLayout>
                         </Panel>
-                        <Panel  visible="{=${i_Presenta_Siniestro}==='SI'}">
-                            <f:Form  editable="true">
+                        <Panel visible="{=${i_Presenta_Siniestro}==='SI'}">
+                            <f:Form editable="true">
                                 <f:layout>
-                                    <f:ResponsiveGridLayout 
-                                            labelSpanXL="2"
-                                            labelSpanL="2"
-                                            labelSpanM="2"
-                                            labelSpanS="2"
-                                            adjustLabelSpan="false"
-                                            emptySpanXL="8"
-                                            emptySpanL="8"
-                                            emptySpanM="8"
-                                            emptySpanS="8"
-                                            columnsXL="1"
-                                            columnsL="1"
-                                            columnsM="1"
-                                            singleContainerFullSize="false"/>
+                                    <f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="2" adjustLabelSpan="false" emptySpanXL="8" emptySpanL="8" emptySpanM="8" emptySpanS="8" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
                                 </f:layout>
                                 <f:formContainers>
                                     <f:FormContainer >
                                         <f:formElements>
-                                            <f:FormElement  label="N° de Siniestro ">
+                                            <f:FormElement label="N° de Siniestro ">
                                                 <f:fields>
-                                                    <Input  value="{NroSiniestro}"/>
+                                                    <Input value="{NroSiniestro}"/>
                                                 </f:fields>
                                             </f:FormElement>
                                         </f:formElements>
@@ -381,33 +244,20 @@
                                 </f:formContainers>
                             </f:Form>
                         </Panel>
-                        <Panel  visible="{=${i_Presenta_Siniestro}==='SI'}">
-                            <FormattedText  class="nota" htmlText="Nota:  Se exigirá número de parte en caso de lesionados, fallecidos, robo del vehículo o que carabineros haya concurrido al lugar."/>
+                        <Panel visible="{=${i_Presenta_Siniestro}==='SI'}">
+                            <FormattedText class="nota" htmlText="Nota:  Se exigirá número de parte en caso de lesionados, fallecidos, robo del vehículo o que carabineros haya concurrido al lugar."/>
                         </Panel>
                         <Panel>
-                            <f:Form  editable="true">
+                            <f:Form editable="true">
                                 <f:layout>
-                                    <f:ResponsiveGridLayout 
-                                            labelSpanXL="12"
-                                            labelSpanL="12"
-                                            labelSpanM="12"
-                                            labelSpanS="12"
-                                            adjustLabelSpan="false"
-                                            emptySpanXL="0"
-                                            emptySpanL="0"
-                                            emptySpanM="0"
-                                            emptySpanS="0"
-                                            columnsXL="1"
-                                            columnsL="1"
-                                            columnsM="1"
-                                            singleContainerFullSize="false"/>
+                                    <f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
                                 </f:layout>
                                 <f:formContainers>
                                     <f:FormContainer >
                                         <f:formElements>
-                                            <f:FormElement  label="Observación">
+                                            <f:FormElement label="Observación">
                                                 <f:fields>
-                                                    <TextArea  value="{Observacion}"/>
+                                                    <TextArea value="{Observacion}"/>
                                                 </f:fields>
                                             </f:FormElement>
                                         </f:formElements>
@@ -421,14 +271,10 @@
         </IconTabBar>
 
         <buttons>
-            <Button  press="handleConsultaDispPrev" text="Regresar"
-                    visible="{=${/ConsultarDisponibilidad/Step} === 'ServicioReparaciones'}"/>
-            <Button  press="closeDialog" text="Cancelar"/>
-            <Button  type="Emphasized" press="handleConsultaDispNext" text="Siguiente"
-                    enabled="{=${/ConsultarDisponibilidad/i_Box}!==''}"
-                    visible="{=${/ConsultarDisponibilidad/Step} === 'FechaHora'}"/>
-            <Button  type="Emphasized" press="handleGenerarReserva" text="Generar"
-                    visible="{=${/ConsultarDisponibilidad/Step} === 'ServicioReparaciones'}"/>
+            <Button press="handleConsultaDispPrev" text="Regresar" visible="{=${/ConsultarDisponibilidad/Step} === 'ServicioReparaciones'}"/>
+            <Button press="closeDialog" text="Cancelar"/>
+            <Button type="Emphasized" press="handleConsultaDispNext" text="Siguiente" enabled="{=${/ConsultarDisponibilidad/i_Box}!==''}" visible="{=${/ConsultarDisponibilidad/Step} === 'FechaHora'}"/>
+            <Button type="Emphasized" press="handleGenerarReserva" text="Generar" visible="{=${/ConsultarDisponibilidad/Step} === 'ServicioReparaciones'}"/>
         </buttons>
     </Dialog>
 

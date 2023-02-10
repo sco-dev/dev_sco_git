@@ -12,98 +12,122 @@
     <Page title="{i18n>title}" showHeader="false">
         <subHeader>
             <Toolbar id="filters">
-                <Label class="sapUiSmallMarginBegin" text="Buscar Por" required="true"/>
-                <Select  items="{/Opciones/Sociedades}" selectedKey="{
+
+
+                <!--Label class="sapUiSmallMarginBegin" text="Buscar Por" required="true"/>
+                <Select items="{/Opciones/Sociedades}" selectedKey="{
                                 path:'/filters/i_Sociedad',
                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                 constraints:{type:'requiredSelect'}
                             }" enabled="false" forceSelection="true" width="10rem">
                     <core:Item key="{KEY}" text="{TEXT}"/>
                 </Select>
-                <Label  class="sapUiSmallMarginBegin" text="Patente" required="true"/>
-                <Input  value="{
+
+                -->
+
+                <!--
+                <Label class="sapUiSmallMarginBegin" text="Patente" required="true"/>
+                <Input value="{
                                 path:'/filters/Patente',
                                 type : 'sapui5agendar.sco00agendar3.customelements.ExtendedString',
                                 constraints:{type:'required'}
                             }" width="10rem" liveChange="toUpperCase" submit="handleSearch"/>
-                <Button  text="Buscar" icon="sap-icon://search" press="handleSearch"/>
+                <Button text="Buscar" icon="sap-icon://search" press="handleSearch"/>
+
+                -->
+                <Button icon="sap-icon://create-form" text="Crear Patente" press="handleCrearVehiculo"/>
             </Toolbar>
         </subHeader>
 
         <content>
 
-            <Panel  visible="{/Visibles/VistaSalfaRent}" class="sapUiNoContentPadding">
+            <Panel visible="{/Visibles/VistaSalfaRent}" class="sapUiNoContentPadding">
 
-                <Panel  class="sapUiNoContentPadding sapUiTinyMargin" headerText="Datos del Contrato" visible="{/Visibles/Contrato}" binding="{/Contrato}">
-                    <f:Form  editable="true">
+                <Panel class="sapUiNoContentPadding sapUiTinyMargin" headerText="Datos generales" visible="{/Visibles/Contrato}" binding="{/Contrato}">
+                    <f:Form editable="true">
                         <f:layout>
-                            <f:ResponsiveGridLayout  labelSpanXL="5" labelSpanL="5" labelSpanM="5" labelSpanS="5" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false"/>
+                            <f:ResponsiveGridLayout labelSpanXL="5" labelSpanL="5" labelSpanM="5" labelSpanS="5" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="2" singleContainerFullSize="false"/>
 
                         </f:layout>
                         <f:formContainers>
                             <f:FormContainer >
                                 <f:formElements>
-                                    <f:FormElement  label="Rut Cliente">
+                                    <f:FormElement label="Rut Cliente">
                                         <f:fields>
-                                            <Text  text="{RUT_CLIENTE}"/>
+                                            <Text text="{RUT_CLIENTE}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Fono">
+                                    <f:FormElement label="Fono">
                                         <f:fields>
-                                            <Text  text="{FONO}"/>
+                                            <Text text="{FONO}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Posee Reemplazo">
+
+
+                                    <!--f:FormElement label="Posee Reemplazo">
                                         <f:fields>
-                                            <Text  text="{POSEE_REEMPLAZO}"/>
+                                            <Text text="{POSEE_REEMPLAZO}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Rend. Neumatico">
+
+                                    
+
+
+                                    <f:FormElement label="Rend. Neumatico">
                                         <f:fields>
-                                            <Text  text="{RENDIMIENTO_NEUMATICO}"/>
+                                            <Text text="{RENDIMIENTO_NEUMATICO}"/>
                                         </f:fields>
                                     </f:FormElement>
+                                        -->
+
                                 </f:formElements>
                             </f:FormContainer>
                             <f:FormContainer >
                                 <f:formElements>
-                                    <f:FormElement  label="Cliente">
+                                    <f:FormElement label="Cliente">
                                         <f:fields>
                                             <Text text="{CLIENTE}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Km. Contratado">
+                                    <!--f:FormElement label="Km. Contratado">
                                         <f:fields>
-                                            <Text  text="{KM_CONTRATADO}"/>
+                                            <Text text="{KM_CONTRATADO}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Horas Remplazo">
+                                    <f:FormElement label="Horas Remplazo">
                                         <f:fields>
                                             <Text text="{HORAS_REEMPLAZO}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Email Adm.">
+
+                                    -->
+                                    <f:FormElement label="Email Adm.">
                                         <f:fields>
-                                            <Text  text="{EMAIL}"/>
+                                            <Text text="{EMAIL}"/>
                                         </f:fields>
                                     </f:FormElement>
                                 </f:formElements>
                             </f:FormContainer>
                             <f:FormContainer >
                                 <f:formElements>
-                                    <f:FormElement  label="Administrador">
+                                    <f:FormElement label="Administrador">
                                         <f:fields>
-                                            <Text  text="{ADMINISTRADOR}"/>
+                                            <Text text="{ADMINISTRADOR}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Deducible">
+
+
+                                    <!--f:FormElement label="Deducible">
                                         <f:fields>
-                                            <Text  text="{DEDUCIBLE}"/>
+                                            <Text text="{DEDUCIBLE}"/>
                                         </f:fields>
                                     </f:FormElement>
-                                    <f:FormElement  label="Plazo Contratado">
+
+                                    -->
+
+                                    <f:FormElement label="Seguro">
                                         <f:fields>
-                                            <Text  text="{PLAZO_CONTRATADO}"/>
+                                            <Text text="HDI Seguros"/>
                                         </f:fields>
                                     </f:FormElement>
                                 </f:formElements>
@@ -113,12 +137,12 @@
                     </f:Form>
                 </Panel>
 
-                <Panel  headerText="Listado de Conductores">
-                    <t:Table  rows="{/Conductores}" selectedIndex="{/i_Conductor}" selectionMode="Single" visibleRowCount="3" selectionBehavior="RowOnly" columnResize="true">
+                <Panel headerText="Conductores">
+                    <t:Table rows="{/Conductores}" selectedIndex="{/i_Conductor}" selectionMode="Single" visibleRowCount="3" selectionBehavior="RowOnly" columnResize="true">
                         <t:extension>
                             <Toolbar >
-                                <Button  icon="sap-icon://add" text="Crear" press="handleCrearConductor"/>
-                                <Button  icon="sap-icon://edit" text="Actualizar" visible="{=${/i_Conductor} >= 0}" press="handleActualizarConductor"/>
+                                <Button icon="sap-icon://add" text="Crear" press="handleCrearConductor"/>
+                                <Button icon="sap-icon://edit" text="Actualizar" visible="{=${/i_Conductor} >= 0}" press="handleActualizarConductor"/>
                             </Toolbar>
                         </t:extension>
                         <t:noData>
@@ -126,27 +150,27 @@
                         </t:noData>
                         <t:columns>
                             <t:Column >
-                                <Label  text="Rut"/>
+                                <Label text="Rut"/>
                                 <t:template>
-                                    <Text  text="{RUT}" wrapping="false"/>
+                                    <Text text="{RUT}" wrapping="false"/>
                                 </t:template>
                             </t:Column>
                             <t:Column >
-                                <Label  text="Nombre"/>
+                                <Label text="Nombre"/>
                                 <t:template>
-                                    <Text  text="{NOMBRE}" wrapping="false"/>
+                                    <Text text="{NOMBRE}" wrapping="false"/>
                                 </t:template>
                             </t:Column>
                             <t:Column >
-                                <Label  text="Apellido"/>
+                                <Label text="Apellido"/>
                                 <t:template>
-                                    <Text  text="{APELLIDO}" wrapping="false"/>
+                                    <Text text="{APELLIDO}" wrapping="false"/>
                                 </t:template>
                             </t:Column>
                             <t:Column >
-                                <Label  text="Movil"/>
+                                <Label text="Movil"/>
                                 <t:template>
-                                    <Text  text="{MOVIL}" wrapping="false"/>
+                                    <Text text="{MOVIL}" wrapping="false"/>
                                 </t:template>
                             </t:Column>
                             <t:Column >
@@ -164,18 +188,19 @@
                         </t:columns>
                     </t:Table>
                 </Panel>
-                <Panel headerText="Información" class="sapUiMediumMarginTop">
+                <Panel class="sapUiMediumMarginTop">
                     <l:Splitter>
-                        <Panel>
+                        <Panel headerText="Detalle del Vehículo">
                             <layoutData>
                                 <l:SplitterLayoutData size="50%" resizable="false"/>
                             </layoutData>
-                            <Title text="Datos del Vehículo"/>
+                            <!--Title text="Detalle del Vehículo"/> -->
                             <t:Table rows="{/Vehiculos}" selectionMode="None" visibleRowCount="1" selectionBehavior="RowOnly">
                                 <t:extension>
                                     <Toolbar>
                                         <Button icon="sap-icon://synchronize" text="Actualizar Km" press="handleActualizarKm"/>
                                         <Button icon="sap-icon://history" text="Historial de Mantenciones" press="handleHistorialMantenciones"/>
+
                                     </Toolbar>
                                 </t:extension>
                                 <t:noData>
@@ -226,11 +251,13 @@
                             </t:Table>
                         </Panel>
 
-                        <Panel>
+                        <Panel headerText="Historial de Mantenciones">
                             <layoutData>
                                 <l:SplitterLayoutData size="50%" resizable="false"/>
                             </layoutData>
-                            <Title text="Historial de Mantenciones"/>
+                            <!--Title text="Historial de Mantenciones"/>
+
+                            -->
                             <t:Table rows="{/HistorialMantenciones}" selectionMode="None" visibleRowCount="5">
                                 <t:extension>
                                     <Toolbar>
@@ -247,7 +274,7 @@
                                         </t:template>
                                     </t:Column>
                                     <t:Column>
-                                        <Label text="Orden"/>
+                                        <Label text="Reserva"/>
                                         <t:template>
                                             <Text text="{ORDEN}"/>
                                         </t:template>
@@ -284,8 +311,8 @@
             <Toolbar>
                 <Button id="errorPopover" icon="sap-icon://message-popup" visible="{= ${message>/}.length > 0}" text="{= ${message>/}.length}" type="Emphasized" press="handleMessagePopoverPress"/>
                 <ToolbarSpacer/>
-                <Button icon="sap-icon://add" text="Crear Agenda" visible="{/Visibles/CrearAgenda}" press="handleCrearAgenda" enabled="true"/>
-                <Button icon="sap-icon://search" text="Consultar Agenda" visible="true" press="handleConsultarAgenda" enabled="true"/>
+                <Button icon="sap-icon://add" text="Crear" visible="{/Visibles/CrearAgenda}" press="handleCrearAgenda" enabled="true"/>
+                <Button icon="sap-icon://search" text="Consultar" visible="true" press="handleConsultarAgenda" enabled="true"/>
             </Toolbar>
         </footer>
     </Page>
