@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*eslint-disable semi, no-console*/
 (function (sap) {
   var fioriToolsGetManifestLibs = function (manifestPath) {

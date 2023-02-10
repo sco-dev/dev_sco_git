@@ -1,12 +1,13 @@
+// @ts-nocheck
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "SCO/sco00timerecording_html/model/models"
+        "sapui5agendar/sco00timerecording_html/model/models"
     ],
     function (UIComponent, Device, models) {
         "use strict";
 
-        return UIComponent.extend("SCO.sco00timerecording_html.Component", {
+        return UIComponent.extend("sapui5agendar.sco00timerecording_html.Component", {
             metadata: {
                 manifest: "json"
             },

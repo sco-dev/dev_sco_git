@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* global moment:true */
 sap.ui.define([
 	"sap/ui/model/json/JSONModel",

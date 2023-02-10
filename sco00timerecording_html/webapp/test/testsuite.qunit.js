@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* global window, parent, location */
 
 // eslint-disable-next-line sap-no-global-define

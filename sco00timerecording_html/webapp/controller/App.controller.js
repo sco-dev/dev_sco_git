@@ -1,3 +1,4 @@
+// @ts-nocheck
 sap.ui.define(
     [
         "sap/ui/core/mvc/Controller"
@@ -5,7 +6,7 @@ sap.ui.define(
     function(BaseController) {
       "use strict";
   
-      return BaseController.extend("SCO.sco00timerecording_html.controller.App", {
+      return BaseController.extend("sapui5agendar.scotimerecording_html.controller.App", {
         onInit: function () {
         }
       });

@@ -1,7 +1,7 @@
 {
     "_version": "1.12.0",
     "sap.app": {
-        "id": "SCO.sco00timerecording_html",
+        "id": "sapui5agendar.sco00timerecording_html",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -35,7 +35,7 @@
     "sap.ui5": {
         "flexEnabled": false,
 		"rootView": {
-			"viewName": "SCO.sco00timerecording_html.view.App",
+			"viewName": "sapui5agendar.sco00timerecording_html.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "App"
@@ -61,7 +61,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "SCO.sco00timerecording_html.i18n.i18n"
+                    "bundleName": "sapui5agendar.sco00timerecording_html.i18n.i18n"
                 }
             }
         },
@@ -77,7 +77,7 @@
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
                 "async": true,
-                "viewPath": "SCO.sco00timerecording_html.view",
+                "viewPath": "sapui5agendar.sco00timerecording_html.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false

@@ -1,3 +1,4 @@
+// @ts-nocheck
 var detenido = "";
 var tipoTrabajador = "";
 var puesto = "";
@@ -64,10 +65,10 @@ var jefeTaM;
 
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "SCO/sco00timerecording_html/utils/Clock",
-    "SCO/sco00timerecording_html/utils/utilFormater",
-    "SCO/sco00timerecording_html/utils/utilUI",
-    "SCO/sco00timerecording_html/utils/utilController"
+    "sapui5agendar/sco00timerecording_html/utils/Clock",
+    "sapui5agendar/sco00timerecording_html/utils/utilFormater",
+    "sapui5agendar/sco00timerecording_html/utils/utilUI",
+    "sapui5agendar/sco00timerecording_html/utils/utilController"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -75,7 +76,7 @@ sap.ui.define([
     function (Controller,Clock,utilFormater,utilUI,utilController) {
         "use strict";
 
-        return Controller.extend("SCO.sco00timerecording_html.controller.View1", {
+        return Controller.extend("sapui5agendar.sco00timerecording_html.controller.View1", {
 
             onPrincipal : function () {
 			
